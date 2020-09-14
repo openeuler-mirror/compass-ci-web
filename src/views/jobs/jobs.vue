@@ -5,7 +5,7 @@
       <h1 class="title">Jobs</h1>
       <p class="summary">summary</p>
       <el-row :gutter="10">
-        <el-col :xs="40" :sm="10" :md="10" :lg="8" :xl="3" class="jobs-tips">
+        <el-col :xs="20" :sm="15" :md="15" :lg="8" :xl="3" class="jobs-tips">
           <span class="page-tips">reports per page</span>
           <el-select
             v-model="listQuery.page_size"
@@ -16,7 +16,7 @@
             <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-col>
-        <el-col :xs="20" :sm="11" :md="10" :lg="6" :xl="3" class="jobs-tips">
+        <el-col :xs="16" :sm="8" :md="8" :lg="6" :xl="3" class="jobs-tips">
           <el-input
             v-model="listQuery.upstream_repo"
             placeholder="Filter the results"

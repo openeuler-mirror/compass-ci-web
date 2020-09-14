@@ -105,7 +105,6 @@ export default {
     },
     compare() {
       this.$refs["ruleForm"].validate((valid) => {
-        // if (this.handleValid()) {
         if (valid) {
           let subQuery = {};
           if (this.compareData.osStr) {
@@ -123,7 +122,6 @@ export default {
           console.log("error submit!!");
           return false;
         }
-        // }
       });
     },
   },

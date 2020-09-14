@@ -34,8 +34,11 @@ export default {
   overflow: hidden;
   z-index: -999;
   .center-title {
-    margin: 180px 0 0 25%;
+    margin: 150px 0 0 25%;
     text-align: left;
+    @media (max-width: 1000px) {
+      margin: 82px 10%;
+    }
     .tile {
       font-size: 40px;
       font-family: PingFangSC-Regular, PingFang SC;

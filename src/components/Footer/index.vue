@@ -26,7 +26,7 @@ export default {
   },
   mounted () {
     this.footTitleObj = require('@/lang/common.js')
-    // console.log(this.footTitleObj)
+    console.log(this.footTitleObj)
   }
 }
 
@@ -35,14 +35,11 @@ export default {
 <style lang='scss' scoped>
 #footer{
     position: relative;
-    bottom: 0;
     width: 100%;
     height: 152px;
     background-image: url('./../../../public/img/footer.png');
     background-size: cover;
     display: block;
-    position: relative;
-    padding: 0 10%;
     .footer-content{
         display: flex;
         width: 1120px;
@@ -50,7 +47,7 @@ export default {
         height: 80px;
         left: 50%;
         top: 50%;
-        margin: -40px 0 0 -600px;
+        margin: -40px 0 0 -560px;
         .content-left{
             .left-title{
                 font-size: 40px;
@@ -69,6 +66,7 @@ export default {
         }
         .content-right{
             margin-left: 400px;
+            margin-top: 24px;
             .right-word{
                 font-size: 11px;
                 font-family: PingFangSC-Regular, PingFang SC;
@@ -76,8 +74,10 @@ export default {
                 color: #FFFFFF;
                 line-height: 24px;
                 span{
+                    display: inline-block;
                     &:last-of-type{
                         font-size: 12px;
+                        margin-left: 135px;
                     }
                 }
             }
@@ -85,8 +85,45 @@ export default {
                 width: 342px;
                 height: 1px;
                 background: #FFFFFF;
-                opacity: .5;
+                opacity: 0.5;
+                margin-top: 8px;
             }
+        }
+    }
+    @media (max-width: 1000px) {
+        height: 280px;
+        .footer-content{
+            width: 100%;
+            flex-direction: column;
+            margin: 0;
+            left: 0;
+            top: 20px;
+            text-align: center;
+             .content-left{
+                 .left-title{
+                     font-size: 25px;
+                 }
+                 .left-content{
+                     font-size: 13px;
+                 }
+             }
+             .content-right{
+                margin: 20px 0 0 0;
+                .right-word{
+                    font-size: 13px;
+                    span{
+                        &:last-of-type{
+                            display: block;
+                            margin-left: 0;
+                        }
+                    }
+                }
+                .footer-line{
+                    width: 342px;
+                    height: 2px;
+                    margin: 15px auto 0 auto;
+                }
+             }
         }
     }
 }

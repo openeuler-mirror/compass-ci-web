@@ -45,32 +45,43 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@media screen and (min-width: 768px) {
-  .home {
-    position: relative;
-    width: 100%;
-    .link-card-box {
-      width: 70%;
-      height: 100%;
-      margin-left: 23%;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      .card1 {
-        margin-bottom: 30px;
-      }
-      .card2 {
-        margin-left: 3%;
-        margin-bottom: 30px;
-      }
-      .card3 {
-        margin-left: 10%;
-        margin-bottom: 30px;
-      }
-      .card4 {
-        margin-left: 3%;
-        margin-bottom: 30px;
-      }
+.home {
+  position: relative;
+  width: 100%;
+  .link-card-box {
+    width: 70%;
+    height: 100%;
+    padding-left: 20%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: -5%;
+    .card1 {
+      margin-bottom: 30px;
+      @media (max-width: 1000px) {
+        margin: 30px auto 0 auto;
+    }
+    }
+    .card2 {
+      margin-left: 3%;
+      margin-bottom: 30px;
+      @media (max-width: 1000px) {
+      margin: 30px auto 0 auto;
+    }
+    }
+    .card3 {
+      margin-left: 10%;
+      margin-bottom: 30px;
+      @media (max-width: 1000px) {
+      margin: 30px auto 0 auto;
+    }
+    }
+    .card4 {
+      margin-left: 2%;
+      margin-bottom: 30px;
+      @media (max-width: 1000px) {
+      margin: 30px auto 0 auto;
+    }
     }
   }
 }

@@ -53,8 +53,14 @@ export default {
   position: relative;
   // margin-bottom: 30px;
   margin: 30px;
+  @media (max-width: 1000px) {
+      margin-right: 0;
+  }
   .back-card {
     width: 304px;
+    @media (max-width: 1000px) {
+      width: 280px;
+    }
     height: 200px;
     background: #ffffff;
     box-shadow: 0px 10px 30px 0px rgba(2, 108, 255, .25);
@@ -65,6 +71,9 @@ export default {
   .link-car {
     cursor: pointer;
     width: 252px;
+    @media (max-width: 1000px) {
+       width: 240px;
+    }
     height: 76px;
     background: #1057ca;
     box-shadow: 0px 10px 30px 0px rgba(2, 108, 255, .25),
