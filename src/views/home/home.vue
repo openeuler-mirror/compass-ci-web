@@ -34,10 +34,10 @@ export default {
         name: "Git repo",
         describe: "列举当前所有已经融入crystal-ci",
       },
-      Testboxes:{
-          name:'Testboxes',
-          describe:'用于查阅当前系统资源的使用状态（待开放）'
-      }
+      Testboxes: {
+        name: "Testboxes",
+        describe: "用于查阅当前系统资源的使用状态（待开放）",
+      },
     };
   },
   methods: {},
@@ -45,27 +45,32 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.home {
-  position: relative;
-  .link-card-box {
-    width: 810px;
-    height: 450px;
-    margin: -10px 0 90px 25%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    .card1 {
-      margin-bottom: 30px;
-    }
-    .card2 {
-      margin-left: 50px;
-      margin-bottom: 30px;
-    }
-    .card3 {
-      margin-left: 142px;
-    }
-    .card4 {
-      margin-left: 50px;
+@media screen and (min-width: 768px) {
+  .home {
+    position: relative;
+    width: 100%;
+    .link-card-box {
+      width: 70%;
+      height: 100%;
+      margin-left:23%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      .card1 {
+        margin-bottom: 30px;
+      }
+      .card2 {
+        margin-left: 3%;
+        margin-bottom: 30px;
+      }
+      .card3 {
+        margin-left: 10%;
+        margin-bottom: 30px;
+      }
+      .card4 {
+        margin-left: 3%;
+        margin-bottom: 30px;
+      }
     }
   }
 }

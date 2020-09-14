@@ -14,6 +14,7 @@
 }
 .content {
   padding: 0 10%;
+  height: 100%;
 }
 .goUrl {
   color: blue;

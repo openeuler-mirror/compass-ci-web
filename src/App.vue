@@ -18,11 +18,18 @@ export default {
     Header,
     Footer,
   },
-};
+  mounted() {
+    
+  }
+}
 </script>
 
 <style>
+#app {
+  height: 100%;
+}
 .container {
-  /* padding: 0 10%; */
+  height: 100%;
+  padding-bottom: 152px;
 }
 </style>

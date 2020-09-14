@@ -44,7 +44,7 @@
           <el-button class="compare-btn" size="medium" :disabled="flag" @click="compare">compare</el-button>
         </el-form-item>
       </el-form>
-      <div>{{resData}}</div>
+      <pre>{{resData}}</pre>
     </div>
   </div>
 </template> 

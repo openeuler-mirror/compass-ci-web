@@ -1,12 +1,22 @@
 <!-- 首页 -->
 <template>
   <div class="link-card">
-    <div class="back-card" @click="goPath">
+    <el-row :gutter="10">
+      <el-col :xs="8" :sm="8" :md="4" :lg="3" :xl="1">
+        <div class="back-card" @click="goPath">
+          <p class="describe">{{insideName.describe}}</p>
+          <div class="link-car">
+            <p>{{insideName.name}}</p>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    <!-- <div class="back-card" @click="goPath">
       <p class="describe">{{insideName.describe}}</p>
       <div class="link-car">
         <p>{{insideName.name}}</p>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -16,9 +26,9 @@ export default {
     return {};
   },
   props: {
-    insideName:{
-      type:Object
-    }
+    insideName: {
+      type: Object,
+    },
   },
   methods: {
     goPath() {
@@ -26,19 +36,21 @@ export default {
         this.$router.push("/jobs");
       } else if (this.insideName.name == "Compare results") {
         this.$router.push("/compare");
-      } else if (this.insideName.name  == 'Testboxes') {
-        window.location.href ='https://gitee.com/wu_fengguang/lab-z9/tree/master/hosts/'
+      } else if (this.insideName.name == "Testboxes") {
+        window.location.href =
+          "https://gitee.com/wu_fengguang/lab-z9/tree/master/hosts/";
       }
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
 <style lang='scss' scoped>
 .link-card {
   position: relative;
+  // margin-bottom: 30px;
+  margin: 30px;
   .back-card {
     width: 304px;
     height: 200px;
@@ -48,7 +60,6 @@ export default {
     padding: 20px 30px;
     text-align: left;
   }
-
   .link-car {
     cursor: pointer;
     width: 252px;

@@ -8,7 +8,7 @@
           <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1" class="tree-info">
             <div>git repo</div>
           </el-col>
-          <el-col :xs="8" :sm="6" :md="4" :lg="2" :xl="1" class="tree-info_detail">
+          <el-col :xs="8" :sm="6" :md="10" :lg="6" :xl="3" class="tree-info_detail">
             <div>{{banner.repo?banner.repo:''}}</div>
           </el-col>
         </el-row>
@@ -16,7 +16,7 @@
           <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1" class="tree-info">
             <div>git url</div>
           </el-col>
-          <el-col :xs="8" :sm="6" :md="4" :lg="10" :xl="10" class="tree-info_detail">
+          <el-col :xs="8" :sm="6" :md="10" :lg="10" :xl="10" class="tree-info_detail">
             <span class="goUrl" @click="goGit(banner.git_url)">{{banner.git_url}}</span>
           </el-col>
         </el-row>
@@ -25,15 +25,7 @@
             <div>branches</div>
           </el-col>
           <el-col
-            :xs="8"
-            :sm="6"
-            :md="4"
-            :lg="2"
-            :xl="1"
-            class="tree-info-detail"
-            v-for="item in banner.branch"
-            :key="item"
-          >
+            :xs="8" :sm="6" :md="4" :lg="2" :xl="1" class="tree-info-detail"  v-for="item in banner.branch" :key="item" >
             <div>{{item}}</div>
           </el-col>
         </el-row>
@@ -63,12 +55,14 @@
       </el-table>
       <div>
         <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          layout="total, prev, pager, next, jumper"
-          :total="jobsQuery.total"
-          class="pagination"
-        ></el-pagination>
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            layout="total, pager, jumper"
+            :total="jobsQuery.total"
+            class="pagination"
+            :pager-count="5"
+            :small="isSmall"
+          ></el-pagination>
       </div>
     </div>
   </div>
@@ -91,6 +85,7 @@ export default {
       },
       jobsQuery: {},
       banner: {},
+      isSmall:false,
     };
   },
   methods: {
@@ -117,14 +112,20 @@ export default {
         this.tableHead = this.jobsQuery.fields;
         this.tableData = this.jobsQuery.jobs;
         this.banner = this.jobsQuery.banner;
+        if(this.isMobile()) {
+          this.isSmall = true
+        } else {
+          this.isSmall = false
+        }
       });
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       this.listQuery.page_num = val;
+      this.getJobs();
+    },
+     isMobile() {
+     let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+      return flag;
     },
   },
   mounted() {
