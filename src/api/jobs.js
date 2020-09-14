@@ -1,15 +1,11 @@
-import {Service} from '../utils/axios.utils'
-
-// export function getJobs(upstream_repo, page_size, page_num) {
-//     return Service({
-//         url: '/get_jobs?upstream_repo='+upstream_repo+';page_size='+page_size+';page_num='+page_num ,
-//         method: 'get'
-//     })
-// }
+/**
+ * @file jobs接口文档入口
+ * */ 
+import {service} from '../utils/axios.utils';
 export function getJobs(data) {
-    return Service({
+    return service({
         url: '/get_jobs',
         method: 'get',
-        params:data
-    })
+        params: data
+    });
 }

@@ -1,3 +1,6 @@
+/**
+ * @file eslint配置
+ * */ 
 module.exports = {
   root: true,
   env: {

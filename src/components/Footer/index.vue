@@ -85,7 +85,7 @@ export default {
                 width: 342px;
                 height: 1px;
                 background: #FFFFFF;
-                opacity: 0.5;
+                opacity: .5;
             }
         }
     }

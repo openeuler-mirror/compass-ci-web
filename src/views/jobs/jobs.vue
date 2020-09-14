@@ -56,15 +56,15 @@
           </template>
         </el-table-column>
       </el-table>
-          <el-pagination
-            @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            layout="total, pager, jumper"
-            :total="jobsQuery.total"
-            class="pagination"
-            :pager-count="5"
-            :small="isSmall"
-          ></el-pagination>
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        layout="total, pager, jumper"
+        :total="jobsQuery.total"
+        class="pagination"
+        :pager-count="5"
+        :small="isSmall"
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -93,7 +93,7 @@ export default {
       },
       pageSizeOptions: [10, 20, 50],
       jobsQuery: {},
-      isSmall:false,
+      isSmall: false,
     };
   },
   methods: {
@@ -116,10 +116,10 @@ export default {
         this.jobsQuery = res;
         this.tableHead = this.jobsQuery.fields;
         this.tableData = this.jobsQuery.jobs;
-        if(this.isMobile()) {
-          this.isSmall = true
+        if (this.isMobile()) {
+          this.isSmall = true;
         } else {
-          this.isSmall = false
+          this.isSmall = false;
         }
       });
     },
@@ -128,12 +128,14 @@ export default {
       this.getJobs();
     },
     isMobile() {
-     let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+      let flag = navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      );
       return flag;
     },
   },
   mounted() {
-    this.getJobs()
+    this.getJobs();
   },
 };
 </script>

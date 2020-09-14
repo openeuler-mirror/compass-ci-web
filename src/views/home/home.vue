@@ -52,7 +52,7 @@ export default {
     .link-card-box {
       width: 70%;
       height: 100%;
-      margin-left:23%;
+      margin-left: 23%;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;

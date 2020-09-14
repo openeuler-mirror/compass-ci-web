@@ -16,8 +16,8 @@ export default {
   },
   methods: {
     goHome() {
-      this.$router.push('/')
-    }
+      this.$router.push("/");
+    },
   },
   mounted() {
     this.headTitleObj = require("@/lang/common.js");

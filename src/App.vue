@@ -18,15 +18,14 @@ export default {
     Header,
     Footer,
   },
-  mounted() {
-    
-  }
-}
+  mounted() {},
+};
 </script>
 
 <style>
 #app {
   height: 100%;
+  position: relative;
 }
 .container {
   height: 100%;

@@ -52,9 +52,7 @@
 import { compareCandidates, compare } from "../../api/compare";
 export default {
   name: "Compare",
-  components: {
-    
-  },
+  components: {},
   data() {
     return {
       flag: true,
@@ -71,6 +69,11 @@ export default {
         dimension: null,
       },
       rules: {
+        suite: {
+          required: true,
+          message: "请选择suite",
+          trigger: "change",
+        },
         dimension: {
           required: true,
           message: "请选择dimension",
@@ -82,7 +85,7 @@ export default {
       osArchData: [],
       tboxGroupdata: [],
       dimensionData: [],
-      resData:''
+      resData: "",
     };
   },
   methods: {
@@ -100,50 +103,32 @@ export default {
         this.dimensionData = res.dimension;
       });
     },
-    // handleValid自定义验证
-    handleValid() {
-      let arrCom = []
-      for (let item in this.compareData) {
-        if (item !== "dimension") {
-          arrCom.push(this.compareData[item])
-        }
-      }
-      let boll = arrCom.some(item=>{
-        return item != null
-      })
-      if(boll) {
-         return boll
-      } else {
-        this.$message.warning("Please choose suite OS OS_ arch tbox_ One of the group")
-      }
-    },
     compare() {
       this.$refs["ruleForm"].validate((valid) => {
-        if (this.handleValid()) {
-          if (valid) {
-            let subQuery = {};
-            if (this.compareData.osStr) {
-              subQuery.os = this.compareData.osStr.split(" ")[0];
-              subQuery.os_version = this.compareData.osStr.split(" ")[1];
-            }
-            subQuery.suite = this.compareData.suite;
-            subQuery.os_arch = this.compareData.os_arch;
-            subQuery.tbox_group = this.compareData.tbox_group;
-            subQuery.dimension = this.compareData.dimension;
-            compare(subQuery).then((res) => {
-              this.resData = res
-            });
-          } else {
-            console.log("error submit!!");
-            return false;
+        // if (this.handleValid()) {
+        if (valid) {
+          let subQuery = {};
+          if (this.compareData.osStr) {
+            subQuery.os = this.compareData.osStr.split(" ")[0];
+            subQuery.os_version = this.compareData.osStr.split(" ")[1];
           }
+          subQuery.suite = this.compareData.suite;
+          subQuery.os_arch = this.compareData.os_arch;
+          subQuery.tbox_group = this.compareData.tbox_group;
+          subQuery.dimension = this.compareData.dimension;
+          compare(subQuery).then((res) => {
+            this.resData = res;
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
         }
+        // }
       });
     },
   },
   mounted() {
     this.compareCandidates();
-    // this.compare();
   },
 };
 </script>
@@ -156,17 +141,19 @@ export default {
   background: #0041bd;
   color: #ffffff;
 }
-.compare-btn:hover {
+.compare-btn:hover,
+.compare-btn:focus {
   background: #0041bd;
   color: #ffffff;
 }
 .el-button.is-disabled,
 .el-button.is-disabled:focus,
-.el-button.is-disabled:hover {
+.el-button.is-disabled:hover,
+.el-button.is-disabled:active {
   color: #c0c4cc;
   cursor: not-allowed;
   background-image: none;
-  background-color: rgba(0, 65, 189, 0.8);
+  background-color: rgba(0, 65, 189, .8);
   border-color: #ebeef5;
 }
 </style>
