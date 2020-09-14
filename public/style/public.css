@@ -1,22 +1,26 @@
 .title,
 .summary {
-  text-align: center;
+    text-align: center;
 }
+
 .title {
-  font-size: 36px;
-  margin: 150px 0 20px;
+    font-size: 36px;
+    margin: 150px 0 20px;
 }
+
 .summary {
     color: rgba(0, 0, 0, .5);
     margin-bottom: 59px;
     font-size: 14px;
     font-family: FZLTHJW--GB1-0, FZLTHJW--GB1;
 }
+
 .content {
-  padding: 0 10%;
-  height: 100%;
+    padding: 0 10%;
+    height: 100%;
 }
+
 .goUrl {
-  color: #002FA7;
-  cursor: pointer;
+    color: #002FA7;
+    cursor: pointer;
 }
