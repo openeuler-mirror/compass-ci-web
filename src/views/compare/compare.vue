@@ -11,27 +11,27 @@
         :rules="rules"
         class="demo-form-inline"
       >
-        <el-form-item label="suite" prop="suite">
+        <el-form-item label="suite" prop="suite" label-width="85px" class="com-tips">
           <el-select v-model="compareData.suite" filterable placeholder="请选择" size="medium">
             <el-option v-for="item in suiteData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="OS" prop="OS">
+        <el-form-item label="OS" prop="OS"  label-width="85px">
           <el-select v-model="compareData.osStr" filterable placeholder="请选择" size="medium">
             <el-option v-for="item in OSData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="os_arch" prop="os_arch">
+        <el-form-item label="os_arch" prop="os_arch" label-width="85px">
           <el-select v-model="compareData.os_arch" filterable placeholder="请选择" size="medium">
             <el-option v-for="item in osArchData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="tbox_group" prop="tbox_group">
+        <el-form-item label="tbox_group" prop="tbox_group" label-width="85px">
           <el-select v-model="compareData.tbox_group" filterable placeholder="请选择" size="medium">
             <el-option v-for="item in tboxGroupdata" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="dimension" prop="dimension">
+        <el-form-item label="dimension" prop="dimension" label-width="85px">
           <el-select
             v-model="compareData.dimension"
             filterable
@@ -84,7 +84,6 @@ export default {
       OSData: [],
       osArchData: [],
       tboxGroupdata: [],
-      dimensionData: [],
       resData: "",
     };
   },
@@ -129,7 +128,7 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss" scoped>
 .filters {
   font-weight: bold;
   padding: 13px 0;
@@ -152,5 +151,10 @@ export default {
   background-image: none;
   background-color: rgba(0, 65, 189, .8);
   border-color: #ebeef5;
+}
+/deep/.el-form-item__label { 
+    @media (max-width: 1000px) {
+        text-align: left;
+    }
 }
 </style>
