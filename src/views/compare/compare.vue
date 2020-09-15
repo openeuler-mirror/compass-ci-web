@@ -153,7 +153,7 @@ export default {
   border-color: #ebeef5;
 }
 /deep/.el-form-item__label { 
-    @media (max-width: 1000px) {
+    @media screen and (max-width: 1000px) {
         text-align: left;
     }
 }

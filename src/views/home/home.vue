@@ -56,34 +56,34 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: -5%;
-    @media (max-width: 1000px) {
+    @media screen and (max-width: 1000px) {
         width: 100%;
         margin-left: 0;
     }
     .card1 {
       margin-bottom: 30px;
-      @media (max-width: 1000px) {
+      @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card2 {
       margin-left: 3%;
       margin-bottom: 30px;
-      @media (max-width: 1000px) {
+     @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card3 {
       margin-left: 10%;
       margin-bottom: 30px;
-      @media (max-width: 1000px) {
+      @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card4 {
       margin-left: 2%;
       margin-bottom: 30px;
-      @media (max-width: 1000px) {
+      @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }

@@ -26,7 +26,7 @@ export default {
 .container {
   height: 100%;
   padding-bottom: 152px;
-  @media (max-width: 1000px) {
+  @media screen and (max-width: 1000px) {
       padding-bottom:100px;
   }
 }

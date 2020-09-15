@@ -35,7 +35,7 @@ export default {
   .center-title {
     margin: 150px 0 0 25%;
     text-align: left;
-    @media (max-width: 1000px) {
+    @media screen and (max-width: 1000px) {
       margin: 82px 10%;
     }
     .tile {

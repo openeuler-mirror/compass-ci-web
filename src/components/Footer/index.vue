@@ -89,7 +89,7 @@ export default {
             }
         }
     }
-    @media (max-width: 1000px) {
+    @media screen and (max-width: 1000px) {
         height: 280px;
         .footer-content{
             width: 100%;

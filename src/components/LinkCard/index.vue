@@ -52,12 +52,12 @@ export default {
 .link-card {
   position: relative;
   margin: 30px;
-  @media (max-width: 1000px) {
+  @media screen and (max-width: 1000px) {
       margin-right: 0;
   }
   .back-card {
     width: 304px;
-    @media (max-width: 1000px) {
+    @media screen and (max-width: 1000px) {
       width: 280px;
     }
     height: 200px;
@@ -70,7 +70,7 @@ export default {
   .link-car {
     cursor: pointer;
     width: 252px;
-    @media (max-width: 1000px) {
+    @media screen and (max-width: 1000px) {
        width: 240px;
     }
     height: 76px;
