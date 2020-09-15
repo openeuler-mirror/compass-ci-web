@@ -70,11 +70,9 @@
 </template>
 <script>
 import {getJobs} from "../../api/jobs.js";
-// import Header from "../../components/Header";
 export default {
   name: "Jobs",
   components: {
-    // Header,
   },
   data() {
     return {
