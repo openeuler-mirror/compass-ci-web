@@ -27,10 +27,7 @@ service.interceptors.response.use(response => {
     loadingInstance.close();
     return response.data;
 }, error => {
-    // const MSG = error.Message !== undefined ? error.Message : ''
-    // console.log(MSG);
     Message({
-        // message: '网络错误' + msg,
         message: '网络错误,请稍后再试',
         type: 'error',
         duration: 3 * 1000
