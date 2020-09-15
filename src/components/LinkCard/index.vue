@@ -1,12 +1,22 @@
 <!-- 首页 -->
 <template>
   <div class="link-card">
-    <div class="back-card" @click="goPath">
+    <el-row :gutter="10">
+      <el-col :xs="8" :sm="8" :md="4" :lg="3" :xl="1">
+        <div class="back-card" @click="goPath">
+          <p class="describe">{{insideName.describe}}</p>
+          <div class="link-car">
+            <p>{{insideName.name}}</p>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    <!-- <div class="back-card" @click="goPath">
       <p class="describe">{{insideName.describe}}</p>
       <div class="link-car">
         <p>{{insideName.name}}</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -118,7 +118,7 @@ export default {
                     }
                 }
                 .footer-line{
-                    width: 342px;
+                    width: 100%;
                     height: 2px;
                     margin: 15px auto 0 auto;
                 }
