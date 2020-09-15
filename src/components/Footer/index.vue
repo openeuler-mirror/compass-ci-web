@@ -26,7 +26,6 @@ export default {
   },
   mounted () {
     this.footTitleObj = require('@/lang/common.js')
-    console.log(this.footTitleObj)
   }
 }
 

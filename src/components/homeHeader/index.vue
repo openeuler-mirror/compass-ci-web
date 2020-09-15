@@ -17,7 +17,6 @@ export default {
   },
   mounted() {
     this.headTitleObj = require("@/lang/common.js");
-    console.log(this.headTitleObj);
   },
 };
 </script>

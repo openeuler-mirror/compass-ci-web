@@ -60,28 +60,28 @@ export default {
       margin-bottom: 30px;
       @media (max-width: 1000px) {
         margin: 30px auto 0 auto;
-    }
+      }
     }
     .card2 {
       margin-left: 3%;
       margin-bottom: 30px;
       @media (max-width: 1000px) {
-      margin: 30px auto 0 auto;
-    }
+        margin: 30px auto 0 auto;
+      }
     }
     .card3 {
       margin-left: 10%;
       margin-bottom: 30px;
       @media (max-width: 1000px) {
-      margin: 30px auto 0 auto;
-    }
+        margin: 30px auto 0 auto;
+      }
     }
     .card4 {
       margin-left: 2%;
       margin-bottom: 30px;
       @media (max-width: 1000px) {
-      margin: 30px auto 0 auto;
-    }
+        margin: 30px auto 0 auto;
+      }
     }
   }
 }

@@ -49,7 +49,7 @@
   </div>
 </template> 
 <script>
-import { compareCandidates, compare } from "../../api/compare";
+import {compareCandidates, compare} from "../../api/compare";
 export default {
   name: "Compare",
   components: {},
@@ -119,7 +119,6 @@ export default {
             this.resData = res;
           });
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

@@ -22,7 +22,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
   height: 100%;
   position: relative;
@@ -30,5 +30,8 @@ export default {
 .container {
   height: 100%;
   padding-bottom: 152px;
+  @media (max-width: 1000px) {
+      padding-bottom:100px;
+  }
 }
 </style>

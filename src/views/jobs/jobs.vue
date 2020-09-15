@@ -69,7 +69,7 @@
   </div>
 </template>
 <script>
-import { getJobs } from "../../api/jobs.js";
+import {getJobs} from "../../api/jobs.js";
 // import Header from "../../components/Header";
 export default {
   name: "Jobs",

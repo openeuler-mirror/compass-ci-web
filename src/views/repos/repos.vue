@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import { getAllRepos } from "../../api/repo";
+import {getAllRepos} from "../../api/repo";
 export default {
   name: "Repos",
   data() {
@@ -50,6 +50,7 @@ export default {
       reposList: [],
       pageSizeOptions: [10, 20, 50],
       isSmall: false,
+      currentPage:1
     };
   },
   methods: {
@@ -87,5 +88,9 @@ export default {
 .page-tips {
   font-weight: bold;
   margin-right: 2%;
+}
+.jobs-tips {
+  padding: 2% 0;
+  line-height: 30px;
 }
 </style>
