@@ -1,22 +1,12 @@
 <!-- 首页 -->
 <template>
   <div class="link-card">
-    <el-row :gutter="10">
-      <el-col :xs="8" :sm="8" :md="4" :lg="3" :xl="1">
-        <div class="back-card" @click="goPath">
-          <p class="describe">{{insideName.describe}}</p>
-          <div class="link-car">
-            <p>{{insideName.name}}</p>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
-    <!-- <div class="back-card" @click="goPath">
+    <div class="back-card" @click="goPath">
       <p class="describe">{{insideName.describe}}</p>
       <div class="link-car">
         <p>{{insideName.name}}</p>
       </div>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -51,7 +41,6 @@ export default {
 <style lang='scss' scoped>
 .link-card {
   position: relative;
-  // margin-bottom: 30px;
   margin: 30px;
   @media (max-width: 1000px) {
       margin-right: 0;

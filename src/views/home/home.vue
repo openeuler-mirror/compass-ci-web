@@ -5,7 +5,7 @@
       <link-card :insideName="Jobs" class="card1"></link-card>
       <link-card :insideName="compare" class="card2"></link-card>
       <link-card :insideName="repo" class="card3"></link-card>
-      <link-card :insideName="Testboxes" class="card4"></link-card>
+      <!-- <link-card :insideName="Testboxes" class="card4"></link-card> -->
     </div>
   </div>
 </template>
@@ -49,9 +49,9 @@ export default {
   position: relative;
   width: 100%;
   .link-card-box {
-    width: 70%;
+    width: 1129px;
     height: 100%;
-    padding-left: 20%;
+    margin-left: 20%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
