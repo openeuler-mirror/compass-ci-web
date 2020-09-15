@@ -142,7 +142,10 @@ acronym {
 
 .fade-in {
     opacity: 0;
-    transition: .8s all ease-out;
+    /* transition: .8s all ease-out; */
+    transition-property: all;
+    transition-duration: .8s;
+    transition-timing-function: ease-out;
     transform: scale(.8);
 }
 

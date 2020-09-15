@@ -1,6 +1,6 @@
 /**
  * @file header footer文字配置入口
- * */ 
+ * */
 module.exports = {
     HEAD: {
         SMALLTITLE: 'Crystal CI',

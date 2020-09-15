@@ -1,6 +1,6 @@
 /**
  * @file compare接口文档入口
- * */ 
+ * */
 import {service} from '../utils/axios.utils';
 export function compareCandidates(data) {
     return service({

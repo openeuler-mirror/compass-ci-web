@@ -1,6 +1,6 @@
 /**
  * @file axios拦截配置
- * */ 
+ * */
 import axios from 'axios';
 import {Message, Loading} from 'element-ui';
 const BASEURL = 'http://124.90.34.227:11320'; // 默认路径，这里也可以使用env来判断环境
