@@ -20,11 +20,11 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  height: 100%;
+  min-height: 100%;
   position: relative;
 }
 .container {
-  height: 100%;
+  min-height: calc(100% - 100px); 
   padding-bottom: 152px;
   @media screen and (max-width: 1000px) {
       padding-bottom:100px;

@@ -4,7 +4,32 @@
     <div class="content">
       <h1 class="title">Jobs</h1>
       <p class="summary">summary</p>
-      <el-row :gutter="10">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="reports per page" class="select-pages">
+          <el-select
+            v-model="listQuery.page_size"
+            placeholder="请选择"
+            size="medium"
+            class="select-page"
+            @change="getJobs"
+          >
+            <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item class="search">
+          <el-input
+            v-model="listQuery.upstream_repo"
+            placeholder="Filter the results"
+            size="medium"
+            @keydown.enter.native="getJobs"
+            clearable
+            @clear="getJobs"
+          >
+            <el-button slot="append" icon="el-icon-search" @click="getJobs"></el-button>
+          </el-input>
+        </el-form-item>
+      </el-form>
+      <!-- <el-row :gutter="10">
         <el-col :xs="20" :sm="15" :md="15" :lg="8" :xl="3" class="jobs-tips">
           <span class="page-tips">reports per page</span>
           <el-select
@@ -28,13 +53,12 @@
             <el-button slot="append" icon="el-icon-search" @click="getJobs"></el-button>
           </el-input>
         </el-col>
-      </el-row>
+      </el-row>-->
       <el-table :data="tableData" stripe class="jobs-data">
         <el-table-column
           :label="item"
           :key="index"
           v-for="(item,index) in tableHead"
-          :show-overflow-tooltip="true"
         >
           <template slot-scope="scope">
             <span
@@ -69,11 +93,10 @@
   </div>
 </template>
 <script>
-import {getJobs} from "../../api/jobs.js";
+import { getJobs } from "../../api/jobs.js";
 export default {
   name: "Jobs",
-  components: {
-  },
+  components: {},
   data() {
     return {
       // 表头假数据
@@ -137,7 +160,7 @@ export default {
   },
 };
 </script>
-<style>
+<style lang='scss' scoped>
 .page-tips {
   font-weight: bold;
   margin-right: 2%;
@@ -151,6 +174,17 @@ export default {
 }
 .pagination {
   width: 100%;
-  /* margin: 2% 0; */
+}
+.search {
+  margin-left: 92px;
+  @media screen and (max-width: 1000px) {
+      margin-left:0;
+  }
+}
+.select-page {
+  width: 113px;
+}
+.el-form-item__label {
+  font-weight: bold;
 }
 </style>

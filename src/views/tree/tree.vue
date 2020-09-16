@@ -43,7 +43,6 @@
           :label="item"
           :key="index"
           v-for="(item,index) in tableHead"
-          :show-overflow-tooltip="true"
         >
           <template slot-scope="scope" >
               <span class="goUrl" @click="goTestBox('https://gitee.com/wu_fengguang/lab-z9/tree/master/hosts/'+scope.row[item])" v-if="item ==='testbox'">{{scope.row[item]}}</span>
