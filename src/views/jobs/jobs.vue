@@ -1,10 +1,9 @@
 <template>
   <div id="jobs">
-    <!-- <Header></Header> -->
     <div class="content">
       <h1 class="title">Jobs</h1>
       <p class="summary">summary</p>
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="reports per page" class="select-pages">
           <el-select
             v-model="listQuery.page_size"
@@ -29,54 +28,49 @@
           </el-input>
         </el-form-item>
       </el-form>
-      <!-- <el-row :gutter="10">
-        <el-col :xs="20" :sm="15" :md="15" :lg="8" :xl="3" class="jobs-tips">
-          <span class="page-tips">reports per page</span>
-          <el-select
-            v-model="listQuery.page_size"
-            placeholder="请选择"
-            size="medium"
-            @change="getJobs"
-          >
-            <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
-        </el-col>
-        <el-col :xs="16" :sm="8" :md="8" :lg="6" :xl="3" class="jobs-tips">
-          <el-input
-            v-model="listQuery.upstream_repo"
-            placeholder="Filter the results"
-            size="medium"
-            @keydown.enter.native="getJobs"
-            clearable
-            @clear="getJobs"
-          >
-            <el-button slot="append" icon="el-icon-search" @click="getJobs"></el-button>
-          </el-input>
-        </el-col>
-      </el-row>-->
       <el-table :data="tableData" stripe class="jobs-data">
-        <el-table-column
-          :label="item"
-          :key="index"
-          v-for="(item,index) in tableHead"
-        >
+        <el-table-column :label="item" :key="index" v-for="(item,index) in tableHead">
           <template slot-scope="scope">
-            <span
-              class="goUrl"
-              @click="goTestBox('https://gitee.com/wu_fengguang/lab-z9/tree/master/hosts/'+scope.row[item])"
-              v-if="item ==='testbox'"
-            >{{scope.row[item]}}</span>
-            <span
-              class="goUrl"
-              @click="goResult('http://124.90.34.227:11300/result/'+scope.row.suite +'/'+ scope.row.id)"
-              v-else-if="item ==='job_state'"
-            >{{scope.row[item]}}</span>
-            <span
-              class="goUrl"
-              @click="goTree(scope.row[item])"
-              v-else-if="item =='upstream_repo'"
-            >{{scope.row[item]}}</span>
-            <span v-else>{{scope.row[item]}}</span>
+            <el-tooltip
+              class="item"
+              effect="light"
+              :content="String(scope.row[item])"
+              placement="top-start"
+              :disabled="toolDisabled"
+            >
+              <div slot="content"  v-if="item == 'error_ids'">
+                <template v-for=" (ids,idsIndex) in scope.row[item]">
+                  <p :key="idsIndex">
+                    {{ids+','}}
+                  </p>
+                </template>
+              </div>
+              <div slot="content"  v-else>{{scope.row[item]}}</div>
+              <span
+                class="goUrl wrap"
+                @click="goTestBox(testBoxUrl+scope.row[item])"
+                v-if="item ==='testbox'"
+                @mouseover="showtip(item)"
+              >{{scope.row[item]}}</span>
+              <span
+                class="goUrl wrap"
+                @click="goResult(resultUrl+scope.row.suite +'/'+ scope.row.id)"
+                v-else-if="item ==='job_state'"
+                @mouseover="showtip(item)"
+              >{{scope.row[item]}}</span>
+              <span
+                class="goUrl wrap"
+                @click="goTree(scope.row[item])"
+                v-else-if="item =='upstream_repo'"
+                @mouseover="showtip(item)"
+              >{{scope.row[item]}}</span>
+              <span class="wrap" v-else-if="item =='error_ids'" @mouseover="showtip(item)">
+                <template v-for="item in scope.row[item]">
+                  <span :key="item">{{item}}</span>
+                </template>
+              </span>
+              <span class="wrap" v-else @mouseover="showtip(item)">{{scope.row[item]}}</span>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -94,30 +88,46 @@
 </template>
 <script>
 import { getJobs } from "../../api/jobs.js";
+import {BASEURLRESULT, BASEURLTESTBOX} from "../../utils/baseUrl.js";
 export default {
   name: "Jobs",
   components: {},
   data() {
     return {
-      // 表头假数据
       tableHead: [],
-      // 表格数据
       tableData: [],
       state: "",
       tableHeader: {},
       currentPage: 1,
-      // 请求参数
       listQuery: {
         upstream_repo: null,
         page_size: 10,
         page_num: 1,
       },
-      pageSizeOptions: [10, 20, 50],
+      pageSizeOptions: [10, 20, 30],
       jobsQuery: {},
       isSmall: false,
+      toolDisabled: false,
+      resultUrl: "",
+      testBoxUrl: "",
     };
   },
   methods: {
+    showtip(item) {
+      if (
+        item == "testbox" ||
+        item == "error_ids" ||
+        item == "upstream_repo" ||
+        item == "upstream_commit" ||
+        item == "start_time" ||
+        item == "id" ||
+        item == "error_ids"
+      ) {
+        this.toolDisabled = false;
+      } else {
+        this.toolDisabled = true;
+      }
+    },
     goTree(item) {
       this.$router.push({
         path: "/tree",
@@ -156,35 +166,29 @@ export default {
     },
   },
   mounted() {
+    this.testBoxUrl = BASEURLTESTBOX;
+    this.resultUrl = BASEURLRESULT;
     this.getJobs();
   },
 };
 </script>
 <style lang='scss' scoped>
-.page-tips {
-  font-weight: bold;
-  margin-right: 2%;
-}
-.jobs-tips {
-  padding: 2% 0;
-  line-height: 30px;
-}
 .jobs-data {
-  width: 100%;
-}
-.pagination {
   width: 100%;
 }
 .search {
   margin-left: 92px;
   @media screen and (max-width: 1000px) {
-      margin-left:0;
+    margin-left: 0;
   }
 }
 .select-page {
   width: 113px;
 }
-.el-form-item__label {
+/deep/.el-form-item__label {
   font-weight: bold;
+}
+.ids-num {
+  color: #002fa7;
 }
 </style>

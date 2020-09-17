@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header class="main-header"></Header>
     <router-view class="container" />
-    <Footer></Footer>
+    <Footer class="main-footer"></Footer>
   </div>
 </template>
 
@@ -20,12 +20,12 @@ export default {
 
 <style lang="scss" scoped>
 #app {
-  min-height: 100%;
+  height: 100%;
   position: relative;
 }
 .container {
-  min-height: calc(100% - 100px); 
   padding-bottom: 152px;
+  min-height: calc(100vh - 242px);
   @media screen and (max-width: 1000px) {
       padding-bottom:100px;
   }

@@ -24,3 +24,13 @@
     color: #002FA7;
     cursor: pointer;
 }
+
+.pagination {
+    margin-top: 30px;
+    width: 100%;
+}
+.wrap {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+}

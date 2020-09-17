@@ -11,7 +11,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import linkCard from "@/components/LinkCard";
 import homeHeader from "@/components/homeHeader";
 export default {
@@ -32,7 +31,7 @@ export default {
       },
       repo: {
         name: "Git repo",
-        describe: "列举当前所有已经融入crystal-ci",
+        describe: "列举当前所有已经融入crystal-ci的开源软件",
       },
       Testboxes: {
         name: "Testboxes",

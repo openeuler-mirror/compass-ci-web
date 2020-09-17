@@ -1,4 +1,3 @@
-<!-- 底部 -->
 <template>
     <footer id="footer">
         <div class="footer-content">
@@ -54,6 +53,7 @@ export default {
                 font-weight: 400;
                 color: #FFFFFF;
                 line-height: 56px;
+                width: 272px;
             }
             .left-content{
                 font-size: 14px;
@@ -64,6 +64,7 @@ export default {
             }
         }
         .content-right{
+            width: 342px;
             margin-left: 400px;
             margin-top: 24px;
             .right-word{

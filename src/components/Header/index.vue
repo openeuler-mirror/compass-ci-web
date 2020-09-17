@@ -1,4 +1,3 @@
-<!-- 头部 -->
 <template>
   <header id="header">
     <div @click="goHome">

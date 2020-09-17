@@ -48,7 +48,7 @@ export default {
       },
       repoData: {},
       reposList: [],
-      pageSizeOptions: [10, 20, 50],
+      pageSizeOptions: [10, 20, 30],
       isSmall: false,
       currentPage:1
     };

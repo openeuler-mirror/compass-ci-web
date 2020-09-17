@@ -1,4 +1,3 @@
-<!-- 头部 -->
 <template>
   <header class="home-header">
     <div class="center-title">
@@ -28,7 +27,7 @@ export default {
   height: 478px;
   position: relative;
   margin-top: -90px;
-  background-size: cover;
+  background-size: auto 100%;
   background-repeat: no-repeat;
   overflow: hidden;
   z-index: -999;
