@@ -50,8 +50,7 @@
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
               <span
-                class="goUrl wrap"
-                @click="goTree(scope.row[item])"
+                class="wrap"
                 v-else-if="item =='upstream_repo'"
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
