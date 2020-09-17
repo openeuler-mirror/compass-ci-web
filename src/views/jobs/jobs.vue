@@ -137,10 +137,10 @@ export default {
       });
     },
     goTestBox(src) {
-      window.location.href = src;
+      window.open(src,"_blank")
     },
     goResult(src) {
-      window.location.href = src;
+      window.open(src,"_blank")
     },
     getJobs() {
       getJobs(this.listQuery).then((res) => {

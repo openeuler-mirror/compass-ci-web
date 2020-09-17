@@ -20,7 +20,7 @@
         <el-table-column prop="git_repo" label="git_repo"></el-table-column>
         <el-table-column label="git_url">
           <template slot-scope="scope">
-            <span class="goUrl" @click="goRepos(scope.row.git_url)">{{scope.row.git_url}}</span>
+            <span  @click="goRepos(scope.row.git_url)" class="goUrl">{{scope.row.git_url}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -66,7 +66,7 @@ export default {
       });
     },
     goRepos(src) {
-      window.location.href = src;
+      window.open(src,"_blank");
     },
     handleCurrentChange(val) {
       this.listQuery.page_num = val;
