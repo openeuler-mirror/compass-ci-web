@@ -24,8 +24,8 @@ export default {
   position: relative;
 }
 .container {
-  padding-bottom: 152px;
-  min-height: calc(100vh - 242px);
+  padding-bottom: 62px;
+  min-height: calc(100vh - 152px);
   @media screen and (max-width: 1000px) {
       padding-bottom:100px;
   }
