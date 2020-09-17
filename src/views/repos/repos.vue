@@ -31,6 +31,7 @@
         :total="repoData.total"
         class="pagination"
         :pager-count="5"
+        :page-size="listQuery.page_size"
         :small="isSmall"
       ></el-pagination>
     </div>
