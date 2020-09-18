@@ -11,8 +11,8 @@
           <el-form-item label="git url">
             <div class="goUrl" @click="goGit(banner.git_url)">{{banner.git_url}}</div>
           </el-form-item>
-          <el-form-item label="branches">
-            <template v-for="item in banner.branch">
+          <el-form-item label="upstream_branch">
+            <template v-for="item in banner.upstream_branch">
               <span :key="item" class="branch">{{item}}</span>
             </template>
           </el-form-item>
@@ -113,7 +113,8 @@ export default {
         item == "upstream_commit" ||
         item == "start_time" ||
         item == "id" ||
-        item == "error_ids"
+        item == "error_ids" ||
+        item == "upstream_branch"
       ) {
         this.toolDisabled = false;
       } else {

@@ -122,7 +122,8 @@ export default {
         item == "upstream_commit" ||
         item == "start_time" ||
         item == "id" ||
-        item == "error_ids"
+        item == "error_ids" ||
+        item == "upstream_branch"
       ) {
         this.toolDisabled = false;
       } else {

@@ -17,9 +17,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="OS" prop="OS"  label-width="85px">
-          <el-select v-model="compareData.osStr" filterable placeholder="请选择" size="medium">
+          <!-- <el-select v-model="compareData.osStr" filterable placeholder="请选择" size="medium">
             <el-option v-for="item in OSData" :key="item" :label="item" :value="item"></el-option>
-          </el-select>
+          </el-select> -->
+          <el-cascader
+          @change="changeOs"
+    :options="OSData"
+    :props="{ checkStrictly: true }"
+    clearable></el-cascader>
         </el-form-item>
         <el-form-item label="os_arch" prop="os_arch" label-width="85px">
           <el-select v-model="compareData.os_arch" filterable placeholder="请选择" size="medium">
@@ -64,6 +69,8 @@ export default {
       compareData: {
         suite: null,
         osStr: null,
+        os: null,
+        os_version: null,
         os_arch: null,
         tbox_group: null,
         dimension: null,
@@ -84,10 +91,15 @@ export default {
       OSData: [],
       osArchData: [],
       tboxGroupdata: [],
+      dimensionData: [],
       resData: "",
     };
   },
   methods: {
+      changeOs(val) {
+          this.compareData.os = val[0];
+          this.compareData.os_version = val[1]
+      },
     isDimesion() {
       if (this.compareData.dimension) {
         this.flag = false;
@@ -105,16 +117,16 @@ export default {
     compare() {
       this.$refs["ruleForm"].validate((valid) => {
         if (valid) {
-          let subQuery = {};
-          if (this.compareData.osStr) {
-            subQuery.os = this.compareData.osStr.split(" ")[0];
-            subQuery.os_version = this.compareData.osStr.split(" ")[1];
-          }
-          subQuery.suite = this.compareData.suite;
-          subQuery.os_arch = this.compareData.os_arch;
-          subQuery.tbox_group = this.compareData.tbox_group;
-          subQuery.dimension = this.compareData.dimension;
-          compare(subQuery).then((res) => {
+        //   let subQuery = {};
+        //   if (this.compareData.osStr) {
+        //     subQuery.os = this.compareData.osStr.split(" ")[0];
+        //     subQuery.os_version = this.compareData.osStr.split(" ")[1];
+        //   }
+        //   subQuery.suite = this.compareData.suite;
+        //   subQuery.os_arch = this.compareData.os_arch;
+        //   subQuery.tbox_group = this.compareData.tbox_group;
+        //   subQuery.dimension = this.compareData.dimension;
+          compare(this.compareData).then((res) => {
             this.resData = res;
           });
         } else {

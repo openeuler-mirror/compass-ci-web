@@ -10,7 +10,8 @@ module.exports = {
     FOOOTER: {
         LEFTTITLE: 'Join Crystal CI',
         LEFTCONTENT: '让社区开发更简单',
-        WORDLEFT: 'Enter your email address..',
-        WORDRIGHT: 'Subscribe'
+        WORDLEFT: '隐私政策',
+        WORDRIGHT: '法律声明',
+        COPYRIGHT: '版权所有 © 2020 openEuler 保留一切权利'
     }
 };
