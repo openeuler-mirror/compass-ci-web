@@ -16,15 +16,13 @@
             <el-option v-for="item in suiteData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="OS" prop="OS"  label-width="85px">
-          <!-- <el-select v-model="compareData.osStr" filterable placeholder="请选择" size="medium">
-            <el-option v-for="item in OSData" :key="item" :label="item" :value="item"></el-option>
-          </el-select> -->
+        <el-form-item label="OS" prop="OS" label-width="85px">
           <el-cascader
-          @change="changeOs"
-    :options="OSData"
-    :props="{ checkStrictly: true }"
-    clearable></el-cascader>
+            @change="changeOs"
+            :options="OSData"
+            :props="{ checkStrictly: true }"
+            clearable
+          ></el-cascader>
         </el-form-item>
         <el-form-item label="os_arch" prop="os_arch" label-width="85px">
           <el-select v-model="compareData.os_arch" filterable placeholder="请选择" size="medium">
@@ -54,7 +52,7 @@
   </div>
 </template> 
 <script>
-import {compareCandidates, compare} from "../../api/compare";
+import { compareCandidates, compare } from "../../api/compare";
 export default {
   name: "Compare",
   components: {},
@@ -96,10 +94,10 @@ export default {
     };
   },
   methods: {
-      changeOs(val) {
-          this.compareData.os = val[0];
-          this.compareData.os_version = val[1]
-      },
+    changeOs(val) {
+      this.compareData.os = val[0];
+      this.compareData.os_version = val[1];
+    },
     isDimesion() {
       if (this.compareData.dimension) {
         this.flag = false;
@@ -117,15 +115,15 @@ export default {
     compare() {
       this.$refs["ruleForm"].validate((valid) => {
         if (valid) {
-        //   let subQuery = {};
-        //   if (this.compareData.osStr) {
-        //     subQuery.os = this.compareData.osStr.split(" ")[0];
-        //     subQuery.os_version = this.compareData.osStr.split(" ")[1];
-        //   }
-        //   subQuery.suite = this.compareData.suite;
-        //   subQuery.os_arch = this.compareData.os_arch;
-        //   subQuery.tbox_group = this.compareData.tbox_group;
-        //   subQuery.dimension = this.compareData.dimension;
+          //   let subQuery = {};
+          //   if (this.compareData.osStr) {
+          //     subQuery.os = this.compareData.osStr.split(" ")[0];
+          //     subQuery.os_version = this.compareData.osStr.split(" ")[1];
+          //   }
+          //   subQuery.suite = this.compareData.suite;
+          //   subQuery.os_arch = this.compareData.os_arch;
+          //   subQuery.tbox_group = this.compareData.tbox_group;
+          //   subQuery.dimension = this.compareData.dimension;
           compare(this.compareData).then((res) => {
             this.resData = res;
           });
@@ -161,12 +159,12 @@ export default {
   color: #c0c4cc;
   cursor: not-allowed;
   background-image: none;
-  background-color: rgba(0, 65, 189, .8);
+  background-color: rgba(0, 65, 189, 0.8);
   border-color: #ebeef5;
 }
-/deep/.el-form-item__label { 
-    @media screen and (max-width: 1000px) {
-        text-align: left;
-    }
+/deep/.el-form-item__label {
+  @media screen and (max-width: 1000px) {
+    text-align: left;
+  }
 }
 </style>
