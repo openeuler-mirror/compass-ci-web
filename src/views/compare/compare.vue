@@ -74,11 +74,6 @@ export default {
         dimension: null,
       },
       rules: {
-        suite: {
-          required: true,
-          message: "请选择suite",
-          trigger: "change",
-        },
         dimension: {
           required: true,
           message: "请选择dimension",
@@ -115,15 +110,6 @@ export default {
     compare() {
       this.$refs["ruleForm"].validate((valid) => {
         if (valid) {
-          //   let subQuery = {};
-          //   if (this.compareData.osStr) {
-          //     subQuery.os = this.compareData.osStr.split(" ")[0];
-          //     subQuery.os_version = this.compareData.osStr.split(" ")[1];
-          //   }
-          //   subQuery.suite = this.compareData.suite;
-          //   subQuery.os_arch = this.compareData.os_arch;
-          //   subQuery.tbox_group = this.compareData.tbox_group;
-          //   subQuery.dimension = this.compareData.dimension;
           compare(this.compareData).then((res) => {
             this.resData = res;
           });
