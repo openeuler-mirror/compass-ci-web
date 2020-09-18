@@ -1,5 +1,6 @@
 <template>
   <div id="tree">
+    <Header class="main-header"></Header>
     <div class="content">
       <h1 class="title">Tree</h1>
       <p class="summary">summary</p>
@@ -29,14 +30,12 @@
               placement="top-start"
               :disabled="toolDisabled"
             >
-              <div slot="content"  v-if="item == 'error_ids'">
+              <div slot="content" v-if="item == 'error_ids'">
                 <template v-for=" (ids,idsIndex) in scope.row[item]">
-                  <p :key="idsIndex">
-                    {{ids+','}}
-                  </p>
+                  <p :key="idsIndex">{{ids+','}}</p>
                 </template>
               </div>
-              <div slot="content"  v-else>{{scope.row[item]}}</div>
+              <div slot="content" v-else>{{scope.row[item]}}</div>
               <span
                 class="goUrl wrap"
                 @click="goTestBox(testBoxUrl+scope.row[item])"
@@ -81,10 +80,13 @@
 </template>
 <script>
 import { getJobs } from "../../api/jobs.js";
-import {BASEURLRESULT, BASEURLTESTBOX} from "../../utils/baseUrl.js";
+import { BASEURLRESULT, BASEURLTESTBOX } from "../../utils/baseUrl.js";
+import Header from "@/components/Header";
 export default {
   name: "Tree",
-  components: {},
+  components: {
+    Header,
+  },
   data() {
     return {
       pageSizeOptions: [10, 20, 30],
@@ -130,13 +132,13 @@ export default {
       });
     },
     goTestBox(src) {
-      window.open(src,"_blank")
+      window.open(src, "_blank");
     },
     goResult(src) {
-      window.open(src,"_blank")
+      window.open(src, "_blank");
     },
     goGit(src) {
-     window.open(src,"_blank")
+      window.open(src, "_blank");
     },
     getJobs() {
       getJobs(this.listQuery).then((res) => {

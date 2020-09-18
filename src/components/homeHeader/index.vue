@@ -1,5 +1,6 @@
 <template>
   <header class="home-header">
+    <p class="small-title">{{headTitleObj.HEAD?headTitleObj.HEAD.SMALLTITLE:''}}</p>
     <div class="center-title">
       <p class="tile">{{headTitleObj.HEAD?headTitleObj.HEAD.CENTERTITLE:''}}</p>
       <p class="home-content">{{headTitleObj.HEAD?headTitleObj.HEAD.CENTERCONTENT:''}}</p>
@@ -26,11 +27,9 @@ export default {
   width: 100%;
   height: 478px;
   position: relative;
-  margin-top: -90px;
-  background-size: auto 100%;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow: hidden;
-  z-index: -999;
   .center-title {
     margin: 150px 0 0 25%;
     text-align: left;
@@ -45,7 +44,7 @@ export default {
       line-height: 56px;
     }
     .home-content {
-      margin-top: 14px;
+      margin: 14px 0;
       font-size: 16px;
       font-family: FZLTXIHJW--GB1-0, FZLTXIHJW--GB1;
       font-weight: 400;
@@ -53,5 +52,15 @@ export default {
       line-height: 28px;
     }
   }
+}
+.small-title {
+  font-size: 20px;
+  width: 30%;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 28px;
+  margin: 31px 0 0 10%;
+  cursor: pointer;
 }
 </style>

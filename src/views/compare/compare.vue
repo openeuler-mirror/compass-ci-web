@@ -1,5 +1,6 @@
 <template>
   <div id="compare">
+    <Header class="main-header"></Header>
     <div class="content">
       <h1 class="title">Compare</h1>
       <p class="summary">summary</p>
@@ -53,9 +54,12 @@
 </template> 
 <script>
 import { compareCandidates, compare } from "../../api/compare";
+import Header from "@/components/Header";
 export default {
   name: "Compare",
-  components: {},
+  components: {
+    Header,
+  },
   data() {
     return {
       flag: true,

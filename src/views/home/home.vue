@@ -46,19 +46,17 @@ export default {
 <style lang="scss" scoped>
 .home {
   position: relative;
-  width: 1920px;
-  margin: 0 auto;
+  width: 100%;
   .link-card-box {
     width: 1129px;
     height: 100%;
-    margin-left: 20%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: -5%;
+    margin: -5% 25% 0 25%;
     @media screen and (max-width: 1000px) {
-        width: 100%;
-        margin-left: 0;
+      width: 100%;
+      margin-left: 0;
     }
     .card1 {
       margin-bottom: 30px;
@@ -69,7 +67,7 @@ export default {
     .card2 {
       margin-left: 3%;
       margin-bottom: 30px;
-     @media screen and (max-width: 1000px) {
+      @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }

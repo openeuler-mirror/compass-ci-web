@@ -1,5 +1,6 @@
 <template>
   <div id="repos">
+    <Header class="main-header"></Header>
     <div class="content">
       <h1 class="title">Repos</h1>
       <p class="summary">summary</p>
@@ -20,7 +21,7 @@
         <el-table-column prop="git_repo" label="git_repo"></el-table-column>
         <el-table-column label="git_url">
           <template slot-scope="scope">
-            <span  @click="goRepos(scope.row.git_url)" class="goUrl">{{scope.row.git_url}}</span>
+            <span @click="goRepos(scope.row.git_url)" class="goUrl">{{scope.row.git_url}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -38,9 +39,13 @@
   </div>
 </template>
 <script>
-import {getAllRepos} from "../../api/repo";
+import { getAllRepos } from "../../api/repo";
+import Header from "@/components/Header";
 export default {
   name: "Repos",
+  components: {
+    Header,
+  },
   data() {
     return {
       listQuery: {
@@ -51,7 +56,7 @@ export default {
       reposList: [],
       pageSizeOptions: [10, 20, 30],
       isSmall: false,
-      currentPage:1
+      currentPage: 1,
     };
   },
   methods: {
@@ -67,7 +72,7 @@ export default {
       });
     },
     goRepos(src) {
-      window.open(src,"_blank");
+      window.open(src, "_blank");
     },
     handleCurrentChange(val) {
       this.listQuery.page_num = val;
