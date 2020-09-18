@@ -46,7 +46,8 @@ export default {
 <style lang="scss" scoped>
 .home {
   position: relative;
-  width: 100%;
+  width: 1920px;
+  margin: 0 auto;
   .link-card-box {
     width: 1129px;
     height: 100%;
