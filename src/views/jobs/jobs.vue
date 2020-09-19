@@ -47,13 +47,13 @@
               <div slot="content" v-else>{{scope.row[item]}}</div>
               <span
                 class="goUrl wrap"
-                @click="goTestBox(testBoxUrl+scope.row[item])"
+                @click="goBlank(testBoxUrl+scope.row[item])"
                 v-if="item ==='testbox'"
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
               <span
                 class="goUrl wrap"
-                @click="goResult(resultUrl+scope.row.suite +'/'+ scope.row.id)"
+                @click="goBlank(resultUrl+scope.row.suite +'/'+ scope.row.id)"
                 v-else-if="item ==='job_state'"
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
@@ -140,10 +140,7 @@ export default {
         },
       });
     },
-    goTestBox(src) {
-      window.open(src, "_blank");
-    },
-    goResult(src) {
+    goBlank(src) {
       window.open(src, "_blank");
     },
     getJobs() {

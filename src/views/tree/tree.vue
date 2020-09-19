@@ -10,7 +10,7 @@
             <div>{{banner.repo?banner.repo:''}}</div>
           </el-form-item>
           <el-form-item label="git url">
-            <div class="goUrl" @click="goGit(banner.git_url)">{{banner.git_url}}</div>
+            <div class="goUrl" @click="goBlank(banner.git_url)">{{banner.git_url}}</div>
           </el-form-item>
           <el-form-item label="upstream_branch">
             <template v-for="item in banner.upstream_branch">
@@ -38,13 +38,13 @@
               <div slot="content" v-else>{{scope.row[item]}}</div>
               <span
                 class="goUrl wrap"
-                @click="goTestBox(testBoxUrl+scope.row[item])"
+                @click="goBlank(testBoxUrl+scope.row[item])"
                 v-if="item ==='testbox'"
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
               <span
                 class="goUrl wrap"
-                @click="goResult(resultUrl+scope.row.suite +'/'+ scope.row.id)"
+                @click="goBlank(resultUrl+scope.row.suite +'/'+ scope.row.id)"
                 v-else-if="item ==='job_state'"
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
@@ -89,7 +89,6 @@ export default {
   },
   data() {
     return {
-      pageSizeOptions: [10, 20, 30],
       tableData: [],
       tableHead: [],
       currentPage: 1,
@@ -131,13 +130,7 @@ export default {
         },
       });
     },
-    goTestBox(src) {
-      window.open(src, "_blank");
-    },
-    goResult(src) {
-      window.open(src, "_blank");
-    },
-    goGit(src) {
+    goBlank(src) {
       window.open(src, "_blank");
     },
     getJobs() {

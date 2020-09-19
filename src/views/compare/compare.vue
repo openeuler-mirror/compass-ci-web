@@ -13,7 +13,7 @@
         class="demo-form-inline"
       >
         <el-form-item label="suite" prop="suite" label-width="85px" class="com-tips">
-          <el-select v-model="compareData.suite" filterable placeholder="请选择" size="medium">
+          <el-select v-model="compareData.suite" filterable placeholder="请选择" size="medium" clearable>
             <el-option v-for="item in suiteData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -26,12 +26,12 @@
           ></el-cascader>
         </el-form-item>
         <el-form-item label="os_arch" prop="os_arch" label-width="85px">
-          <el-select v-model="compareData.os_arch" filterable placeholder="请选择" size="medium">
+          <el-select v-model="compareData.os_arch" filterable placeholder="请选择" size="medium" clearable>
             <el-option v-for="item in osArchData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="tbox_group" prop="tbox_group" label-width="85px">
-          <el-select v-model="compareData.tbox_group" filterable placeholder="请选择" size="medium">
+          <el-select v-model="compareData.tbox_group" filterable placeholder="请选择" size="medium" clearable>
             <el-option v-for="item in tboxGroupdata" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -42,6 +42,8 @@
             placeholder="请选择"
             size="medium"
             @change="isDimesion"
+            clearable
+            @clear="changeFlag"
           >
             <el-option v-for="item in dimensionData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
@@ -101,6 +103,9 @@ export default {
       if (this.compareData.dimension) {
         this.flag = false;
       }
+    },
+    changeFlag() {
+        this.flag = true
     },
     compareCandidates() {
       compareCandidates().then((res) => {
