@@ -12,6 +12,9 @@ export default {
     Footer,
   },
   mounted() {},
+  updated() {
+   window.scroll(0, 0);
+},
 };
 </script>
 
