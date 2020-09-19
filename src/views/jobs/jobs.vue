@@ -21,11 +21,11 @@
             v-model="listQuery.upstream_repo"
             placeholder="search upstream_repo"
             size="medium"
-            @keydown.enter.native="getJobs"
+            @keydown.enter.native="handSearch"
             clearable
             @clear="getJobs"
           >
-            <el-button slot="append" icon="el-icon-search" @click="getJobs"></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="handSearch"></el-button>
           </el-input>
         </el-form-item>
       </el-form>
@@ -144,6 +144,13 @@ export default {
     goBlank(src) {
       window.open(src, "_blank");
     },
+    handSearch() {
+      if (this.listQuery.upstream_repo) {
+        this.getJobs();
+      } else {
+        this.$message("请输入要筛选的upstream_repo");
+      }
+    },
     getJobs() {
       getJobs(this.listQuery).then((res) => {
         this.jobsQuery = res;
@@ -194,6 +201,6 @@ export default {
   color: #002fa7;
 }
 /deep/.el-table th > .cell {
-    font-weight: bold;
-  }
+  font-weight: bold;
+}
 </style>

@@ -129,7 +129,7 @@ export default {
       if (boll) {
         return boll;
       } else {
-        this.$message.warning(
+        this.$message(
           "请选择 suite OS OS_ arch tbox_group 其中至少一个选项"
         );
       }
