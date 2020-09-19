@@ -30,6 +30,7 @@
         </el-form-item>
       </el-form>
       <el-table :data="tableData" stripe class="jobs-data">
+        <el-table-column label="序号" type="index" width="50"></el-table-column>
         <el-table-column :label="item" :key="index" v-for="(item,index) in tableHead">
           <template slot-scope="scope">
             <el-tooltip
