@@ -11,7 +11,7 @@
             placeholder="请选择"
             size="medium"
             class="select-page"
-            @change="getJobs"
+            @change="getAllRepos"
           >
             <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
           </el-select>
