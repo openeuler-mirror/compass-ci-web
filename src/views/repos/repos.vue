@@ -4,19 +4,19 @@
     <div class="content">
       <h1 class="title">Repos</h1>
       <p class="summary">summary</p>
-      <el-row :gutter="10">
-        <el-col :xs="40" :sm="10" :md="10" :lg="8" :xl="3" class="jobs-tips">
-          <span class="page-tips">reports per page</span>
+      <el-form :inline="true" class="demo-form-inline">
+        <el-form-item label="reports per page" class="select-pages">
           <el-select
             v-model="listQuery.page_size"
             placeholder="请选择"
             size="medium"
-            @change="getAllRepos"
+            class="select-page"
+            @change="getJobs"
           >
             <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
           </el-select>
-        </el-col>
-      </el-row>
+        </el-form-item>
+      </el-form>
       <el-table :data="reposList" stripe class="repos-data">
         <el-table-column prop="git_repo" label="git_repo"></el-table-column>
         <el-table-column label="git_url">
@@ -90,7 +90,7 @@ export default {
   },
 };
 </script>
-<style>
+<style lang='scss' scoped>
 .page-tips {
   font-weight: bold;
   margin-right: 2%;
@@ -98,5 +98,11 @@ export default {
 .jobs-tips {
   padding: 2% 0;
   line-height: 30px;
+}
+.select-page {
+  width: 113px;
+}
+/deep/.el-form-item__label {
+  font-weight: bold;
 }
 </style>
