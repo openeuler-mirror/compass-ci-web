@@ -111,12 +111,32 @@ export default {
         this.dimensionData = res.dimension;
       });
     },
+    handleValid() {
+      let arrCom = [];
+      for (let item in this.compareData) {
+        if (item !== "dimension") {
+          arrCom.push(this.compareData[item]);
+        }
+      }
+      let boll = arrCom.some((item) => {
+        return item != null;
+      });
+      if (boll) {
+        return boll;
+      } else {
+        this.$message.warning(
+          "请选择 suite OS OS_ arch tbox_group 其中至少一个选项"
+        );
+      }
+    },
     compare() {
       this.$refs["ruleForm"].validate((valid) => {
         if (valid) {
-          compare(this.compareData).then((res) => {
-            this.resData = res;
-          });
+          if (this.handleValid()) {
+            compare(this.compareData).then((res) => {
+              this.resData = res;
+            });
+          }
         } else {
           return false;
         }
