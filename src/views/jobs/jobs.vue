@@ -19,7 +19,7 @@
         <el-form-item class="search">
           <el-input
             v-model="listQuery.upstream_repo"
-            placeholder="Filter the results"
+            placeholder="search upstream_repo"
             size="medium"
             @keydown.enter.native="getJobs"
             clearable
