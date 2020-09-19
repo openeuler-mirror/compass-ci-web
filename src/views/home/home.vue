@@ -23,15 +23,15 @@ export default {
     return {
       Jobs: {
         name: "Jobs",
-        describe: "列举开源软件测试的状态最新信息",
+        describe: "开源软件测试查询",
       },
       compare: {
         name: "Compare results",
-        describe: "查阅开源软件历史测试结果信息",
+        describe: "开源软件测试历史",
       },
       repo: {
         name: "Git repo",
-        describe: "列举当前所有已经融入crystal-ci的开源软件",
+        describe: "已支持开源软件",
       },
       Testboxes: {
         name: "Testboxes",
@@ -54,9 +54,11 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     margin: -5% 25% 0 25%;
+    font-size: 18px;
     @media screen and (max-width: 1000px) {
       width: 100%;
       margin-left: 0;
+      font-size: 16px;
     }
     .card1 {
       margin-bottom: 30px;

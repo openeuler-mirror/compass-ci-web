@@ -30,11 +30,14 @@ export default {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   overflow: hidden;
+  @media screen and (max-width: 1000px) {
+      background-size: auto 100%;
+  }
   .center-title {
     margin: 150px 0 0 25%;
     text-align: left;
     @media screen and (max-width: 1000px) {
-      margin: 82px 10%;
+      margin: 30px 10%;
     }
     .tile {
       font-size: 40px;

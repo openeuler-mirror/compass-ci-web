@@ -2,7 +2,7 @@
   <footer id="footer">
     <div class="footer-content">
       <div class="content-left">
-        <p class="left-title">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.LEFTTITLE:''}}</p>
+        <p class="left-title" @click="JoinUs">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.LEFTTITLE:''}}</p>
         <p class="left-content">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.LEFTCONTENT:''}}</p>
       </div>
       <div class="content-right">
@@ -29,6 +29,9 @@ export default {
     },
     goPrivacyPolicy() {
         window.open("https://openeuler.org/zh/privacyPolicy.html", "_blank");
+    },
+    JoinUs() {
+        window.open("https://gitee.com/forest_deer/crystal-ci", "_blank")
     }
   },
   mounted() {
@@ -61,6 +64,7 @@ export default {
         color: #ffffff;
         line-height: 56px;
         width: 272px;
+        cursor: pointer;
       }
       .left-content {
         font-size: 14px;
