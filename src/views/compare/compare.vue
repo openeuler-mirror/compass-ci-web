@@ -3,7 +3,7 @@
     <Header class="main-header"></Header>
     <div class="content">
       <h1 class="title">Compare</h1>
-      <p class="summary">summary</p>
+      <p class="summary">让测试分析过程更简单，更高效</p>
       <div class="filters">filters</div>
       <el-form
         :inline="true"

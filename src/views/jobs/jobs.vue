@@ -3,7 +3,7 @@
     <Header class="main-header"></Header>
     <div class="content">
       <h1 class="title">Jobs</h1>
-      <p class="summary">summary</p>
+      <p class="summary">开源软件的测试结果如何，这里告诉你答案</p>
       <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="reports per page" class="select-pages">
           <el-select
@@ -193,4 +193,7 @@ export default {
 .ids-num {
   color: #002fa7;
 }
+/deep/.el-table th > .cell {
+    font-weight: bold;
+  }
 </style>

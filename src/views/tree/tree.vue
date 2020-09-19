@@ -3,7 +3,7 @@
     <Header class="main-header"></Header>
     <div class="content">
       <h1 class="title">Tree</h1>
-      <p class="summary">summary</p>
+      <p class="summary">你的开源软件在这里么，让我们加入进来，一起提升开源软件质量</p>
       <div class="tree-header-tips">
         <el-form label-position="left" class="tree-header-tips">
           <el-form-item label="git repo">
@@ -184,5 +184,8 @@ export default {
   @media screen and (max-width: 1000px) {
     width: 100%;
   }
+}
+/deep/.el-table th > .cell {
+  font-weight: bold;
 }
 </style>

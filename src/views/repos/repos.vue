@@ -106,4 +106,7 @@ export default {
 /deep/.el-form-item__label {
   font-weight: bold;
 }
+/deep/.el-table th > .cell {
+  font-weight: bold;
+}
 </style>
