@@ -11,7 +11,12 @@ VueRouter.prototype.push = function push(location) {
 }
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+    {
+        path: '*',
+        name: 'Error',
+        component: () => import('../components/error/error.vue')
+    },{
         path: '/',
         name: 'Home',
         component: () => import('../views/home/home.vue')
