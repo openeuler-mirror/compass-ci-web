@@ -13,12 +13,20 @@
         class="demo-form-inline"
       >
         <el-form-item label="suite" prop="suite" label-width="85px" class="com-tips">
-          <el-select v-model="compareData.suite" filterable placeholder="请选择" size="medium" clearable>
+          <el-select
+            v-model="compareData.suite"
+            filterable
+            placeholder="请选择"
+            size="medium"
+            clearable
+          >
             <el-option v-for="item in suiteData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="OS" prop="OS" label-width="85px">
           <el-cascader
+            v-model="handlerValue"
+            ref="refHandle"
             @change="changeOs"
             :options="OSData"
             :props="{ checkStrictly: true }"
@@ -26,12 +34,24 @@
           ></el-cascader>
         </el-form-item>
         <el-form-item label="os_arch" prop="os_arch" label-width="85px">
-          <el-select v-model="compareData.os_arch" filterable placeholder="请选择" size="medium" clearable>
+          <el-select
+            v-model="compareData.os_arch"
+            filterable
+            placeholder="请选择"
+            size="medium"
+            clearable
+          >
             <el-option v-for="item in osArchData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="tbox_group" prop="tbox_group" label-width="85px">
-          <el-select v-model="compareData.tbox_group" filterable placeholder="请选择" size="medium" clearable>
+          <el-select
+            v-model="compareData.tbox_group"
+            filterable
+            placeholder="请选择"
+            size="medium"
+            clearable
+          >
             <el-option v-for="item in tboxGroupdata" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
@@ -62,8 +82,16 @@ export default {
   components: {
     Header,
   },
+  watch: {
+    handlerValue() {
+      if (this.$refs.refHandle) {
+        this.$refs.refHandle.dropDownVisible = false; //监听值发生变化就关闭它
+      }
+    },
+  },
   data() {
     return {
+      handlerValue: null,
       flag: true,
       listquery: {
         os: "",
@@ -105,7 +133,7 @@ export default {
       }
     },
     changeFlag() {
-        this.flag = true
+      this.flag = true;
     },
     compareCandidates() {
       compareCandidates().then((res) => {
@@ -129,9 +157,7 @@ export default {
       if (boll) {
         return boll;
       } else {
-        this.$message(
-          "请选择 suite OS OS_ arch tbox_group 其中至少一个选项"
-        );
+        this.$message("请选择 suite OS OS_ arch tbox_group 其中至少一个选项");
       }
     },
     compare() {
