@@ -63,7 +63,6 @@ export default {
         font-weight: 400;
         color: #ffffff;
         line-height: 56px;
-        width: 272px;
         cursor: pointer;
       }
       .left-content {
