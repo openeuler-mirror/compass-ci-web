@@ -19,6 +19,7 @@
             placeholder="请选择"
             size="medium"
             clearable
+            @clear="clearCheck('suite')"
           >
             <el-option v-for="item in suiteData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
@@ -31,6 +32,7 @@
             :options="OSData"
             :props="{ checkStrictly: true }"
             clearable
+            @clear="clearCheck('os')"
           ></el-cascader>
         </el-form-item>
         <el-form-item label="os_arch" prop="os_arch" label-width="85px">
@@ -40,6 +42,7 @@
             placeholder="请选择"
             size="medium"
             clearable
+            @clear="clearCheck('os_arch')"
           >
             <el-option v-for="item in osArchData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
@@ -51,6 +54,7 @@
             placeholder="请选择"
             size="medium"
             clearable
+            @clear="clearCheck('tbox_group')"
           >
             <el-option v-for="item in tboxGroupdata" :key="item" :label="item" :value="item"></el-option>
           </el-select>
@@ -123,6 +127,14 @@ export default {
     };
   },
   methods: {
+    clearCheck(str) {
+      if (str == "os") {
+        this.compareData.os = null;
+        this.os_version = null;
+      } else {
+        this.compareData[str] = null;
+      }
+    },
     changeOs(val) {
       this.compareData.os = val[0];
       this.compareData.os_version = val[1];

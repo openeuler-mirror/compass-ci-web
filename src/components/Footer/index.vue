@@ -2,7 +2,10 @@
   <footer id="footer">
     <div class="footer-content">
       <div class="content-left">
-        <p class="left-title" @click="JoinUs">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.LEFTTITLE:''}}</p>
+        <p
+          class="left-title"
+          @click="JoinUs"
+        >{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.LEFTTITLE:''}}</p>
         <p class="left-content">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.LEFTCONTENT:''}}</p>
       </div>
       <div class="content-right">
@@ -28,11 +31,11 @@ export default {
       window.open("https://openeuler.org/zh/legal.html", "_blank");
     },
     goPrivacyPolicy() {
-        window.open("https://openeuler.org/zh/privacyPolicy.html", "_blank");
+      window.open("https://openeuler.org/zh/privacyPolicy.html", "_blank");
     },
     JoinUs() {
-        // window.open("https://gitee.com/openeuler/crystal-ci", "_blank")
-    }
+      // window.open("https://gitee.com/openeuler/crystal-ci", "_blank")
+    },
   },
   mounted() {
     this.footTitleObj = require("@/lang/common.js");
@@ -122,12 +125,14 @@ export default {
         }
       }
       .content-right {
+        width: 100%;
         margin: 20px 0 0 0;
         .right-word {
           font-size: 13px;
+          text-align: center;
+          width: 100%;
           span {
             &:last-of-type {
-              display: block;
               margin-left: 0;
             }
           }

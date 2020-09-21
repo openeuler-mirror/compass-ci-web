@@ -34,7 +34,7 @@ export default {
       background-size: auto 100%;
   }
   .center-title {
-    margin: 150px 0 0 25%;
+    margin: 150px 0 0 20%;
     text-align: left;
     @media screen and (max-width: 1000px) {
       margin: 30px 10%;
