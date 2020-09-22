@@ -35,7 +35,7 @@ export default {
   overflow: hidden;
   .small-title {
     font-size: 20px;
-    width: 30%;
+    width: 40%;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #ffffff;
