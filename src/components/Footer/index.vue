@@ -34,7 +34,7 @@ export default {
       window.open("https://openeuler.org/zh/privacyPolicy.html", "_blank");
     },
     JoinUs() {
-      // window.open("https://gitee.com/openeuler/crystal-ci", "_blank")
+      window.open("https://gitee.com/openeuler/compass-ci", "_blank")
     },
   },
   mounted() {
