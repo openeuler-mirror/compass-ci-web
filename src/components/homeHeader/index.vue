@@ -1,6 +1,7 @@
 <template>
   <header class="home-header">
-    <p class="small-title">{{headTitleObj.HEAD?headTitleObj.HEAD.SMALLTITLE:''}}</p>
+    <!-- <p class="small-title">{{headTitleObj.HEAD?headTitleObj.HEAD.SMALLTITLE:''}}</p> -->
+    <div class="ci-logo">CI</div>
     <div class="center-title">
       <p class="tile">{{headTitleObj.HEAD?headTitleObj.HEAD.CENTERTITLE:''}}</p>
       <p class="home-content">{{headTitleObj.HEAD?headTitleObj.HEAD.CENTERCONTENT:''}}</p>

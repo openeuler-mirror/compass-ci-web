@@ -55,7 +55,7 @@ export default {
     // flex-direction: row;
     // flex-wrap: wrap;
     // margin: -5% 25% 0 25%;
-     margin: -11% 10% -30px 10%;
+    margin: -5% 10% 0 10%;
     font-size: 18px;
     @media screen and (max-width: 1000px) {
       width: 100%;
@@ -63,21 +63,21 @@ export default {
       font-size: 16px;
     }
     .card1 {
-      margin-bottom: 30px;
+    //   margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card2 {
     //   margin-left: 3%;
-      margin-bottom: 30px;
+    //   margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card3 {
     //   margin-left: 10%;
-      margin-bottom: 30px;
+    //   margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }

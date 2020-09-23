@@ -1,7 +1,8 @@
 <template>
   <header id="header">
-    <div @click="goHome">
-      <p class="small-title">{{headTitleObj.HEAD?headTitleObj.HEAD.SMALLTITLE:''}}</p>
+    <div @click="goHome" class="header-title">
+        <div class="ci-logo">CI</div>
+      <span class="small-title">{{headTitleObj.HEAD?headTitleObj.HEAD.SMALLTITLE:''}}</span>
     </div>
   </header>
 </template>
@@ -25,7 +26,7 @@ export default {
 </script>
 
 <style lang='scss' scpoed>
-#header {
+.header-title {
   background-image: url("./../../../public/img/header.png");
   width: 100%;
   height: 90px;
@@ -33,6 +34,7 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
+  display: flex;
   .small-title {
     font-size: 20px;
     width: 40%;
@@ -40,7 +42,7 @@ export default {
     font-weight: 400;
     color: #ffffff;
     line-height: 28px;
-    margin: 31px 0 0 10%;
+    margin: 31px 0 0 40px;
     cursor: pointer;
   }
 }
