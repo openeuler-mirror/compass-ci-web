@@ -51,6 +51,9 @@ export default {
       margin: 14px 0;
       font-size: 20px;
       width: 1250px;
+      @media screen and (min-width: 1920px) {
+          width:70%
+      }
       font-family: FZLTXIHJW--GB1-0, FZLTXIHJW--GB1;
       font-weight: 400;
       color: #ffffff;

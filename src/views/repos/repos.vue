@@ -3,7 +3,7 @@
     <Header class="main-header"></Header>
     <div class="content">
       <h1 class="title">Repos</h1>
-      <p class="summary">你的开源软件不在这里么</p>
+      <p class="summary">你的开源软件不在这里吗？</p>
       <el-form :inline="true" class="demo-form-inline">
         <el-form-item label="reports per page" class="select-pages">
           <el-select

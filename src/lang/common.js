@@ -5,7 +5,7 @@ module.exports = {
     HEAD: {
         SMALLTITLE: 'Compass CI',
         CENTERTITLE: 'Compass CI',
-        CENTERCONTENT: '作为一个开放式测试服务，集构建&测试系统、登录调测、测试分析比较、辅助于一体，旨在提供社区开发者提供友好的开发体验，与社区开发者一起繁荣开源软件生态及提升开源软件质量。'
+        CENTERCONTENT: '开放式测试服务平台，集构建&测试系统、登录调测、测试分析比较、辅助于一体，旨在提供社区开发者提供友好的开发体验，与社区开发者一起繁荣开源软件生态及提升开源软件质量。'
     },
     FOOOTER: {
         LEFTTITLE: 'Join Compass CI',

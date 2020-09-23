@@ -23,15 +23,15 @@ export default {
     return {
       Jobs: {
         name: "Jobs",
-        describe: "获取开源软件测试任务的最新信息",
+        describe: "测试任务最新信息",
       },
       compare: {
         name: "Compare results",
-        describe: "查阅及比较开源软件历史测试结果",
+        describe: "查询及比较历史测试结果",
       },
       repo: {
         name: "Git repo",
-        describe: "获取被融入compass-ci测试开源软件清单",
+        describe: "已加入的开源软件清单",
       },
       Testboxes: {
         name: "Testboxes",

@@ -5,7 +5,7 @@
 
 .title {
     font-size: 36px;
-    margin: 150px 0 20px;
+    margin: 50px 0 20px;
 }
 
 .summary {
@@ -29,11 +29,13 @@
     margin-top: 30px;
     width: 100%;
 }
+
 .wrap {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .ci-logo {
     margin-left: 10%;
     margin-top: 25px;
@@ -41,11 +43,11 @@
     height: 40px;
     border-radius: 50%;
     border: 2px solid #ffffff;
-    background-color:rgba(0, 0, 0,0) ;
+    background-color: rgba(0, 0, 0, 0);
     color: #ffffff;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-   line-height: 36px;
-   cursor: pointer;
+    line-height: 36px;
+    cursor: pointer;
 }
