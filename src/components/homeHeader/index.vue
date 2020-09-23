@@ -34,7 +34,7 @@ export default {
       background-size: auto 100%;
   }
   .center-title {
-    margin: 150px 0 0 20%;
+    margin: 85px 0 0 10%;
     text-align: left;
     @media screen and (max-width: 1000px) {
       margin: 30px 10%;
@@ -48,7 +48,8 @@ export default {
     }
     .home-content {
       margin: 14px 0;
-      font-size: 16px;
+      font-size: 20px;
+      width: 1250px;
       font-family: FZLTXIHJW--GB1-0, FZLTXIHJW--GB1;
       font-weight: 400;
       color: #ffffff;

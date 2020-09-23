@@ -34,7 +34,7 @@ export default {
       window.open("https://openeuler.org/zh/privacyPolicy.html", "_blank");
     },
     JoinUs() {
-      window.open("https://gitee.com/openeuler/compass-ci", "_blank")
+      window.open("https://gitee.com/openeuler/compass-ci", "_blank");
     },
   },
   mounted() {
@@ -48,18 +48,17 @@ export default {
   position: relative;
   width: 100%;
   height: 152px;
+  padding: 0 10%;
   background-image: url("./../../../public/img/footer.png");
   background-size: cover;
   display: block;
   .footer-content {
     display: flex;
-    width: 1120px;
-    position: absolute;
-    height: 80px;
-    left: 50%;
-    top: 50%;
-    margin: -40px 0 0 -560px;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
     .content-left {
+      align-self: center;
       .left-title {
         font-size: 40px;
         font-family: PingFangSC-Regular, PingFang SC;
@@ -78,9 +77,9 @@ export default {
     }
     .content-right {
       width: 342px;
-      margin-left: 400px;
       margin-top: 24px;
       text-align: center;
+      align-self: center;
       .right-word {
         width: 342px;
         font-size: 14px;
@@ -100,7 +99,6 @@ export default {
       .footer-line {
         width: 342px;
         color: #ffffff;
-        // background: #FFFFFF;
         opacity: 0.5;
         margin-top: 8px;
         font-size: 12px;

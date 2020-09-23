@@ -23,15 +23,15 @@ export default {
     return {
       Jobs: {
         name: "Jobs",
-        describe: "列举开源软件测试的状态最新信息",
+        describe: "获取开源软件测试任务的最新信息",
       },
       compare: {
         name: "Compare results",
-        describe: "查阅开源软件历史测试结果信息",
+        describe: "查阅及比较开源软件历史测试结果",
       },
       repo: {
         name: "Git repo",
-        describe: "列举当前所有已经融入crystal-ci 的开源软件",
+        describe: "获取被融入compass-ci测试开源软件清单",
       },
       Testboxes: {
         name: "Testboxes",
@@ -48,12 +48,14 @@ export default {
   position: relative;
   width: 100%;
   .link-card-box {
-    width: 1129px;
+    // width: 1129px;
     height: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: -5% 25% 0 25%;
+    justify-content: space-between;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // margin: -5% 25% 0 25%;
+     margin: -11% 10% -30px 10%;
     font-size: 18px;
     @media screen and (max-width: 1000px) {
       width: 100%;
@@ -67,14 +69,14 @@ export default {
       }
     }
     .card2 {
-      margin-left: 3%;
+    //   margin-left: 3%;
       margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card3 {
-      margin-left: 10%;
+    //   margin-left: 10%;
       margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;

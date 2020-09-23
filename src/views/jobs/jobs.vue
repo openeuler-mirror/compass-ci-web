@@ -60,6 +60,12 @@
               >{{scope.row[item]}}</span>
               <span
                 class="goUrl wrap"
+                @click="goBlank(resultUrl+scope.row.suite +'/'+ scope.row.id)"
+                v-else-if="item ==='suite'"
+                @mouseover="showtip(item)"
+              >{{scope.row[item]}}</span>
+              <span
+                class="goUrl wrap"
                 @click="goTree(scope.row[item])"
                 v-else-if="item =='upstream_repo'"
                 @mouseover="showtip(item)"
