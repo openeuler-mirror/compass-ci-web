@@ -49,8 +49,8 @@ export default {
     }
     .home-content {
       margin: 14px 0;
-      font-size: 20px;
-      width: 1250px;
+      font-size: 16px;
+      width: 1150px;
       @media screen and (min-width: 1920px) {
           width:70%
       }
