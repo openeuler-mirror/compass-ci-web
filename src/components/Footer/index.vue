@@ -28,10 +28,10 @@ export default {
   },
   methods: {
     goLegalNotices() {
-      window.open("https://openeuler.org/zh/legal.html", "_blank");
+      window.open("https://openeuler.org/zh/other/legal/", "_blank");
     },
     goPrivacyPolicy() {
-      window.open("https://openeuler.org/zh/privacyPolicy.html", "_blank");
+      window.open("https://openeuler.org/zh/other/privacy/", "_blank");
     },
     JoinUs() {
       window.open("https://gitee.com/openeuler/compass-ci", "_blank");

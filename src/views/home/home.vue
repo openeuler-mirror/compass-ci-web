@@ -3,8 +3,8 @@
     <home-header></home-header>
     <div class="link-card-box">
       <link-card :insideName="Jobs" class="card1"></link-card>
-      <link-card :insideName="compare" class="card2"></link-card>
-      <link-card :insideName="repo" class="card3"></link-card>
+      <link-card :insideName="repo" class="card2"></link-card>
+      <link-card :insideName="compare" class="card3"></link-card>
       <!-- <link-card :insideName="Testboxes" class="card4"></link-card> -->
     </div>
   </div>
@@ -25,17 +25,17 @@ export default {
         name: "Jobs",
         describe: "测试任务最新信息",
       },
-      compare: {
-        name: "Compare results",
-        describe: "查询及比较历史测试结果",
-      },
       repo: {
         name: "Git repo",
         describe: "已加入的开源软件清单",
       },
+      compare: {
+        name: "Compare results",
+        describe: "查询及比较历史测试结果（待开放）",
+      },
       Testboxes: {
         name: "Testboxes",
-        describe: "用于查阅当前系统资源的使用状态（待开放）",
+        describe: "用于查阅当前系统资源的使用状态",
       },
     };
   },
