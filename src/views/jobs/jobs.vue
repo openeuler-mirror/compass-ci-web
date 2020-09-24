@@ -196,7 +196,6 @@ export default {
   mounted() {
     this.baseUrl = BASEUrl;
     this.testBoxUrl = this.baseUrl.BASEURLTESTBOX;
-    console.log(this.testBoxUrl, 111);
     this.resultUrl = this.baseUrl.BASEURLRESULT;
     this.getJobs();
   },
