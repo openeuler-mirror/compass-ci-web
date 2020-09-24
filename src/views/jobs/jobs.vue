@@ -89,7 +89,7 @@
 </template>
 <script>
 import { getJobs } from "../../api/jobs.js";
-import BASEUrl from "../../../vue.config"
+import BASEUrl from "../../../vue.config";
 // import BASEURLTESTBOX from "../../../vue.config"
 import Header from "@/components/Header";
 export default {
@@ -115,7 +115,7 @@ export default {
       toolDisabled: false,
       resultUrl: "",
       testBoxUrl: "",
-      baseUrl: ""
+      baseUrl: "",
     };
   },
   methods: {
@@ -189,15 +189,14 @@ export default {
         resultStr = strArr.slice(0, strArr.length - 1);
         resultStr = resultStr.join("-");
       }
-        console.log(resultStr)
+      console.log(resultStr);
       return resultStr;
-    
     },
   },
   mounted() {
-      this.baseUrl = BASEUrl
+    this.baseUrl = BASEUrl;
     this.testBoxUrl = this.baseUrl.BASEURLTESTBOX;
-    console.log(this.testBoxUrl,111)
+    console.log(this.testBoxUrl, 111);
     this.resultUrl = this.baseUrl.BASEURLRESULT;
     this.getJobs();
   },
