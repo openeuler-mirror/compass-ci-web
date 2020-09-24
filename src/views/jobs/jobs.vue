@@ -54,14 +54,8 @@
               >{{scope.row[item]}}</span>
               <span
                 class="goUrl wrap"
-                @click="goBlank(resultUrl+scope.row.suite +'/'+ scope.row.id)"
+                @click="goBlank(resultUrl + scope.row.result_root)"
                 v-else-if="item ==='job_state'"
-                @mouseover="showtip(item)"
-              >{{scope.row[item]}}</span>
-              <span
-                class="goUrl wrap"
-                @click="goBlank(resultUrl+scope.row.suite +'/'+ scope.row.id)"
-                v-else-if="item ==='suite'"
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
               <span
@@ -179,6 +173,9 @@ export default {
       );
       return flag;
     },
+    checkStr(str) {
+        str.splice
+    }
   },
   mounted() {
     this.testBoxUrl = BASEURLTESTBOX;

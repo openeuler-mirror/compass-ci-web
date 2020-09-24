@@ -43,6 +43,9 @@ export default {
   margin: 30px;
   @media screen and (max-width: 1000px) {
     margin-right: 0;
+    display: flex;
+    direction: row;
+    flex-wrap: nowrap;
   }
   .back-card {
     // width: 304px;
@@ -52,7 +55,7 @@ export default {
     }
     height: 200px;
     background: #ffffff;
-    box-shadow: 0px 10px 30px 0px rgba(2, 108, 255,0.15);
+    box-shadow: 0px 10px 30px 0px rgba(2, 108, 255, .15);
     border-radius: 20px;
     padding: 20px 30px;
     text-align: left;
@@ -65,8 +68,8 @@ export default {
     }
     height: 76px;
     background: #1057ca;
-    box-shadow: 0px 10px 30px 0px rgba(2, 108, 255,0.15),
-      0px -10px 20px 0px rgba(2, 108, 255,0.15);
+    box-shadow: 0px 10px 30px 0px rgba(2, 108, 255, .15),
+      0px -10px 20px 0px rgba(2, 108, 255, .15);
     border-radius: 10px 20px 10px 20px;
     position: absolute;
     bottom: -10px;
@@ -76,7 +79,7 @@ export default {
     font-weight: 400;
     color: #ffffff;
     line-height: 36px;
-    text-shadow: 0px 10px 30px rgba(2, 108, 255,0.15);
+    text-shadow: 0px 10px 30px rgba(2, 108, 255, .15);
     padding: 20px 0 20px 20px;
   }
 }

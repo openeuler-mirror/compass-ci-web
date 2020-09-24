@@ -48,36 +48,28 @@ export default {
   position: relative;
   width: 100%;
   .link-card-box {
-    // width: 1129px;
     height: 100%;
     display: flex;
     justify-content: space-between;
-    // flex-direction: row;
-    // flex-wrap: wrap;
-    // margin: -5% 25% 0 25%;
-    margin: -5% 10% 0 10%;
     font-size: 18px;
     @media screen and (max-width: 1000px) {
       width: 100%;
       margin-left: 0;
       font-size: 16px;
+       flex-direction: row;
+    flex-wrap: wrap;
     }
     .card1 {
-    //   margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card2 {
-    //   margin-left: 3%;
-    //   margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
     }
     .card3 {
-    //   margin-left: 10%;
-    //   margin-bottom: 30px;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }

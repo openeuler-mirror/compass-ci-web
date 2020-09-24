@@ -150,7 +150,7 @@ export default {
     compareCandidates() {
       compareCandidates().then((res) => {
         this.suiteData = res.query_conditions.suite;
-        this.OSData = res.query_conditions.OS;
+        this.OSData = this.propsdata(res.query_conditions.OS);
         this.osArchData = res.query_conditions.os_arch;
         this.tboxGroupdata = res.query_conditions.tbox_group;
         this.dimensionData = res.dimension;
@@ -184,6 +184,32 @@ export default {
           return false;
         }
       });
+    },
+    propsdata(arr) {
+      let result = [];
+      let osdata = []
+      osdata = arr
+      osdata.forEach((item) => {
+        let obj = {
+          children: [],
+        };
+        Object.keys(item).map((key) => {
+          if (key === "os") {
+            obj.value = item[key];
+            obj.label = item[key];
+          }
+          if (key === "os_version") {
+            item[key].forEach((iten) => {
+              let obj1 = {};
+              obj1.value = iten;
+              obj1.label = iten;
+              obj.children.push(obj1);
+            });
+          }
+        });
+        result.push(obj)
+      });
+      return result
     },
   },
   mounted() {
