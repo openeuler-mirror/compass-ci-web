@@ -38,7 +38,7 @@ export default {
     margin: 85px 0 0 10%;
     text-align: left;
     @media screen and (max-width: 1000px) {
-      margin: 30px 10%;
+      margin: 10px 10%;
     }
     .tile {
       font-size: 40px;
@@ -52,7 +52,11 @@ export default {
       font-size: 16px;
       width: 1150px;
       @media screen and (min-width: 1920px) {
-          width:70%
+          width:70%;
+      }
+       @media screen and (max-width: 1000px) {
+          width:100%;
+          margin: 0;
       }
       font-family: FZLTXIHJW--GB1-0, FZLTXIHJW--GB1;
       font-weight: 400;
