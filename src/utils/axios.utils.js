@@ -8,7 +8,7 @@ import BASEURL from "../../vue.config"
 let loadingInstance = null;
 export const service = axios.create({
     timeout: 20 * 1000,
-    baseURL: BASEURL.BASEURL,
+    baseURL: BASEURL,
     method: 'post',
     headers: {
         'Content-Type': 'application/json;charset=UTF-8;'

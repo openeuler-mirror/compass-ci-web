@@ -81,7 +81,7 @@
 </template>
 <script>
 import { getJobs } from "../../api/jobs.js";
-import BASEUrl from "../../../vue.config";
+import {BASEURLTESTBOX, BASEURLRESULT} from '../../utils/baseUrl.js'
 import Header from "@/components/Header";
 export default {
   name: "Tree",
@@ -104,7 +104,6 @@ export default {
       toolDisabled: false,
       resultUrl: "",
       testBoxUrl: "",
-      baseUrl: "",
     };
   },
   methods: {
@@ -162,7 +161,6 @@ export default {
         resultStr = strArr.slice(0, strArr.length - 1);
         resultStr = resultStr.join("-");
       }
-      console.log(resultStr);
       return resultStr;
     },
     handleCurrentChange(val) {
@@ -177,9 +175,8 @@ export default {
     },
   },
   mounted() {
-    this.baseUrl = BASEUrl;
-    this.testBoxUrl = this.baseUrl.BASEURLTESTBOX;
-    this.resultUrl = this.baseUrl.BASEURLRESULT;
+    this.testBoxUrl = BASEURLTESTBOX;
+    this.resultUrl = BASEURLRESULT;
     this.listQuery.upstream_repo = this.$route.query.upstream_repo;
     if (this.listQuery.upstream_repo) {
       this.getJobs();
