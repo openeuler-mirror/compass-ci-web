@@ -76,7 +76,7 @@
       </el-table>
       <el-pagination
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
+        :current-page.sync="listQuery.page_num"
         layout="total, pager, jumper"
         :total="jobsQuery.total"
         class="pagination"
@@ -89,7 +89,7 @@
 </template>
 <script>
 import { getJobs } from "../../api/jobs.js";
-import {BASEURLTESTBOX, BASEURLRESULT} from '../../utils/baseUrl.js'
+import { BASEURLTESTBOX, BASEURLRESULT } from "../../utils/baseUrl.js";
 import Header from "@/components/Header";
 export default {
   name: "Jobs",
@@ -102,7 +102,6 @@ export default {
       tableData: [],
       state: "",
       tableHeader: {},
-      currentPage: 1,
       listQuery: {
         upstream_repo: null,
         page_size: 10,
@@ -146,6 +145,7 @@ export default {
     },
     handSearch() {
       if (this.listQuery.upstream_repo) {
+        this.listQuery.page_num = 1;
         this.getJobs();
       } else {
         this.$message("请输入要筛选的upstream_repo");
