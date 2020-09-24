@@ -2,7 +2,7 @@
   <div class="link-card">
     <div class="back-card" @click="goPath">
       <p class="describe">{{insideName.describe}}</p>
-      <div class="link-car">
+      <div :class="insideName.name == 'Compare results'? 'disableCom' :'link-car'">
         <p>{{insideName.name}}</p>
       </div>
     </div>
@@ -83,4 +83,25 @@ export default {
     padding: 20px 0 20px 20px;
   }
 }
+.disableCom {
+    color: #9b9b9b;
+    width: 252px;
+    @media screen and (max-width: 1000px) {
+      width: 240px;
+    }
+    height: 76px;
+    background: #1057ca;
+    box-shadow: 0px 10px 30px 0px rgba(2, 108, 255, 0.15),
+      0px -10px 20px 0px rgba(2, 108, 255, 0.15);
+    border-radius: 10px 20px 10px 20px;
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    font-size: 25px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    line-height: 36px;
+    text-shadow: 0px 10px 30px rgba(2, 108, 255, 0.15);
+    padding: 20px 0 20px 20px;
+  }
 </style>

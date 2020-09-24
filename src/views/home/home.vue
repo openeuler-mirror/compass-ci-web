@@ -57,8 +57,8 @@ export default {
       width: 100%;
       margin-left: 0;
       font-size: 16px;
-       flex-direction: row;
-    flex-wrap: wrap;
+      flex-direction: row;
+      flex-wrap: wrap;
     }
     .card1 {
       @media screen and (max-width: 1000px) {
@@ -71,6 +71,7 @@ export default {
       }
     }
     .card3 {
+      color: #9b9b9b;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
