@@ -48,7 +48,7 @@
               <div slot="content" v-else>{{scope.row[item]}}</div>
               <span
                 class="goUrl wrap"
-                @click="goBlank(testBoxUrl+scope.row[item])"
+                @click="goBlank(testBoxUrl+checkStr(scope.row.testbox))"
                 v-if="item ==='testbox'"
                 @mouseover="showtip(item)"
               >{{scope.row[item]}}</span>
@@ -89,7 +89,8 @@
 </template>
 <script>
 import { getJobs } from "../../api/jobs.js";
-import { BASEURLRESULT, BASEURLTESTBOX } from "../../utils/baseUrl.js";
+import BASEUrl from "../../../vue.config"
+// import BASEURLTESTBOX from "../../../vue.config"
 import Header from "@/components/Header";
 export default {
   name: "Jobs",
@@ -114,6 +115,7 @@ export default {
       toolDisabled: false,
       resultUrl: "",
       testBoxUrl: "",
+      baseUrl: ""
     };
   },
   methods: {
@@ -174,12 +176,29 @@ export default {
       return flag;
     },
     checkStr(str) {
-        str.splice
-    }
+      let resultStr = "";
+      let strArr = str.split("-");
+      let testReg = /^[0-9]+$/;
+      let resultReg = /(^.+--.+$)|(^vm-.*-\d\w*-([a-zA-Z]+)|(\d+)$)/;
+      if (str.indexOf("--") != -1) {
+        resultStr = str.split("--")[0];
+      } else if (testReg.test(strArr[strArr.length - 1])) {
+        resultStr = strArr.slice(0, strArr.length - 1);
+        resultStr = resultStr.join("-");
+      } else if (resultReg.test(str)) {
+        resultStr = strArr.slice(0, strArr.length - 1);
+        resultStr = resultStr.join("-");
+      }
+        console.log(resultStr)
+      return resultStr;
+    
+    },
   },
   mounted() {
-    this.testBoxUrl = BASEURLTESTBOX;
-    this.resultUrl = BASEURLRESULT;
+      this.baseUrl = BASEUrl
+    this.testBoxUrl = this.baseUrl.BASEURLTESTBOX;
+    console.log(this.testBoxUrl,111)
+    this.resultUrl = this.baseUrl.BASEURLRESULT;
     this.getJobs();
   },
 };

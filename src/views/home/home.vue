@@ -49,6 +49,7 @@ export default {
   width: 100%;
   .link-card-box {
     height: 100%;
+    margin: 0 10%;
     display: flex;
     justify-content: space-between;
     font-size: 18px;
