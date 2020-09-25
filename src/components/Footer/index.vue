@@ -12,6 +12,7 @@
         <p class="right-word">
           <span @click="goPrivacyPolicy">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.WORDLEFT:''}}</span>
           <span @click="goLegalNotices">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.WORDRIGHT:''}}</span>
+          <span @click="goDisclamer">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.DISCLAIMER:''}}</span>
         </p>
         <div class="footer-line">{{footTitleObj.FOOOTER?footTitleObj.FOOOTER.COPYRIGHT:''}}</div>
       </div>
@@ -36,6 +37,9 @@ export default {
     JoinUs() {
       window.open("https://gitee.com/openeuler/compass-ci", "_blank");
     },
+    goDisclamer() {
+       this.$router.push("/disclaimer");
+    }
   },
   mounted() {
     this.footTitleObj = require("@/lang/common.js");
@@ -91,7 +95,10 @@ export default {
         span {
           display: inline-block;
           padding: 0 15px;
-          &:last-of-type {
+          &:nth-of-type(2){
+            border-left: 1px solid #ffffff;
+          }
+          &:last-of-type{
             border-left: 1px solid #ffffff;
           }
         }

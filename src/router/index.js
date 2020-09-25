@@ -40,6 +40,11 @@ const routes = [
         path: '/repos',
         name: 'Repos',
         component: () => import('../views/repos/repos.vue')
+    },
+    {
+        path: '/disclaimer',
+        name: 'Disclaimer',
+        component: () => import('../views/disclaimer/disclaimer.vue')
     }
 ]
 
