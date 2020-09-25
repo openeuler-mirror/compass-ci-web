@@ -29,7 +29,8 @@ export default {
       } else if (this.insideName.name == "Git repo") {
         this.$router.push("/repos");
       } else if (this.insideName.name == "Compare results") {
-        this.$router.push("/compare");
+        // this.$router.push("/compare");
+        return false
       }
     },
   },
