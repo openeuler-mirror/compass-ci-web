@@ -217,7 +217,6 @@ export default {
     this.testBoxUrl = BASEURLTESTBOX;
     this.resultUrl = BASEURLRESULT;
     this.getJobs();
-    this.checkStrDemo();
   },
 };
 </script>
