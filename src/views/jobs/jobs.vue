@@ -13,7 +13,12 @@
             class="select-page"
             @change="getJobs"
           >
-            <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
+            <el-option
+              v-for="item in pageSizeOptions"
+              :key="item"
+              :label="item"
+              :value="item"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="search">
@@ -25,13 +30,21 @@
             clearable
             @clear="getJobs"
           >
-            <el-button slot="append" icon="el-icon-search" @click="handSearch"></el-button>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="handSearch"
+            ></el-button>
           </el-input>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" stripe class="jobs-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
-        <el-table-column :label="item" :key="index" v-for="(item,index) in tableHead">
+        <el-table-column
+          :label="item"
+          :key="index"
+          v-for="(item, index) in tableHead"
+        >
           <template slot-scope="scope">
             <el-tooltip
               class="item"
@@ -41,35 +54,44 @@
               :disabled="toolDisabled"
             >
               <div slot="content" v-if="item == 'error_ids'">
-                <template v-for=" (ids,idsIndex) in scope.row[item]">
-                  <p :key="idsIndex">{{ids+','}}</p>
+                <template v-for="(ids, idsIndex) in scope.row[item]">
+                  <p :key="idsIndex">{{ ids + "," }}</p>
                 </template>
               </div>
-              <div slot="content" v-else>{{scope.row[item]}}</div>
+              <div slot="content" v-else>{{ scope.row[item] }}</div>
               <span
                 class="goUrl wrap"
-                @click="goBlank(testBoxUrl+checkStr(scope.row.testbox))"
-                v-if="item ==='testbox'"
+                @click="goBlank(testBoxUrl + checkStr(scope.row.testbox))"
+                v-if="item === 'testbox'"
                 @mouseover="showtip(item)"
-              >{{scope.row[item]}}</span>
+                >{{ scope.row[item] }}</span
+              >
               <span
                 class="goUrl wrap"
                 @click="goBlank(resultUrl + scope.row.result_root)"
-                v-else-if="item ==='job_state'"
+                v-else-if="item === 'job_state'"
                 @mouseover="showtip(item)"
-              >{{scope.row[item]}}</span>
+                >{{ scope.row[item] }}</span
+              >
               <span
                 class="goUrl wrap"
                 @click="goTree(scope.row[item])"
-                v-else-if="item =='upstream_repo'"
+                v-else-if="item == 'upstream_repo'"
                 @mouseover="showtip(item)"
-              >{{scope.row[item]}}</span>
-              <span class="wrap" v-else-if="item =='error_ids'" @mouseover="showtip(item)">
+                >{{ scope.row[item] }}</span
+              >
+              <span
+                class="wrap"
+                v-else-if="item == 'error_ids'"
+                @mouseover="showtip(item)"
+              >
                 <template v-for="item in scope.row[item]">
-                  <span :key="item">{{item}}</span>
+                  <span :key="item">{{ item }}</span>
                 </template>
               </span>
-              <span class="wrap" v-else @mouseover="showtip(item)">{{scope.row[item]}}</span>
+              <span class="wrap" v-else @mouseover="showtip(item)">{{
+                scope.row[item]
+              }}</span>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -175,17 +197,18 @@ export default {
     },
     checkStr(str) {
       let resultStr = "";
-      let strArr = str.split("-");
-      let testReg = /^[0-9]+$/;
-      let resultReg = /(^.+--.+$)|(^vm-.*-\d\w*-([a-zA-Z]+)|(\d+)$)/;
-      if (str.indexOf("--") != -1) {
+      let strReg = /^vm/;
+      if (strReg.test(str)) {
         resultStr = str.split("--")[0];
-      } else if (testReg.test(strArr[strArr.length - 1])) {
-        resultStr = strArr.slice(0, strArr.length - 1);
-        resultStr = resultStr.join("-");
-      } else if (resultReg.test(str)) {
-        resultStr = strArr.slice(0, strArr.length - 1);
-        resultStr = resultStr.join("-");
+      } else {
+        let strArr = str.split("--");
+        let firstStr = strArr[0];
+        let sedStr = strArr[1];
+        if (sedStr) {
+          resultStr = firstStr + "--" + sedStr.split("-")[0];
+        } else {
+          resultStr = firstStr;
+        }
       }
       return resultStr;
     },
@@ -194,6 +217,7 @@ export default {
     this.testBoxUrl = BASEURLTESTBOX;
     this.resultUrl = BASEURLRESULT;
     this.getJobs();
+    this.checkStrDemo();
   },
 };
 </script>

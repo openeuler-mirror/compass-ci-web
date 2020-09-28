@@ -149,17 +149,18 @@ export default {
     },
     checkStr(str) {
       let resultStr = "";
-      let strArr = str.split("-");
-      let testReg = /^[0-9]+$/;
-      let resultReg = /(^.+--.+$)|(^vm-.*-\d\w*-([a-zA-Z]+)|(\d+)$)/;
-      if (str.indexOf("--") != -1) {
+      let strReg = /^vm/;
+      if (strReg.test(str)) {
         resultStr = str.split("--")[0];
-      } else if (testReg.test(strArr[strArr.length - 1])) {
-        resultStr = strArr.slice(0, strArr.length - 1);
-        resultStr = resultStr.join("-");
-      } else if (resultReg.test(str)) {
-        resultStr = strArr.slice(0, strArr.length - 1);
-        resultStr = resultStr.join("-");
+      } else {
+        let strArr = str.split("--");
+        let firstStr = strArr[0];
+        let sedStr = strArr[1];
+        if (sedStr) {
+          resultStr = firstStr + "--" + sedStr.split("-")[0];
+        } else {
+          resultStr = firstStr;
+        }
       }
       return resultStr;
     },
