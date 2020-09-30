@@ -15,7 +15,8 @@ import {
     Input,
     Cascader,
     Button,
-    Tooltip
+    Tooltip,
+    Notification
 } from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -35,6 +36,7 @@ Vue.use(Input);
 Vue.use(Cascader);
 Vue.use(Button);
 Vue.use(Tooltip);
+Vue.prototype.$notify = Notification;
 
 new Vue({
     router,
