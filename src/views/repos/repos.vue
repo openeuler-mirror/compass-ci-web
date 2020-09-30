@@ -13,7 +13,12 @@
             class="select-page"
             @change="getAllRepos"
           >
-            <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
+            <el-option
+              v-for="item in pageSizeOptions"
+              :key="item"
+              :label="item"
+              :value="item"
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -22,7 +27,9 @@
         <el-table-column prop="git_repo" label="git_repo"></el-table-column>
         <el-table-column label="git_url">
           <template slot-scope="scope">
-            <span @click="goRepos(scope.row.git_url)" class="goUrl">{{scope.row.git_url}}</span>
+            <span @click="goRepos(scope.row.git_url)" class="goUrl">{{
+              scope.row.git_url
+            }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -73,7 +80,13 @@ export default {
       });
     },
     goRepos(src) {
-      window.open(src, "_blank");
+      let srcReg = /^git/;
+      if (srcReg.test(src)) {
+        src = src.replace(/^git/, "https");
+        window.open(src, "_blank");
+      } else {
+        window.open(src, "_blank");
+      }
     },
     handleCurrentChange(val) {
       this.listQuery.page_num = val;
