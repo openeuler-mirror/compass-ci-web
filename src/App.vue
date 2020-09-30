@@ -15,7 +15,7 @@ export default {
     notice() {
       this.$notify({
         title: "通知",
-        message: "由于国庆机房维护，需要到10月5日才可以正常访问数据，给您带来不便之处敬请谅解。",
+        message: "由于国庆机房维护，从10月1日22点~10月4日22点暂时无法提供服务，给您带来不便之处敬请谅解。",
         duration: 0,
         showClose: false,
       });
