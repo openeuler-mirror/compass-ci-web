@@ -24,7 +24,7 @@
         <el-form-item class="search">
           <el-input
             v-model="listQuery.upstream_repo"
-            placeholder="search upstream_repo"
+            placeholder="search"
             size="medium"
             @keydown.enter.native="handSearch"
             clearable
@@ -89,7 +89,7 @@ export default {
         this.listQuery.page_num = 1;
         this.getAllRepos();
       } else {
-        this.$message("请输入要筛选的upstream_repo");
+        this.$message("请输入要筛选的字段");
       }
     },
     getAllRepos() {
