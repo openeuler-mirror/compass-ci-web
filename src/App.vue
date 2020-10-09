@@ -22,7 +22,7 @@ export default {
     },
   },
   mounted() {
-    this.notice();
+    // this.notice();
   },
   updated() {
     window.scroll(0, 0);
