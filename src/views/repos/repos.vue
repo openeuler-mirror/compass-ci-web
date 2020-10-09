@@ -21,22 +21,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item class="search">
-          <el-input
-            v-model="listQuery.upstream_repo"
-            placeholder="search"
-            size="medium"
-            @keydown.enter.native="handSearch"
-            clearable
-            @clear="getAllRepos"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="handSearch"
-            ></el-button>
-          </el-input>
-        </el-form-item>
       </el-form>
       <el-table :data="reposList" stripe class="repos-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
@@ -84,14 +68,6 @@ export default {
     };
   },
   methods: {
-      handSearch() {
-      if (this.listQuery.upstream_repo) {
-        this.listQuery.page_num = 1;
-        this.getAllRepos();
-      } else {
-        this.$message("请输入要筛选的字段");
-      }
-    },
     getAllRepos() {
       getAllRepos(this.listQuery).then((res) => {
         this.repoData = res;
