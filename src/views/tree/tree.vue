@@ -7,14 +7,16 @@
       <div class="tree-header-tips">
         <el-form label-position="left" class="tree-header-tips">
           <el-form-item label="git repo">
-            <div>{{banner.repo?banner.repo:''}}</div>
+            <div>{{ banner.repo ? banner.repo : "" }}</div>
           </el-form-item>
           <el-form-item label="git url">
-            <div class="goUrl" @click="goBlank(banner.git_url)">{{banner.git_url}}</div>
+            <div class="goUrl" @click="goBlank(banner.git_url)">
+              {{ banner.git_url }}
+            </div>
           </el-form-item>
           <el-form-item label="upstream_branch">
             <template v-for="item in banner.upstream_branch">
-              <span :key="item" class="branch">{{item}}</span>
+              <span :key="item" class="branch">{{ item }}</span>
             </template>
           </el-form-item>
           <el-form-item label="jobs"></el-form-item>
@@ -22,7 +24,11 @@
       </div>
       <el-table :data="tableData" stripe class="jobs-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
-        <el-table-column :label="item" :key="index" v-for="(item,index) in tableHead">
+        <el-table-column
+          :label="item"
+          :key="index"
+          v-for="(item, index) in tableHead"
+        >
           <template slot-scope="scope">
             <el-tooltip
               class="item"
@@ -32,34 +38,43 @@
               :disabled="toolDisabled"
             >
               <div slot="content" v-if="item == 'error_ids'">
-                <template v-for=" (ids,idsIndex) in scope.row[item]">
-                  <p :key="idsIndex">{{ids+','}}</p>
+                <template v-for="(ids, idsIndex) in scope.row[item]">
+                  <p :key="idsIndex">{{ ids + "," }}</p>
                 </template>
               </div>
-              <div slot="content" v-else>{{scope.row[item]}}</div>
+              <div slot="content" v-else>{{ scope.row[item] }}</div>
               <span
                 class="goUrl wrap"
-                @click="goBlank(testBoxUrl+checkStr(scope.row.testbox))"
-                v-if="item ==='testbox'"
+                @click="goBlank(testBoxUrl + checkStr(scope.row.testbox))"
+                v-if="item === 'testbox'"
                 @mouseover="showtip(item)"
-              >{{scope.row[item]}}</span>
+                >{{ scope.row[item] }}</span
+              >
               <span
                 class="goUrl wrap"
                 @click="goBlank(resultUrl + scope.row.result_root)"
-                v-else-if="item ==='job_state'"
+                v-else-if="item === 'job_state'"
                 @mouseover="showtip(item)"
-              >{{scope.row[item]}}</span>
+                >{{ scope.row[item] }}</span
+              >
               <span
                 class="wrap"
-                v-else-if="item =='upstream_repo'"
+                v-else-if="item == 'upstream_repo'"
                 @mouseover="showtip(item)"
-              >{{scope.row[item]}}</span>
-              <span class="wrap" v-else-if="item =='error_ids'" @mouseover="showtip(item)">
+                >{{ scope.row[item] }}</span
+              >
+              <span
+                class="wrap"
+                v-else-if="item == 'error_ids'"
+                @mouseover="showtip(item)"
+              >
                 <template v-for="item in scope.row[item]">
-                  <span :key="item">{{item}}</span>
+                  <span :key="item">{{ item }}</span>
                 </template>
               </span>
-              <span class="wrap" v-else @mouseover="showtip(item)">{{scope.row[item]}}</span>
+              <span class="wrap" v-else @mouseover="showtip(item)">{{
+                scope.row[item]
+              }}</span>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -81,7 +96,7 @@
 </template>
 <script>
 import { getJobs } from "../../api/jobs.js";
-import {BASEURLTESTBOX, BASEURLRESULT} from '../../utils/baseUrl.js'
+import { BASEURLTESTBOX, BASEURLRESULT } from "../../utils/baseUrl.js";
 import Header from "@/components/Header";
 export default {
   name: "Tree",
@@ -116,7 +131,8 @@ export default {
         item == "start_time" ||
         item == "id" ||
         item == "error_ids" ||
-        item == "upstream_branch"
+        item == "upstream_branch" ||
+        item == "suite"
       ) {
         this.toolDisabled = false;
       } else {

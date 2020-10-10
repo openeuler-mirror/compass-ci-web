@@ -147,7 +147,8 @@ export default {
         item == "start_time" ||
         item == "id" ||
         item == "error_ids" ||
-        item == "upstream_branch"
+        item == "upstream_branch" ||
+        item == "suite"
       ) {
         this.toolDisabled = false;
       } else {
