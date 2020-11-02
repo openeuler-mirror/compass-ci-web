@@ -2,7 +2,7 @@
   <div class="link-card">
     <div class="back-card" @click="goPath">
       <p class="describe">{{insideName.describe}}</p>
-      <div :class="insideName.name == 'Compare results'? 'disableCom' :'link-car'">
+      <div class="link-car">
         <p>{{insideName.name}}</p>
       </div>
     </div>

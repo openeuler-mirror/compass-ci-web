@@ -71,7 +71,6 @@ export default {
       }
     }
     .card3 {
-      color: #9b9b9b;
       @media screen and (max-width: 1000px) {
         margin: 30px auto 0 auto;
       }
