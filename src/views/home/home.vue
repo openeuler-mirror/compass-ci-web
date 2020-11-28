@@ -40,7 +40,13 @@ export default {
     };
   },
   methods: {},
-  mounted() {},
+  mounted() {
+    this.$notify({
+        title: '通知',
+        message: '机房于2020年11月28日20:00至2020年11月29日20:00维护，将不能正常访问数据，给您带来的不便，敬请谅解！',
+        duration: 0
+    });
+  },
 };
 </script>
 <style lang="scss" scoped>
