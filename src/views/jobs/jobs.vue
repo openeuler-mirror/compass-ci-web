@@ -200,7 +200,7 @@ export default {
       let resultStr = "";
       let strReg = /^vm/;
       if (strReg.test(str)) {
-        resultStr = str.split("--")[0];
+        resultStr = str.split(".")[0];
       } else {
         let strArr = str.split("--");
         let firstStr = strArr[0];
