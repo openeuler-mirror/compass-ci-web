@@ -198,7 +198,7 @@ export default {
     },
     checkStr(str) {
       let resultStr = "";
-      let strReg = /^vm/;
+      let strReg = /(^vm|^dc)/;
       if (strReg.test(str)) {
         resultStr = str.split(".")[0];
       } else {
