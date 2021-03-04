@@ -1,4 +1,4 @@
-FROM alpine:3.9 as Builder
+FROM node as Builder
 
 MAINTAINER zhangxiaopan<zhangxiaopan2@huawei.com>
 
@@ -6,10 +6,9 @@ RUN mkdir -p /home/openeuler/crystal-ci-web
 WORKDIR /home/openeuler/crystal-ci-web
 COPY . /home/openeuler/crystal-ci-web
 
-RUN apk add nodejs npm
 
-RUN npm install && \
-    npm run build
+#RUN npm install && \
+#    npm run build
 
 FROM nginx:1.19.2
 
