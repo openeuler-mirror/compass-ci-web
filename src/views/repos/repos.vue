@@ -21,6 +21,22 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item class="search">
+          <el-input
+            v-model="listQuery.git_repo"
+            placeholder="search git_repo"
+            size="medium"
+            @keydown.enter.native="getAllRepos"
+            clearable
+            @clear="getAllRepos"
+          >
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getAllRepos"
+            ></el-button>
+          </el-input>
+        </el-form-item>
       </el-form>
       <el-table :data="reposList" stripe class="repos-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
