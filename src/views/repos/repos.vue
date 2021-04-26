@@ -40,7 +40,13 @@
       </el-form>
       <el-table :data="reposList" stripe class="repos-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
-        <el-table-column prop="git_repo" label="git_repo"></el-table-column>
+        <el-table-column prop="git_repo" label="git_repo">
+          <template slot-scope="scope">
+            <span @click="goTree(scope.row.git_repo)" class="goUrl">{{
+              scope.row.git_repo
+            }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="git_url">
           <template slot-scope="scope">
             <span @click="goRepos(scope.row.git_url)" class="goUrl">{{
@@ -92,6 +98,14 @@ export default {
           this.isSmall = true;
         } else {
           this.isSmall = false;
+        }
+      });
+    },
+    goTree(item) {
+      this.$router.push({
+        path: "/tree",
+        query: {
+          upstream_repo: item
         }
       });
     },
