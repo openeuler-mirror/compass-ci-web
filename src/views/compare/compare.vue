@@ -12,7 +12,7 @@
         :rules="rules"
         class="demo-form-inline"
       >
-        <el-form-item label="suite" prop="suite" label-width="85px" class="com-tips">
+        <el-form-item label="suite" prop="suite" label-width="100px" class="com-tips">
           <el-select
             v-model="compareData.suite"
             filterable
@@ -24,18 +24,19 @@
             <el-option v-for="item in suiteData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="OS" prop="OS" label-width="85px">
+        <el-form-item label="OS" prop="OS" label-width="100px">
           <el-cascader
             v-model="handlerValue"
             ref="refHandle"
             @change="changeOs"
             :options="OSData"
             :props="{ checkStrictly: true }"
+            size="medium"
             clearable
             @clear="clearCheck('os')"
           ></el-cascader>
         </el-form-item>
-        <el-form-item label="os_arch" prop="os_arch" label-width="85px">
+        <el-form-item label="os_arch" prop="os_arch" label-width="100px">
           <el-select
             v-model="compareData.os_arch"
             filterable
@@ -47,7 +48,7 @@
             <el-option v-for="item in osArchData" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="tbox_group" prop="tbox_group" label-width="85px">
+        <el-form-item label="tbox_group" prop="tbox_group" label-width="120px">
           <el-select
             v-model="compareData.tbox_group"
             filterable
@@ -59,7 +60,7 @@
             <el-option v-for="item in tboxGroupdata" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="dimension" prop="dimension" label-width="85px">
+        <el-form-item label="dimension" prop="dimension" label-width="100px">
           <el-select
             v-model="compareData.dimension"
             filterable
@@ -149,10 +150,10 @@ export default {
     },
     compareCandidates() {
       compareCandidates().then((res) => {
-        this.suiteData = res.query_conditions.suite;
+        this.suiteData = res.query_conditions.suite.sort();
         this.OSData = this.propsdata(res.query_conditions.OS);
         this.osArchData = res.query_conditions.os_arch;
-        this.tboxGroupdata = res.query_conditions.tbox_group;
+        this.tboxGroupdata = res.query_conditions.tbox_group.sort();
         this.dimensionData = res.dimension;
       });
     },
