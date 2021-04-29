@@ -153,7 +153,7 @@ export default {
         this.suiteData = res.query_conditions.suite.sort();
         this.OSData = this.propsdata(res.query_conditions.OS);
         this.osArchData = res.query_conditions.os_arch;
-        this.tboxGroupdata = res.query_conditions.tbox_group.sort();
+        this.tboxGroupdata = res.query_conditions.tbox_group;
         this.dimensionData = res.dimension;
       });
     },
