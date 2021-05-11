@@ -9,7 +9,7 @@ COPY . /home/openeuler/crystal-ci-web
 RUN npm install && \
     npm run build
 
-FROM nginx:1.19.2
+FROM nginx:1.20.0
 
 COPY --from=Builder /home/openeuler/crystal-ci-web/dist /usr/share/nginx/html/
 RUN chmod -R 755 /usr/share/nginx/html
