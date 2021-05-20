@@ -6,11 +6,18 @@ Crystal CI
 #### Software Architecture
 Software architecture description
 
-#### Installation
+#### Deploy in local
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. configuration
+  - crystal-ci/src/utils/axios.utils.js: change 'const BASEURL' like
+  ```
+  https://$you_host:$you_web-backend_port; # if you hadn't changed web-bachend port, you can use default port: 20003
+  ```
+  - crystal-ci/src/utils/baseUrl.js: change export const BASEURLRESULT like
+  ```
+  http://$your_host:$your_srv_http_result_port'; #  if you hadn't changed srv-http-result port, you can use default port: 20007
+  ```
+2. run: crystal-ci/build && crystal-ci/start
 
 #### Instructions
 
