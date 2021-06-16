@@ -23,8 +23,8 @@
         </el-form-item>
         <el-form-item class="search">
           <el-input
-            v-model="listQuery.upstream_repo"
-            placeholder="search upstream_repo"
+            v-model="filter"
+            placeholder="search: suite=iperf os=openruler"
             size="medium"
             @keydown.enter.native="handSearch"
             clearable
@@ -124,8 +124,8 @@ export default {
       tableData: [],
       state: "",
       tableHeader: {},
+      filter: null,
       listQuery: {
-        upstream_repo: null,
         page_size: 10,
         page_num: 1,
       },
@@ -166,12 +166,20 @@ export default {
     goBlank(src) {
       window.open(src, "_blank");
     },
+    parseFilter(){
+      var filters = this.filter.split(" ")
+      for (var f of filters){
+        var key_vaule = f.split("=")
+        this.listQuery[key_vaule[0]] = key_vaule[1]
+      }
+    },
     handSearch() {
-      if (this.listQuery.upstream_repo) {
+      if (this.filter) {
+        this.parseFilter()
         this.listQuery.page_num = 1;
         this.getJobs();
       } else {
-        this.$message("请输入要筛选的upstream_repo");
+        this.$message("请输入筛选条件");
       }
     },
     getJobs() {
