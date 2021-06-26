@@ -25,7 +25,7 @@
           <el-input
             class = "search-input"
             v-model="filter"
-            placeholder="search jobs like: suite=iperf os=openruler"
+            placeholder="search jobs like: suite=iperf os=openeuler"
             size="medium"
             @keydown.enter.native="handSearch"
             clearable
