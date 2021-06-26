@@ -23,8 +23,9 @@
         </el-form-item>
         <el-form-item class="search">
           <el-input
+            class = "search-input"
             v-model="filter"
-            placeholder="search: suite=iperf os=openruler"
+            placeholder="search jobs like: suite=iperf os=openruler"
             size="medium"
             @keydown.enter.native="handSearch"
             clearable
@@ -238,6 +239,9 @@ export default {
   @media screen and (max-width: 1000px) {
     margin-left: 0;
   }
+}
+.search-input{
+  width: 550px;
 }
 .select-page {
   width: 113px;
