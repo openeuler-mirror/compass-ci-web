@@ -45,6 +45,21 @@ const routes = [
         path: '/disclaimer',
         name: 'Disclaimer',
         component: () => import('../views/disclaimer/disclaimer.vue')
+    },
+    {
+        path: '/job-summary',
+        name: 'JobSummary',
+        component: () => import('../views/jobSummer/jobSummer.vue')
+    },
+    {
+        path: '/error-list',
+        name: 'ErrorList',
+        component: () => import('../views/errorlist/errorlist.vue')
+    },
+    {
+        path: '/performance-result',
+        name: 'PerformanceResult',
+        component: () => import('../views/performanceresult/performanceresult.vue')
     }
 ]
 
