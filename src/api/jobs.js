@@ -1,7 +1,7 @@
 /**
  * @file jobs接口文档入口
  * */
-import {service} from '../utils/axios.utils';
+import { service } from '../utils/axios.utils';
 export function getJobs(data) {
     return service({
         url: '/get_jobs',
@@ -13,7 +13,6 @@ export function getJobs(data) {
 export function getJobsSummary(data) {
     return service({
         url: '/get_jobs_summary',
-        // baseURL: 'http://124.160.11.57:10002',
         method: 'get',
         params: data
     });
@@ -24,5 +23,15 @@ export function getErrorList(data) {
         url: '/get_job_error',
         method: 'get',
         params: data
+    });
+}
+export function getPerformanceResult(data) {
+    return service({
+        url: '/performance_result',
+        method: 'post',
+        data: data,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     });
 }
