@@ -15,7 +15,7 @@
           <template slot-scope="scope">
             <div
               class="go"
-              v-if="item==='link_to_result'"
+              v-if="item==='result_root'"
               @click="goBlank(scope.row[item])"
             >result_root</div>
             <div v-else>{{scope.row[item]}}</div>
