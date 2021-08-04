@@ -18,6 +18,9 @@
               v-if="item==='result_root'"
               @click="goBlank(scope.row[item])"
             >result_root</div>
+
+            <div class="go" v-else-if="item==='stderr'" @click="goBlank(scope.row[item])">stderr</div>
+
             <div v-else>{{scope.row[item]}}</div>
           </template>
         </el-table-column>
@@ -55,7 +58,9 @@ export default {
       });
     },
     getWidth(index) {
-      return index % 3 == 0 ? 120 : 0;
+      if (index == 0 || index == 3 || index == 4) return 120;
+
+      return 0;
     }
   },
   mounted() {
