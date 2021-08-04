@@ -28,6 +28,7 @@
 <script>
 import { getErrorList } from "@/api/jobs.js";
 import Header from "@/components/Header";
+import { BASEURLRESULT } from "../../utils/baseUrl.js";
 export default {
   name: "ErrorList",
   components: {
@@ -43,6 +44,7 @@ export default {
   },
   methods: {
     goBlank(src) {
+      src = BASEURLRESULT + src;
       window.open(src, "_blank");
     },
     getData() {
