@@ -85,14 +85,14 @@ import Header from "@/components/Header";
 export default {
   name: "Compare",
   components: {
-    Header,
+    Header
   },
   watch: {
     handlerValue() {
       if (this.$refs.refHandle) {
         this.$refs.refHandle.dropDownVisible = false; //监听值发生变化就关闭它
       }
-    },
+    }
   },
   data() {
     return {
@@ -101,7 +101,7 @@ export default {
       listquery: {
         os: "",
         suite: "",
-        dimension: "",
+        dimension: ""
       },
       compareData: {
         suite: null,
@@ -110,21 +110,21 @@ export default {
         os_version: null,
         os_arch: null,
         tbox_group: null,
-        dimension: null,
+        dimension: null
       },
       rules: {
         dimension: {
           required: true,
           message: "请选择dimension",
-          trigger: "change",
-        },
+          trigger: "change"
+        }
       },
       suiteData: [],
       OSData: [],
       osArchData: [],
       tboxGroupdata: [],
       dimensionData: [],
-      resData: "",
+      resData: ""
     };
   },
   methods: {
@@ -149,7 +149,7 @@ export default {
       this.flag = true;
     },
     compareCandidates() {
-      compareCandidates().then((res) => {
+      compareCandidates().then(res => {
         this.suiteData = res.query_conditions.suite.sort();
         this.OSData = this.propsdata(res.query_conditions.OS);
         this.osArchData = res.query_conditions.os_arch;
@@ -164,7 +164,7 @@ export default {
           arrCom.push(this.compareData[item]);
         }
       }
-      let boll = arrCom.some((item) => {
+      let boll = arrCom.some(item => {
         return item != null;
       });
       if (boll) {
@@ -174,10 +174,15 @@ export default {
       }
     },
     compare() {
-      this.$refs["ruleForm"].validate((valid) => {
+      this.$refs["ruleForm"].validate(valid => {
         if (valid) {
           if (this.handleValid()) {
-            compare(this.compareData).then((res) => {
+            this.$router.push({
+              path: this.$route.path,
+              query: this.compareData
+            });
+
+            compare(this.compareData).then(res => {
               this.resData = res;
             });
           }
@@ -188,19 +193,19 @@ export default {
     },
     propsdata(arr) {
       let result = [];
-      let osdata = []
-      osdata = arr
-      osdata.forEach((item) => {
+      let osdata = [];
+      osdata = arr;
+      osdata.forEach(item => {
         let obj = {
-          children: [],
+          children: []
         };
-        Object.keys(item).map((key) => {
+        Object.keys(item).map(key => {
           if (key === "os") {
             obj.value = item[key];
             obj.label = item[key];
           }
           if (key === "os_version") {
-            item[key].forEach((iten) => {
+            item[key].forEach(iten => {
               let obj1 = {};
               obj1.value = iten;
               obj1.label = iten;
@@ -208,14 +213,35 @@ export default {
             });
           }
         });
-        result.push(obj)
+        result.push(obj);
       });
-      return result
+      return result;
     },
+    checkRouteQuery(data) {
+      if (data.dimension == null) {
+        this.$message("请给出dimension值");
+        return false;
+      } else if (
+        data.suite == null &&
+        data.OS == null &&
+        data.os_arch == null &&
+        data.tbox_group == null
+      ) {
+        this.$message("请给出 suite OS OS_ arch tbox_group 其中至少一个");
+        return false;
+      }
+      return true;
+    }
   },
   mounted() {
     this.compareCandidates();
-  },
+    var data = this.$route.query;
+    if (Object.keys(data).length > 0 && this.checkRouteQuery(data)) {
+      compare(data).then(res => {
+        this.resData = res;
+      });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
