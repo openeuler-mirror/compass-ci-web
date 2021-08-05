@@ -170,7 +170,7 @@ export default {
       if (boll) {
         return boll;
       } else {
-        this.$message("请选择 suite OS OS_ arch tbox_group 其中至少一个选项");
+        this.$message("请选择 suite OS os_arch tbox_group 其中至少一个选项");
       }
     },
     compare() {
@@ -222,12 +222,21 @@ export default {
         this.$message("请给出dimension值");
         return false;
       } else if (
+        data.dimension != "os" &&
+        data.dimension != "os_version" &&
+        data.dimension != "os_arch" &&
+        data.dimension != "suite" &&
+        data.dimension != "tbox_group"
+      ) {
+        this.$message("dimension值错误");
+        return false;
+      } else if (
         data.suite == null &&
         data.OS == null &&
         data.os_arch == null &&
         data.tbox_group == null
       ) {
-        this.$message("请给出 suite OS OS_ arch tbox_group 其中至少一个");
+        this.$message("请给出 suite OS os_arch tbox_group 其中至少一个");
         return false;
       }
       return true;
