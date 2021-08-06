@@ -13,12 +13,7 @@
             class="select-page"
             @change="getAllRepos"
           >
-            <el-option
-              v-for="item in pageSizeOptions"
-              :key="item"
-              :label="item"
-              :value="item"
-            ></el-option>
+            <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="search">
@@ -26,15 +21,11 @@
             v-model="listQuery.git_repo"
             placeholder="search git_repo"
             size="medium"
-            @keydown.enter.native="getAllRepos"
+            @keydown.enter.native="searchRepos"
             clearable
-            @clear="getAllRepos"
+            @clear="searchRepos"
           >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="getAllRepos"
-            ></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="searchRepos"></el-button>
           </el-input>
         </el-form-item>
       </el-form>
@@ -42,16 +33,12 @@
         <el-table-column label="序号" type="index" width="50"></el-table-column>
         <el-table-column prop="git_repo" label="git_repo">
           <template slot-scope="scope">
-            <span @click="goTree(scope.row.git_repo)" class="goUrl">{{
-              scope.row.git_repo
-            }}</span>
+            <span @click="goTree(scope.row.git_repo)" class="goUrl">{{ scope.row.git_repo }}</span>
           </template>
         </el-table-column>
         <el-table-column label="git_url">
           <template slot-scope="scope">
-            <span @click="goRepos(scope.row.git_url)" class="goUrl">{{
-              scope.row.git_url
-            }}</span>
+            <span @click="goRepos(scope.row.git_url)" class="goUrl">{{ scope.row.git_url }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -74,24 +61,25 @@ import Header from "@/components/Header";
 export default {
   name: "Repos",
   components: {
-    Header,
+    Header
   },
   data() {
     return {
       listQuery: {
+        git_repo: null,
         page_size: 10,
-        page_num: 1,
+        page_num: 1
       },
       repoData: {},
       reposList: [],
       pageSizeOptions: [10, 20, 30],
       isSmall: false,
-      currentPage: 1,
+      currentPage: 1
     };
   },
   methods: {
     getAllRepos() {
-      getAllRepos(this.listQuery).then((res) => {
+      getAllRepos(this.listQuery).then(res => {
         this.repoData = res;
         this.reposList = this.repoData.repos;
         if (this.isMobile()) {
@@ -100,6 +88,17 @@ export default {
           this.isSmall = false;
         }
       });
+    },
+    searchRepos() {
+      var routeQuery = null;
+      if (this.listQuery.git_repo) {
+        routeQuery = { git_repo: this.listQuery.git_repo };
+      }
+      this.$router.push({
+        path: this.$route.path,
+        query: routeQuery
+      });
+      this.getAllRepos();
     },
     goTree(item) {
       this.$router.push({
@@ -127,11 +126,12 @@ export default {
         /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
       );
       return flag;
-    },
+    }
   },
   mounted() {
+    this.listQuery.git_repo = this.$route.query.git_repo;
     this.getAllRepos();
-  },
+  }
 };
 </script>
 <style lang='scss' scoped>
