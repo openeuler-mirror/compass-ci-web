@@ -13,17 +13,12 @@
             class="select-page"
             @change="getJobs"
           >
-            <el-option
-              v-for="item in pageSizeOptions"
-              :key="item"
-              :label="item"
-              :value="item"
-            ></el-option>
+            <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="search">
           <el-input
-            class = "search-input"
+            class="search-input"
             v-model="filter"
             placeholder="search jobs like: suite=iperf os=openeuler"
             size="medium"
@@ -31,21 +26,13 @@
             clearable
             @clear="getJobs"
           >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="handSearch"
-            ></el-button>
+            <el-button slot="append" icon="el-icon-search" @click="handSearch"></el-button>
           </el-input>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" stripe class="jobs-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
-        <el-table-column
-          :label="item"
-          :key="index"
-          v-for="(item, index) in tableHead"
-        >
+        <el-table-column :label="item" :key="index" v-for="(item, index) in tableHead">
           <template slot-scope="scope">
             <el-tooltip
               class="item"
@@ -65,34 +52,25 @@
                 @click="goBlank(testBoxUrl + checkStr(scope.row.testbox))"
                 v-if="item === 'testbox'"
                 @mouseover="showtip(item)"
-                >{{ scope.row[item] }}</span
-              >
+              >{{ scope.row[item] }}</span>
               <span
                 class="goUrl wrap"
                 @click="goBlank(resultUrl + scope.row.result_root)"
                 v-else-if="item === 'job_state'"
                 @mouseover="showtip(item)"
-                >{{ scope.row[item] }}</span
-              >
+              >{{ scope.row[item] }}</span>
               <span
                 class="goUrl wrap"
                 @click="goTree(scope.row[item])"
                 v-else-if="item == 'upstream_repo'"
                 @mouseover="showtip(item)"
-                >{{ scope.row[item] }}</span
-              >
-              <span
-                class="wrap"
-                v-else-if="item == 'error_ids'"
-                @mouseover="showtip(item)"
-              >
+              >{{ scope.row[item] }}</span>
+              <span class="wrap" v-else-if="item == 'error_ids'" @mouseover="showtip(item)">
                 <template v-for="item in scope.row[item]">
                   <span :key="item">{{ item }}</span>
                 </template>
               </span>
-              <span class="wrap" v-else @mouseover="showtip(item)">{{
-                scope.row[item]
-              }}</span>
+              <span class="wrap" v-else @mouseover="showtip(item)">{{ scope.row[item] }}</span>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -117,7 +95,7 @@ import Header from "@/components/Header";
 export default {
   name: "Jobs",
   components: {
-    Header,
+    Header
   },
   data() {
     return {
@@ -128,14 +106,14 @@ export default {
       filter: null,
       listQuery: {
         page_size: 10,
-        page_num: 1,
+        page_num: 1
       },
       pageSizeOptions: [10, 20, 30],
       jobsQuery: {},
       isSmall: false,
       toolDisabled: false,
       resultUrl: "",
-      testBoxUrl: "",
+      testBoxUrl: ""
     };
   },
   methods: {
@@ -160,31 +138,36 @@ export default {
       this.$router.push({
         path: "/tree",
         query: {
-          upstream_repo: item,
-        },
+          upstream_repo: item
+        }
       });
     },
     goBlank(src) {
       window.open(src, "_blank");
     },
-    parseFilter(){
-      var filters = this.filter.split(" ")
-      for (var f of filters){
-        var key_vaule = f.split("=")
-        this.listQuery[key_vaule[0]] = key_vaule[1]
+    parseFilter() {
+      var filters = this.filter.split(" ");
+      for (var f of filters) {
+        var key_vaule = f.split("=");
+        this.listQuery[key_vaule[0]] = key_vaule[1];
       }
     },
     handSearch() {
+      var tmp = { page_size: null, page_num: null };
+      tmp.page_size = this.listQuery.page_size;
+      tmp.page_num = this.listQuery.page_num;
+
       if (this.filter) {
-        this.parseFilter()
+        this.parseFilter();
         this.listQuery.page_num = 1;
         this.getJobs();
       } else {
         this.$message("请输入筛选条件");
       }
+      this.listQuery = tmp;
     },
     getJobs() {
-      getJobs(this.listQuery).then((res) => {
+      getJobs(this.listQuery).then(res => {
         this.jobsQuery = res;
         this.tableHead = this.jobsQuery.fields;
         this.tableData = this.jobsQuery.jobs;
@@ -221,13 +204,13 @@ export default {
         }
       }
       return resultStr;
-    },
+    }
   },
   mounted() {
     this.testBoxUrl = BASEURLTESTBOX;
     this.resultUrl = BASEURLRESULT;
     this.getJobs();
-  },
+  }
 };
 </script>
 <style lang='scss' scoped>
@@ -240,7 +223,7 @@ export default {
     margin-left: 0;
   }
 }
-.search-input{
+.search-input {
   width: 550px;
 }
 .select-page {
