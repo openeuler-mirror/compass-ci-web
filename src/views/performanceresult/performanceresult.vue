@@ -194,6 +194,13 @@ export default {
 
       return series;
     },
+    getSeriesNames(sourceData) {
+      var s_names = [];
+      for (var i = 0; i < sourceData.datas.length; i++) {
+        s_names[i] = sourceData.datas[i].name;
+      }
+      return s_names;
+    },
     getEcharts() {
       var container = document.getElementById("container");
       this.getQueryData();
@@ -233,6 +240,9 @@ export default {
               },
               title: {
                 text: sourceData[i].title
+              },
+              legend: {
+                data: this.getSeriesNames(sourceData[i])
               },
               xAxis: {
                 data: sourceData[i].datas[0].x_params
