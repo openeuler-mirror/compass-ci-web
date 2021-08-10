@@ -51,3 +51,9 @@
     line-height: 36px;
     cursor: pointer;
 }
+
+.nav-div {
+    float: right;
+    margin-right: 10%;
+    border-bottom: none;
+}

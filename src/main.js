@@ -17,7 +17,10 @@ import {
     Button,
     Tooltip,
     Notification,
-    Message
+    Message,
+    Menu,
+    Submenu,
+    MenuItem
 } from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -38,6 +41,9 @@ Vue.use(Input);
 Vue.use(Cascader);
 Vue.use(Button);
 Vue.use(Tooltip);
+Vue.use(Menu);
+Vue.use(Submenu);
+Vue.use(MenuItem);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 

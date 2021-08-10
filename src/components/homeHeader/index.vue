@@ -2,6 +2,19 @@
   <header class="home-header">
     <!-- <p class="small-title">{{headTitleObj.HEAD?headTitleObj.HEAD.SMALLTITLE:''}}</p> -->
     <div class="ci-logo">CI</div>
+    <div class="nav-div">
+      <el-menu
+        default-active="/job-summary"
+        mode="horizontal"
+        background-color="unset"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+        @select="handleSelect"
+      >
+        <el-menu-item index="/job-summary">测试汇总</el-menu-item>
+        <el-menu-item index="/performance-result">性能图表</el-menu-item>
+      </el-menu>
+    </div>
     <div class="center-title">
       <p class="tile">{{headTitleObj.HEAD?headTitleObj.HEAD.CENTERTITLE:''}}</p>
       <p class="home-content">{{headTitleObj.HEAD?headTitleObj.HEAD.CENTERCONTENT:''}}</p>
@@ -13,12 +26,17 @@
 export default {
   data() {
     return {
-      headTitleObj: {},
+      headTitleObj: {}
     };
+  },
+  methods: {
+    handleSelect(path) {
+      window.open(path);
+    }
   },
   mounted() {
     this.headTitleObj = require("@/lang/common.js");
-  },
+  }
 };
 </script>
 
@@ -32,7 +50,7 @@ export default {
   background-repeat: no-repeat;
   overflow: hidden;
   @media screen and (max-width: 1000px) {
-      background-size: auto 100%;
+    background-size: auto 100%;
   }
   .center-title {
     margin: 85px 0 0 10%;
@@ -52,11 +70,11 @@ export default {
       font-size: 16px;
       width: 1150px;
       @media screen and (min-width: 1920px) {
-          width:70%;
+        width: 70%;
       }
-       @media screen and (max-width: 1000px) {
-          width:100%;
-          margin: 0;
+      @media screen and (max-width: 1000px) {
+        width: 100%;
+        margin: 0;
       }
       font-family: FZLTXIHJW--GB1-0, FZLTXIHJW--GB1;
       font-weight: 400;
