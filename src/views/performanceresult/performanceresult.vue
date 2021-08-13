@@ -223,16 +223,22 @@ export default {
                 },
 
                 formatter(params) {
-                  var res = "<p>x_value:" + params[0].name + "</p>";
+                  var res = "<p>x_value: " + params[0].name + "</p>";
                   var s_name;
                   var average;
                   var deviation;
+                  var tmp;
 
                   for (var i = 0; i < params.length; i = i + 2) {
                     s_name = "<p>" + params[i].seriesName + "</p>";
-                    average = "<p>" + "average:" + params[i].data + "</p>";
-                    deviation =
-                      "<p>" + "deviation:" + params[i + 1].data[1] + "</p>";
+                    if (params[i].data > 1000000)
+                      tmp = params[i].data.toFixed(3);
+                    else tmp = params[i].data;
+                    average = "<p>" + "average: " + tmp + "</p>";
+                    if (params[i + 1].data[1] > 1000000)
+                      tmp = params[i + 1].data[1].toFixed(3);
+                    else tmp = params[i + 1].data[1];
+                    deviation = "<p>" + "deviation: " + tmp + "</p>";
                     res += "</br>" + s_name + average + deviation;
                   }
                   return res;
