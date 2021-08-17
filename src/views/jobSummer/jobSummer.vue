@@ -17,16 +17,13 @@
         <el-form-item class="confirm">
           <el-button @click="getData">确定</el-button>
         </el-form-item>
+        <el-form-item class="example">
+          <el-button @click="showExample">Example</el-button>
+        </el-form-item>
       </el-form>
 
       <el-table :data="tableData" stripe>
-        <el-table-column
-          v-for="(item,index) in tableHead"
-          :label="item"
-          :prop="item"
-          width
-          :key="index"
-        >
+        <el-table-column v-for="(item,index) in tableHead" :label="item" :prop="item" :key="index">
           <template slot-scope="scope">
             <div
               class="go"
@@ -101,6 +98,10 @@ export default {
       } else {
         this.$message("Filter和Grounp By为必填项");
       }
+    },
+    showExample() {
+      this.filter = "suite=openeuler_docker group_id=test_fail";
+      this.listQuery.GROUP_BY = "os";
     }
   },
   mounted() {
@@ -127,6 +128,14 @@ export default {
   position: absolute;
   top: 350px;
   left: 750px;
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+.example {
+  position: absolute;
+  top: 350px;
+  left: 1000px;
   @media screen and (max-width: 1000px) {
     display: none;
   }
