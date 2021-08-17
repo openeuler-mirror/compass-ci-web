@@ -7,7 +7,7 @@
       <el-table :data="tableData" stripe>
         <template v-for="(item,index) in tableHead">
           <el-table-column
-            v-if="item!='result_root'"
+            v-if="item!='result_root' && item!='error_id'"
             :label="item"
             :prop="item"
             :key="index"
