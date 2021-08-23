@@ -193,7 +193,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.listQuery.page_num = val;
-      this.getJobs();
+      this.getJobs(this.listQuery);
     },
     isMobile() {
       let flag = navigator.userAgent.match(
