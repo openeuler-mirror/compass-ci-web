@@ -231,13 +231,17 @@ export default {
 
                   for (var i = 0; i < params.length; i = i + 2) {
                     s_name = "<p>" + params[i].seriesName + "</p>";
-                    if (params[i].data > 1000000)
+                    if (params[i].data > 1000000) {
                       tmp = params[i].data.toFixed(3);
-                    else tmp = params[i].data;
+                    } else {
+                      tmp = params[i].data;
+                    }
                     average = "<p>" + "average: " + tmp + "</p>";
-                    if (params[i + 1].data[1] > 1000000)
+                    if (params[i + 1].data[1] > 1000000) {
                       tmp = params[i + 1].data[1].toFixed(3);
-                    else tmp = params[i + 1].data[1];
+                    } else {
+                      tmp = params[i + 1].data[1];
+                    }
                     deviation = "<p>" + "deviation: " + tmp + "</p>";
                     res += "</br>" + s_name + average + deviation;
                   }
