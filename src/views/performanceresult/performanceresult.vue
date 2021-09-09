@@ -177,7 +177,8 @@ export default {
           type: "custom",
           itemStyle: {
             normal: {
-              borderWidth: 1.5
+              borderWidth: 1.5,
+              borderType: 'dotted'
             }
           },
           renderItem: this.renderItem,
