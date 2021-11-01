@@ -6,7 +6,10 @@
     <div class="content">
       <el-form :model="QueryData">
         <el-form-item label="Filter" label-width="80px" class="input_class">
-          <el-input v-model="filter" placeholder="eg: suite:fio-basic;os_arch:aarch64,x86;"></el-input>
+          <el-input
+            v-model="filter"
+            placeholder="eg: suite:fio-basic;os_arch:aarch64,x86;"
+          ></el-input>
         </el-form-item>
         <el-form-item label="series" label-width="80px" class="input_class">
           <el-input
@@ -15,7 +18,10 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="metrics" label-width="80px" class="input_class">
-          <el-input v-model="metrics" placeholder="eg: iperf.tcp.sender.dps"></el-input>
+          <el-input
+            v-model="metrics"
+            placeholder="eg: iperf.tcp.sender.dps"
+          ></el-input>
         </el-form-item>
         <el-form-item label="x_params" label-width="80px" class="input_class">
           <el-input v-model="x_params" placeholder="eg: test_size"></el-input>
@@ -51,16 +57,13 @@ export default {
         filter: {},
         metrics: [],
         series: [],
-        x_params: []
-      }
+        x_params: [],
+      },
     };
   },
   methods: {
     getQueryData() {
-      var tmp = this.filter
-        .split(" ")
-        .join("")
-        .split(";");
+      var tmp = this.filter.split(" ").join("").split(";");
       var tmp1;
       var tmp2;
       this.QueryData.filter = {};
@@ -76,19 +79,10 @@ export default {
         }
       }
 
-      this.QueryData.metrics = this.metrics
-        .split(" ")
-        .join("")
-        .split(";");
-      this.QueryData.x_params = this.x_params
-        .split(" ")
-        .join("")
-        .split(";");
+      this.QueryData.metrics = this.metrics.split(" ").join("").split(";");
+      this.QueryData.x_params = this.x_params.split(" ").join("").split(";");
 
-      tmp = this.series
-        .split(" ")
-        .join("")
-        .split(";");
+      tmp = this.series.split(" ").join("").split(";");
       this.QueryData.series = [];
       for (i = 0; i < tmp.length; i++) {
         if (tmp[i] == "") continue;
@@ -109,7 +103,7 @@ export default {
         deviationAreaArray.push([
           i,
           dataArray[i] + (dataArray[i] * deviationArray[i]) / 100,
-          dataArray[i] - (dataArray[i] * deviationArray[i]) / 100
+          dataArray[i] - (dataArray[i] * deviationArray[i]) / 100,
         ]); //[x坐标序号,最大值，最小值]
       }
       return deviationAreaArray;
@@ -122,7 +116,7 @@ export default {
       var halfWidth = api.size([1, 0])[0] * 0.1;
       var style = api.style({
         stroke: api.visual("color"),
-        fill: null
+        fill: null,
       });
 
       return {
@@ -135,9 +129,9 @@ export default {
               x1: highPoint[0] - halfWidth,
               y1: highPoint[1],
               x2: highPoint[0] + halfWidth,
-              y2: highPoint[1]
+              y2: highPoint[1],
             },
-            style: style
+            style: style,
           },
           {
             type: "line",
@@ -146,9 +140,9 @@ export default {
               x1: highPoint[0],
               y1: highPoint[1],
               x2: lowPoint[0],
-              y2: lowPoint[1]
+              y2: lowPoint[1],
             },
-            style: style
+            style: style,
           },
           {
             type: "line",
@@ -157,11 +151,11 @@ export default {
               x1: lowPoint[0] - halfWidth,
               y1: lowPoint[1],
               x2: lowPoint[0] + halfWidth,
-              y2: lowPoint[1]
+              y2: lowPoint[1],
             },
-            style: style
-          }
-        ]
+            style: style,
+          },
+        ],
       };
     },
     renderSeries(sourceData) {
@@ -171,22 +165,22 @@ export default {
         var objLine = {
           name: sourceData.datas[j].name,
           type: "line",
-          data: sourceData.datas[j].data
+          data: sourceData.datas[j].data,
         };
         var objCustom = {
           type: "custom",
           itemStyle: {
             normal: {
               borderWidth: 1.5,
-              borderType: 'dotted'
-            }
+              borderType: "dotted",
+            },
           },
           renderItem: this.renderItem,
           data: this.renderDeviationAreaArray(
             sourceData.datas[j].data,
             sourceData.datas[j].deviation
           ), //返回方差数组
-          z: 100
+          z: 100,
         };
 
         series.push(objLine);
@@ -202,11 +196,19 @@ export default {
       }
       return s_names;
     },
+    echart_clean() {
+      var container = document.getElementById("container");
+      for (var i = container.children.length - 1; i >= 0; i--) {
+        container.removeChild(container.children[i]);
+      }
+    },
     getEcharts() {
       var container = document.getElementById("container");
+      this.echart_clean();
+
       this.getQueryData();
       if (this.QueryData) {
-        getPerformanceResult(this.QueryData).then(res => {
+        getPerformanceResult(this.QueryData).then((res) => {
           var sourceData = res;
           for (var i = 0; i < sourceData.length; i++) {
             var el = document.createElement("div");
@@ -220,7 +222,7 @@ export default {
               tooltip: {
                 trigger: "axis",
                 axisPointer: {
-                  type: "shadow"
+                  type: "shadow",
                 },
 
                 formatter(params) {
@@ -247,22 +249,22 @@ export default {
                     res += "</br>" + s_name + average + deviation;
                   }
                   return res;
-                }
+                },
               },
               title: {
-                text: sourceData[i].title
+                text: sourceData[i].title,
               },
               legend: {
-                data: this.getSeriesNames(sourceData[i])
+                data: this.getSeriesNames(sourceData[i]),
               },
               xAxis: {
-                data: sourceData[i].datas[0].x_params
+                data: sourceData[i].datas[0].x_params,
               },
               yAxis: {},
 
               grid: {
-                left: "15%"
-              }
+                left: "15%",
+              },
             };
             var series = this.renderSeries(sourceData[i]);
             option.series = series;
@@ -276,9 +278,9 @@ export default {
       this.series = "os:openeuler;os:centos;";
       this.metrics = "atomic.score";
       this.x_params = "nr_threads";
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 
