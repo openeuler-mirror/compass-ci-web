@@ -20,7 +20,8 @@ import {
     Message,
     Menu,
     Submenu,
-    MenuItem
+    MenuItem,
+    Checkbox
 } from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -44,6 +45,7 @@ Vue.use(Tooltip);
 Vue.use(Menu);
 Vue.use(Submenu);
 Vue.use(MenuItem);
+Vue.use(Checkbox);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 

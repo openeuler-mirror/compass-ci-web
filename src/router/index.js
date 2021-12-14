@@ -60,7 +60,13 @@ const routes = [
         path: '/performance-result',
         name: 'PerformanceResult',
         component: () => import('../views/performanceresult/performanceresult.vue')
+    },
+    {
+        path: '/performance-list',
+        name: 'PerformanceList',
+        component: () => import('../views/performanceresult/performancelist.vue')
     }
+
 ]
 
 const router = new VueRouter({
