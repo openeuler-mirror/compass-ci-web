@@ -157,7 +157,7 @@
             <el-radio label="netperf">netperf</el-radio>
             <el-radio label="unixbench">unixbench</el-radio>
             <el-radio label="lmbench3">lmbench3</el-radio>
-            <el-radio label="libMicro">libMicro</el-radio>
+            <el-radio label="libmicro">libmicro</el-radio>
             <el-radio label="fio-basic">fio-basic</el-radio>
           </el-radio-group>
         </div>
@@ -230,8 +230,64 @@
         ></div>
       </div>
 
-      <div v-for="(t_item, t_index) in libMicro_data.table_data" :key="t_index">
+      <div v-for="(t_item, t_index) in libmicro_data.table_data" :key="t_index">
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in stream_data.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in fio_data.table_data" :key="t_index">
+        <div class="test_params">test_params:</div>
         <el-table
           :data="t_item.data"
           border
@@ -282,34 +338,6 @@
 
         <div
           :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
-          :style="{ width: '100%', height: '600px' }"
-        ></div>
-      </div>
-
-      <div v-for="(t_item, t_index) in stream_data.table_data" :key="t_index">
-        <div class="test_params">test_params: {{ t_item.test_params }}</div>
-        <el-table
-          :data="t_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
-          :row-style="tableRowStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in t_item.header"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
-
-        <div
-          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
-          :style="{ width: '100%', height: '600px' }"
-        ></div>
-
-        <div
-          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
       </div>
@@ -388,6 +416,8 @@ export default {
         QueryData: {
           filter: {
             suite: ["stream"],
+            "pp.stream.nr_threads": [32],
+            "pp.stream.array_size": [50000000],
             group_id: [],
           },
           metrics: [
@@ -416,11 +446,11 @@ export default {
           x_params: ["metric"],
         },
       },
-      libMicro_data: {
+      libmicro_data: {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["libMicro"], group_id: [] },
+          filter: { suite: ["libmicro"], group_id: [] },
           metrics: [],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -433,20 +463,43 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["unixbench"], group_id: [] },
-          metrics: [],
+          filter: { suite: ["unixbench"], nr_task: [1, 96], group_id: [] },
+          metrics: ["unixbench.score"],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
             { os: "openeuler", os_version: "21.09-iso" },
           ],
-          x_params: ["metric"],
+          x_params: ["test"],
+        },
+      },
+      fio_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["fio-basic"], group_id: [] },
+          metrics: [
+            "fio.read_iops",
+            "fio.read_bw_MBps",
+            "fio.write_iops",
+            "fio.write_bw_MBps",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["bs"],
         },
       },
       netperfa_data: {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["netperf"], group_id: [] },
+          filter: {
+            suite: ["netperf"],
+            "pp.netperf.test": ["TCP_STREAM", "UDP_STREAM"],
+            "pp.netperf.runtime": [60],
+            group_id: [],
+          },
           metrics: ["netperf.Throughput_Mbps"],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -463,6 +516,7 @@ export default {
             suite: ["netperf"],
             group_id: [],
             "pp.netperf.test": ["TCP_RR", "TCP_CRR", "UDP_CRR"],
+            "pp.netperf.runtime": [60],
           },
           metrics: ["netperf.Throughput_tps"],
           series: [
@@ -578,11 +632,14 @@ export default {
       this.lmbench_data.table_data = [];
       this.lmbench_data.echart_data = [];
 
-      this.libMicro_data.table_data = [];
-      this.libMicro_data.echart_data = [];
+      this.libmicro_data.table_data = [];
+      this.libmicro_data.echart_data = [];
 
       this.unixbench_data.table_data = [];
       this.unixbench_data.echart_data = [];
+
+      this.fio_data.table_data = [];
+      this.fio_data.echart_data = [];
 
       this.netperfa_data.table_data = [];
       this.netperfa_data.echart_data = [];
@@ -631,7 +688,7 @@ export default {
         for (var i = 0; i < sourceData.length; i++) {
           this.getTableData(sourceData[i], JobData.table_data);
         }
-        this.sleep(50).then(() => {
+        this.sleep(200).then(() => {
           this.get_Echarts(JobData.echart_data);
         });
       });
@@ -641,8 +698,6 @@ export default {
       this.checkQuery.filter.os = [];
       this.checkQuery.filter.os_version = [];
       this.checkQuery.field = "os";
-      this.os_a = "";
-      this.os_version_a = "";
       this.group_id_a = "";
       this.versionData_a = [];
       this.groupData_a = [];
@@ -651,8 +706,6 @@ export default {
       this.checkQuery_b.filter.os = [];
       this.checkQuery_b.filter.os_version = [];
       this.checkQuery_b.field = "os";
-      this.os_b = "";
-      this.os_version_b = "";
       this.group_id_b = "";
       this.versionData_b = [];
       this.groupData_b = [];
@@ -791,10 +844,10 @@ export default {
       this.unixbench_data.QueryData.series[1].os = this.os_b;
       this.unixbench_data.QueryData.series[1].os_version = this.os_version_b;
 
-      this.libMicro_data.QueryData.series[0].os = this.os_a;
-      this.libMicro_data.QueryData.series[0].os_version = this.os_version_a;
-      this.libMicro_data.QueryData.series[1].os = this.os_b;
-      this.libMicro_data.QueryData.series[1].os_version = this.os_version_b;
+      this.libmicro_data.QueryData.series[0].os = this.os_a;
+      this.libmicro_data.QueryData.series[0].os_version = this.os_version_a;
+      this.libmicro_data.QueryData.series[1].os = this.os_b;
+      this.libmicro_data.QueryData.series[1].os_version = this.os_version_b;
 
       this.stream_data.QueryData.series[0].os = this.os_a;
       this.stream_data.QueryData.series[0].os_version = this.os_version_a;
@@ -814,7 +867,7 @@ export default {
       if (this.group_id_a == "" || this.group_id_b == "") {
         this.lmbench_data.QueryData.filter.group_id = [];
         this.unixbench_data.QueryData.filter.group_id = [];
-        this.libMicro_data.QueryData.filter.group_id = [];
+        this.libmicro_data.QueryData.filter.group_id = [];
         this.stream_data.QueryData.filter.group_id = [];
         this.netperfa_data.QueryData.filter.group_id = [];
         this.netperfb_data.QueryData.filter.group_id = [];
@@ -823,8 +876,8 @@ export default {
         this.lmbench_data.QueryData.filter.group_id[1] = this.group_id_b;
         this.unixbench_data.QueryData.filter.group_id[0] = this.group_id_a;
         this.unixbench_data.QueryData.filter.group_id[1] = this.group_id_b;
-        this.libMicro_data.QueryData.filter.group_id[0] = this.group_id_a;
-        this.libMicro_data.QueryData.filter.group_id[1] = this.group_id_b;
+        this.libmicro_data.QueryData.filter.group_id[0] = this.group_id_a;
+        this.libmicro_data.QueryData.filter.group_id[1] = this.group_id_b;
         this.stream_data.QueryData.filter.group_id[0] = this.group_id_a;
         this.stream_data.QueryData.filter.group_id[1] = this.group_id_b;
         this.netperfa_data.QueryData.filter.group_id[0] = this.group_id_a;
@@ -840,16 +893,20 @@ export default {
       if (this.suite === "unixbench") {
         this.getData(this.unixbench_data);
       }
-      if (this.suite === "libMicro") {
-        this.getData(this.libMicro_data);
+      if (this.suite === "libmicro") {
+        this.getData(this.libmicro_data);
       }
       if (this.suite === "stream") {
         this.getData(this.stream_data);
       }
+      if (this.suite === "fio-basic") {
+        this.getData(this.fio_data);
+      }
       if (this.suite === "netperf") {
-        this.sleep(100).then(() => {
+        this.getData(this.netperfb_data);
+
+        this.sleep(200).then(() => {
           this.getData(this.netperfa_data);
-          this.getData(this.netperfb_data);
         });
       }
     },
