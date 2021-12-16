@@ -35,3 +35,13 @@ export function getPerformanceResult(data) {
         }
     });
 }
+export function QueryField(data) {
+    return service({
+        url: '/query_field',
+        method: 'post',
+        data: data,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+}

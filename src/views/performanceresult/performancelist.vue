@@ -4,20 +4,55 @@
     <Header class="main-header"></Header>
     <h1 class="title">Performance Result</h1>
     <div class="content">
-      <div style="background-color: #eeeeee; float: left; width: 40%">
+      <div
+        style="
+          background-color: #eeeeee;
+          float: left;
+          width: 30%;
+          margin-left: 10%;
+        "
+      >
         <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
           <font size="5">比较基线</font>
         </p>
         <el-form>
           <el-form-item label="os" label-width="120px" class="input_class">
-            <el-input v-model="os_a"></el-input>
+            <el-select
+              v-model="os_a"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+              @change="getSelectVersiona"
+            >
+              <el-option
+                v-for="item in osData"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item
             label="os_version"
             label-width="120px"
             class="input_class"
           >
-            <el-input v-model="os_version_a"></el-input>
+            <el-select
+              v-model="os_version_a"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+              @change="getSelectGroupa"
+            >
+              <el-option
+                v-for="item in versionData_a"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
           </el-form-item>
 
           <el-form-item
@@ -25,7 +60,20 @@
             label-width="120px"
             class="input_class"
           >
-            <el-input v-model="group_id_a"></el-input>
+            <el-select
+              v-model="group_id_a"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+            >
+              <el-option
+                v-for="item in groupData_a"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </div>
@@ -34,7 +82,7 @@
         style="
           background-color: #eeeeee;
           float: left;
-          width: 40%;
+          width: 30%;
           margin-left: 20%;
         "
       >
@@ -43,36 +91,81 @@
         </p>
         <el-form>
           <el-form-item label="os" label-width="120px" class="input_class">
-            <el-input v-model="os_b"></el-input>
+            <el-select
+              v-model="os_b"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+              @change="getSelectVersionb"
+            >
+              <el-option
+                v-for="item in osData"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item
             label="os_version"
             label-width="120px"
             class="input_class"
           >
-            <el-input v-model="os_version_b"></el-input>
+            <el-select
+              v-model="os_version_b"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+              @change="getSelectGroupb"
+            >
+              <el-option
+                v-for="item in versionData_b"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item
             label="group_id"
             label-width="120px"
             class="input_class"
           >
-            <el-input v-model="group_id_b"></el-input>
+            <el-select
+              v-model="group_id_b"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+            >
+              <el-option
+                v-for="item in groupData_b"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </div>
       <div style="float: left; width: 100%; margin-top: 20px">
-        <el-checkbox v-model="checked_unixbench">unixbench</el-checkbox>
-        <el-checkbox v-model="checked_lmbench3">lmbench3</el-checkbox>
-        <el-checkbox v-model="checked_libMicro">libMicro</el-checkbox>
-        <el-checkbox v-model="checked_stream">stream</el-checkbox>
-        <el-checkbox v-model="checked_netperf">netperf</el-checkbox>
-        <el-checkbox v-model="checked_fio">fio-basic</el-checkbox>
-        <el-form>
-          <el-form-item class="confirm">
-            <el-button @click="queryCharts">确定</el-button>
-          </el-form-item>
-        </el-form>
+        <div style="float: left; width: 50%; margin-left: 20%">
+          <el-checkbox v-model="checked_unixbench">unixbench</el-checkbox>
+          <el-checkbox v-model="checked_lmbench3">lmbench3</el-checkbox>
+          <el-checkbox v-model="checked_libMicro">libMicro</el-checkbox>
+          <el-checkbox v-model="checked_stream">stream</el-checkbox>
+          <el-checkbox v-model="checked_netperf">netperf</el-checkbox>
+          <el-checkbox v-model="checked_fio">fio-basic</el-checkbox>
+        </div>
+        <div style="float: left">
+          <el-form>
+            <el-form-item class="confirm">
+              <el-button @click="queryCharts">确定</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
     </div>
     <div id="container" class="containers">
@@ -81,7 +174,13 @@
         :key="l_index"
       >
         <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table :data="l_item.data" border style="width: 1500px">
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
           <el-table-column
             v-for="(item, index) in l_item.header"
             :key="index"
@@ -215,7 +314,7 @@
 </template>
 
 <script>
-import { getPerformanceResult } from "@/api/jobs.js";
+import { getPerformanceResult, QueryField } from "@/api/jobs.js";
 import Header from "@/components/Header";
 import echarts from "echarts";
 export default {
@@ -223,29 +322,51 @@ export default {
   components: { Header },
   data() {
     return {
-      inputvalue: "",
-      filter: "",
-      series: "",
-      metrics: "",
-      x_params: "",
-      QueryData: {
-        filter: {},
-        metrics: [],
-        series: [],
-        x_params: [],
+      osData: [],
+      versionData_a: [],
+      versionData_b: [],
+      groupData_a: [],
+      groupData_b: [],
+      checkQuery: {
+        filter: {
+          suite: [
+            "netperf",
+            "unixbench",
+            "lmbench3",
+            "libMicro",
+            "stream",
+            "fio-basic",
+          ],
+          os: [],
+          os_version: [],
+        },
+        field: "os",
       },
-      table_data: [],
-      echart_data: [],
+      checkQuery_b: {
+        filter: {
+          suite: [
+            "netperf",
+            "unixbench",
+            "lmbench3",
+            "libMicro",
+            "stream",
+            "fio-basic",
+          ],
+          os: [],
+          os_version: [],
+        },
+        field: "os",
+      },
       checked_unixbench: true,
-      checked_lmbench3: true,
-      checked_libMicro: true,
-      checked_stream: true,
-      checked_netperf: true,
+      checked_lmbench3: false,
+      checked_libMicro: false,
+      checked_stream: false,
+      checked_netperf: false,
       checked_fio: false,
-      os_a: "openeuler",
-      os_b: "openeuler",
-      os_version_a: "20.03-LTS-SP1-iso",
-      os_version_b: "20.03-LTS-SP2-iso",
+      os_a: "",
+      os_b: "",
+      os_version_a: "",
+      os_version_b: "",
       group_id_a: "",
       group_id_b: "",
       stream_data: {
@@ -263,8 +384,8 @@ export default {
             "stream.triad_bandwidth_MBps",
           ],
           series: [
-            { os: "openeuler", os_version: "21.09-iso" },
             { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
         },
@@ -276,8 +397,8 @@ export default {
           filter: { suite: ["lmbench3"], group_id: [] },
           metrics: [],
           series: [
-            { os: "openeuler", os_version: "21.09-iso" },
             { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
         },
@@ -289,8 +410,8 @@ export default {
           filter: { suite: ["libMicro"], group_id: [] },
           metrics: [],
           series: [
-            { os: "openeuler", os_version: "21.09-iso" },
             { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
         },
@@ -302,8 +423,8 @@ export default {
           filter: { suite: ["unixbench"], group_id: [] },
           metrics: [],
           series: [
-            { os: "openeuler", os_version: "21.09-iso" },
             { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
         },
@@ -315,8 +436,8 @@ export default {
           filter: { suite: ["netperf"], group_id: [] },
           metrics: ["netperf.Throughput_Mbps"],
           series: [
-            { os: "openeuler", os_version: "21.09-iso" },
             { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["send_size"],
         },
@@ -332,8 +453,8 @@ export default {
           },
           metrics: ["netperf.Throughput_tps"],
           series: [
-            { os: "openeuler", os_version: "21.09-iso" },
             { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["test"],
         },
@@ -437,13 +558,6 @@ export default {
       }
       return s_names;
     },
-    echart_clean() {
-      var container = document.getElementById("container");
-      for (var i = container.children.length - 1; i >= 0; i--) {
-        container.removeChild(container.children[i]);
-      }
-      this.table_data = [];
-    },
     clean_data() {
       this.stream_data.table_data = [];
       this.stream_data.echart_data = [];
@@ -498,16 +612,64 @@ export default {
     },
     getData(JobData) {
       getPerformanceResult(JobData.QueryData).then((res) => {
-        console.log(res);
         JobData.echart_data = res;
         var sourceData = res;
 
         for (var i = 0; i < sourceData.length; i++) {
           this.getTableData(sourceData[i], JobData.table_data);
         }
-        this.sleep(500).then(() => {
+        this.sleep(50).then(() => {
           this.get_Echarts(JobData.echart_data);
         });
+      });
+    },
+    getosData(QueryData) {
+      QueryField(QueryData).then((res) => {
+        this.osData = res;
+      });
+    },
+    getSelectVersiona(os) {
+      this.checkQuery.filter.os = [os];
+      this.checkQuery.filter.os_version = [];
+      this.checkQuery.field = "os_version";
+      this.os_version_a = "";
+      this.group_id_a = "";
+      this.versionData_a = [];
+      this.groupData_a = [];
+
+      QueryField(this.checkQuery).then((res) => {
+        this.versionData_a = res;
+      });
+    },
+    getSelectVersionb(os) {
+      this.checkQuery_b.filter.os = [os];
+      this.checkQuery_b.filter.os_version = [];
+      this.checkQuery_b.field = "os_version";
+      this.os_version_b = "";
+      this.group_id_b = "";
+      this.versionData_b = [];
+      this.groupData_b = [];
+
+      QueryField(this.checkQuery_b).then((res) => {
+        this.versionData_b = res;
+      });
+    },
+    getSelectGroupa(os_version) {
+      this.checkQuery.filter.os_version = [os_version];
+      this.checkQuery.field = "group_id";
+      this.group_id_a = "";
+
+      QueryField(this.checkQuery).then((res) => {
+        this.groupData_a = res;
+      });
+    },
+    getSelectGroupb(os_version) {
+      this.checkQuery_b.filter.os_version = [os_version];
+      this.checkQuery_b.field = "group_id";
+      this.group_id_b = "";
+
+      QueryField(this.checkQuery_b).then((res) => {
+        this.groupData_b = res;
       });
     },
     sleep(time) {
@@ -542,7 +704,6 @@ export default {
     drawEchart(echart_title, index, data_type, echart_type, e_data) {
       var echart_id =
         data_type + "_" + echart_title.replace(".", "_") + "_" + index;
-      console.log(echart_id);
       var myChart = echarts.init(document.getElementById(echart_id));
 
       var option = {
@@ -659,8 +820,22 @@ export default {
         });
       }
     },
+    tableRowStyle({ row, rowIndex }) {
+      let rowBackground = {};
+      if (rowIndex === 0) {
+        rowBackground.background = "#eeeeee";
+      } else if (rowIndex === 2) {
+        for (var k in row) {
+          if (row[k] <= 0) {
+            rowBackground.background = "yellow";
+          }
+        }
+      }
+      return rowBackground;
+    },
   },
   mounted() {
+    this.getosData(this.checkQuery);
     if (this.checked_lmbench3) {
       this.getData(this.lmbench_data);
     }
@@ -690,17 +865,7 @@ export default {
 .confirm {
   float: left;
   margin-left: 90%;
-  //  margin-top: 20px;
 }
-.example {
-  position: absolute;
-  top: 390px;
-  left: 1000px;
-  @media screen and (max-width: 1000px) {
-    display: none;
-  }
-}
-
 .containers {
   display: flex;
   flex-wrap: wrap;
@@ -715,5 +880,8 @@ export default {
 .test-params {
   margin-left: 100px;
   margin-bottom: 20px;
+}
+.el-table.warning-row {
+  background: #02851e;
 }
 </style>
