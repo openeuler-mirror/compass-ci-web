@@ -152,12 +152,14 @@
       </div>
       <div style="float: left; width: 100%; margin-top: 20px">
         <div style="float: left; width: 50%; margin-left: 20%">
-          <el-checkbox v-model="checked_unixbench">unixbench</el-checkbox>
-          <el-checkbox v-model="checked_lmbench3">lmbench3</el-checkbox>
-          <el-checkbox v-model="checked_libMicro">libMicro</el-checkbox>
-          <el-checkbox v-model="checked_stream">stream</el-checkbox>
-          <el-checkbox v-model="checked_netperf">netperf</el-checkbox>
-          <el-checkbox v-model="checked_fio">fio-basic</el-checkbox>
+          <el-radio-group v-model="suite" @change="getosData">
+            <el-radio label="stream">stream</el-radio>
+            <el-radio label="netperf">netperf</el-radio>
+            <el-radio label="unixbench">unixbench</el-radio>
+            <el-radio label="lmbench3">lmbench3</el-radio>
+            <el-radio label="libMicro">libMicro</el-radio>
+            <el-radio label="fio-basic">fio-basic</el-radio>
+          </el-radio-group>
         </div>
         <div style="float: left">
           <el-form>
@@ -202,7 +204,13 @@
 
       <div v-for="(l_item, l_index) in lmbench_data.table_data" :key="l_index">
         <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table :data="l_item.data" border style="width: 1500px">
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
           <el-table-column
             v-for="(item, index) in l_item.header"
             :key="index"
@@ -224,7 +232,13 @@
 
       <div v-for="(t_item, t_index) in libMicro_data.table_data" :key="t_index">
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
-        <el-table :data="t_item.data" border style="width: 1500px">
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
           <el-table-column
             v-for="(item, index) in t_item.header"
             :key="index"
@@ -246,7 +260,13 @@
 
       <div v-for="(l_item, l_index) in netperfb_data.table_data" :key="l_index">
         <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table :data="l_item.data" border style="width: 1500px">
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
           <el-table-column
             v-for="(item, index) in l_item.header"
             :key="index"
@@ -268,7 +288,13 @@
 
       <div v-for="(t_item, t_index) in stream_data.table_data" :key="t_index">
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
-        <el-table :data="t_item.data" border style="width: 1500px">
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
           <el-table-column
             v-for="(item, index) in t_item.header"
             :key="index"
@@ -290,7 +316,13 @@
 
       <div v-for="(l_item, l_index) in netperfa_data.table_data" :key="l_index">
         <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table :data="l_item.data" border style="width: 1500px">
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
           <el-table-column
             v-for="(item, index) in l_item.header"
             :key="index"
@@ -322,6 +354,7 @@ export default {
   components: { Header },
   data() {
     return {
+      suite: "stream",
       osData: [],
       versionData_a: [],
       versionData_b: [],
@@ -329,14 +362,7 @@ export default {
       groupData_b: [],
       checkQuery: {
         filter: {
-          suite: [
-            "netperf",
-            "unixbench",
-            "lmbench3",
-            "libMicro",
-            "stream",
-            "fio-basic",
-          ],
+          suite: [],
           os: [],
           os_version: [],
         },
@@ -344,25 +370,12 @@ export default {
       },
       checkQuery_b: {
         filter: {
-          suite: [
-            "netperf",
-            "unixbench",
-            "lmbench3",
-            "libMicro",
-            "stream",
-            "fio-basic",
-          ],
+          suite: [],
           os: [],
           os_version: [],
         },
         field: "os",
       },
-      checked_unixbench: true,
-      checked_lmbench3: false,
-      checked_libMicro: false,
-      checked_stream: false,
-      checked_netperf: false,
-      checked_fio: false,
       os_a: "",
       os_b: "",
       os_version_a: "",
@@ -623,8 +636,28 @@ export default {
         });
       });
     },
-    getosData(QueryData) {
-      QueryField(QueryData).then((res) => {
+    getosData() {
+      this.checkQuery.filter.suite = [this.suite];
+      this.checkQuery.filter.os = [];
+      this.checkQuery.filter.os_version = [];
+      this.checkQuery.field = "os";
+      this.os_a = "";
+      this.os_version_a = "";
+      this.group_id_a = "";
+      this.versionData_a = [];
+      this.groupData_a = [];
+
+      this.checkQuery_b.filter.suite = [this.suite];
+      this.checkQuery_b.filter.os = [];
+      this.checkQuery_b.filter.os_version = [];
+      this.checkQuery_b.field = "os";
+      this.os_b = "";
+      this.os_version_b = "";
+      this.group_id_b = "";
+      this.versionData_b = [];
+      this.groupData_b = [];
+
+      QueryField(this.checkQuery).then((res) => {
         this.osData = res;
       });
     },
@@ -801,19 +834,19 @@ export default {
       }
 
       this.clean_data();
-      if (this.checked_lmbench3) {
+      if (this.suite === "lmbench3") {
         this.getData(this.lmbench_data);
       }
-      if (this.checked_unixbench) {
+      if (this.suite === "unixbench") {
         this.getData(this.unixbench_data);
       }
-      if (this.checked_libMicro) {
+      if (this.suite === "libMicro") {
         this.getData(this.libMicro_data);
       }
-      if (this.checked_stream) {
+      if (this.suite === "stream") {
         this.getData(this.stream_data);
       }
-      if (this.checked_netperf) {
+      if (this.suite === "netperf") {
         this.sleep(100).then(() => {
           this.getData(this.netperfa_data);
           this.getData(this.netperfb_data);
@@ -835,25 +868,7 @@ export default {
     },
   },
   mounted() {
-    this.getosData(this.checkQuery);
-    if (this.checked_lmbench3) {
-      this.getData(this.lmbench_data);
-    }
-    if (this.checked_unixbench) {
-      this.getData(this.unixbench_data);
-    }
-    if (this.checked_libMicro) {
-      this.getData(this.libMicro_data);
-    }
-    if (this.checked_stream) {
-      this.getData(this.stream_data);
-    }
-    if (this.checked_netperf) {
-      this.sleep(100).then(() => {
-        this.getData(this.netperfa_data);
-        this.getData(this.netperfb_data);
-      });
-    }
+    this.getosData();
   },
 };
 </script>
