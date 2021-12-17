@@ -23,7 +23,7 @@
               placeholder="请选择"
               size="medium"
               clearable
-              @change="getSelectVersiona"
+              @change="selectChangeVersiona"
             >
               <el-option
                 v-for="item in osData"
@@ -97,7 +97,7 @@
               placeholder="请选择"
               size="medium"
               clearable
-              @change="getSelectVersionb"
+              @change="selectChangeVersionb"
             >
               <el-option
                 v-for="item in osData"
@@ -152,7 +152,7 @@
       </div>
       <div style="float: left; width: 100%; margin-top: 20px">
         <div style="float: left; width: 50%; margin-left: 20%">
-          <el-radio-group v-model="suite" @change="getosData">
+          <el-radio-group v-model="suite" @change="radioChange">
             <el-radio label="stream">stream</el-radio>
             <el-radio label="netperf">netperf</el-radio>
             <el-radio label="unixbench">unixbench</el-radio>
@@ -416,8 +416,6 @@ export default {
         QueryData: {
           filter: {
             suite: ["stream"],
-            "pp.stream.nr_threads": [32],
-            "pp.stream.array_size": [50000000],
             group_id: [],
           },
           metrics: [
@@ -693,6 +691,13 @@ export default {
         });
       });
     },
+    radioChange() {
+      this.getosData();
+      this.getSelectVersiona(this.os_a);
+      this.getSelectVersionb(this.os_b);
+      this.getSelectGroupa(this.os_version_a);
+      this.getSelectGroupb(this.os_version_b);
+    },
     getosData() {
       this.checkQuery.filter.suite = [this.suite];
       this.checkQuery.filter.os = [];
@@ -714,11 +719,18 @@ export default {
         this.osData = res;
       });
     },
+    selectChangeVersiona(os) {
+      this.os_version_a = "";
+      this.getSelectVersiona(os);
+    },
+    selectChangeVersionb(os) {
+      this.os_version_b = "";
+      this.getSelectVersionb(os);
+    },
     getSelectVersiona(os) {
       this.checkQuery.filter.os = [os];
       this.checkQuery.filter.os_version = [];
       this.checkQuery.field = "os_version";
-      this.os_version_a = "";
       this.group_id_a = "";
       this.versionData_a = [];
       this.groupData_a = [];
@@ -731,7 +743,6 @@ export default {
       this.checkQuery_b.filter.os = [os];
       this.checkQuery_b.filter.os_version = [];
       this.checkQuery_b.field = "os_version";
-      this.os_version_b = "";
       this.group_id_b = "";
       this.versionData_b = [];
       this.groupData_b = [];
