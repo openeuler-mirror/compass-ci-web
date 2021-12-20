@@ -1,0 +1,918 @@
+
+<template>
+  <div id="CustomErrorBar">
+    <Header class="main-header"></Header>
+    <h1 class="title">Performance Result for Update</h1>
+    <div class="content">
+      <div
+        style="
+          background-color: #eeeeee;
+          float: left;
+          width: 30%;
+          margin-left: 10%;
+        "
+      >
+        <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
+          <font size="5">比较基线</font>
+        </p>
+        <el-form>
+          <el-form-item label="os" label-width="120px" class="input_class">
+            <el-select v-model="os_select" size="medium" disabled> </el-select>
+          </el-form-item>
+          <el-form-item
+            label="os_version"
+            label-width="120px"
+            class="input_class"
+          >
+            <el-select
+              v-model="os_version"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+              @change="getSelectGroup"
+            >
+              <el-option
+                v-for="item in versionData"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item
+            label="group_id"
+            label-width="120px"
+            class="input_class"
+          >
+            <el-select
+              v-model="group_id_a"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+            >
+              <el-option
+                v-for="item in groupData"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <div
+        style="
+          background-color: #eeeeee;
+          float: left;
+          width: 30%;
+          margin-left: 20%;
+        "
+      >
+        <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
+          <font size="5">对比对象</font>
+        </p>
+        <el-form>
+          <el-form-item label="os" label-width="120px" class="input_class">
+            <el-select v-model="os_select" size="medium" disabled> </el-select>
+          </el-form-item>
+          <el-form-item
+            label="os_version"
+            label-width="120px"
+            class="input_class"
+          >
+            <el-select
+              v-model="os_version"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+              @change="getSelectGroup"
+            >
+              <el-option
+                v-for="item in versionData"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            label="group_id"
+            label-width="120px"
+            class="input_class"
+          >
+            <el-select
+              v-model="group_id_b"
+              filterable
+              placeholder="请选择"
+              size="medium"
+              clearable
+            >
+              <el-option
+                v-for="item in groupData"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div style="float: left; width: 100%; margin-top: 20px">
+        <div style="float: left; width: 50%; margin-left: 20%">
+          <el-radio-group v-model="suite" @change="radioChange">
+            <el-radio label="stream">stream</el-radio>
+            <el-radio label="netperf">netperf</el-radio>
+            <el-radio label="unixbench">unixbench</el-radio>
+            <el-radio label="lmbench3">lmbench3</el-radio>
+            <el-radio label="libmicro">libmicro</el-radio>
+            <el-radio label="fio-basic">fio-basic</el-radio>
+          </el-radio-group>
+        </div>
+        <div style="float: left">
+          <el-form>
+            <el-form-item class="confirm">
+              <el-button @click="queryCharts">确定</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+    </div>
+    <div id="container" class="containers">
+      <div
+        v-for="(l_item, l_index) in unixbench_data.table_data"
+        :key="l_index"
+      >
+        <div class="test_params">test_params: {{ l_item.test_params }}</div>
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in l_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(l_item, l_index) in lmbench_data.table_data" :key="l_index">
+        <div class="test_params">test_params: {{ l_item.test_params }}</div>
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in l_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in libmicro_data.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in stream_data.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in fio_data.table_data" :key="t_index">
+        <div class="test_params">test_params:</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(l_item, l_index) in netperfb_data.table_data" :key="l_index">
+        <div class="test_params">test_params: {{ l_item.test_params }}</div>
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in l_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="l_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(l_item, l_index) in netperfa_data.table_data" :key="l_index">
+        <div class="test_params">test_params: {{ l_item.test_params }}</div>
+        <el-table
+          :data="l_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :row-style="tableRowStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in l_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="l_item.data.length > 2"
+        ></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { getPerformanceResult, QueryField } from "@/api/jobs.js";
+import Header from "@/components/Header";
+import echarts from "echarts";
+export default {
+  name: "CustomErrorBar",
+  components: { Header },
+  data() {
+    return {
+      suite: "stream",
+      osData: [],
+      versionData: [],
+      groupData: [],
+      checkQuery: {
+        filter: {
+          suite: [],
+          os: ["openeuler"],
+          os_version: [],
+        },
+        field: "os_version",
+      },
+      checkQuery_b: {
+        filter: {
+          suite: [],
+          os: ["openeuler"],
+          os_version: [],
+        },
+        field: "os_version",
+      },
+      os_select: "openeuler",
+      os_version: "",
+      group_id_a: "",
+      group_id_b: "",
+      stream_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            interval_type: ["openeuler-update"],
+            os: ["openeuler"],
+            suite: ["stream"],
+            os_version: [],
+            group_id: [],
+          },
+          metrics: [
+            "stream.copy_bandwidth_MBps",
+            "stream.scale_bandwidth_MBps",
+            "stream.add_bandwidth_MBps",
+            "stream.triad_bandwidth_MBps",
+          ],
+          series: ["group_id"],
+          x_params: ["metric"],
+          max_series_num: 2,
+        },
+      },
+      lmbench_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["lmbench3"], group_id: [] },
+          metrics: [],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+        },
+      },
+      libmicro_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            interval_type: ["openeuler-update"],
+            os: ["openeuler"],
+            suite: ["libmicro"],
+            os_version: [],
+            group_id: [],
+          },
+          metrics: [],
+          series: ["group_id"],
+          x_params: ["metric"],
+          max_series_num: 2,
+        },
+      },
+      unixbench_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            interval_type: ["openeuler-update"],
+            os: ["openeuler"],
+            suite: ["unixbench"],
+            os_version: [],
+            group_id: [],
+          },
+          metrics: ["unixbench.score"],
+          series: ["group_id"],
+          x_params: ["test"],
+          max_series_num: 2,
+        },
+      },
+      fio_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["fio-basic"], group_id: [] },
+          metrics: [
+            "fio.read_iops",
+            "fio.read_bw_MBps",
+            "fio.write_iops",
+            "fio.write_bw_MBps",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["bs"],
+        },
+      },
+      netperfa_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            interval_type: ["openeuler-update"],
+            os: ["openeuler"],
+            suite: ["netperf"],
+            "pp.netperf.test": ["TCP_STREAM", "UDP_STREAM"],
+            os_version: [],
+            group_id: [],
+          },
+          metrics: ["netperf.Throughput_Mbps"],
+          series: ["group_id"],
+          x_params: ["send_size"],
+          max_series_num: 2,
+        },
+      },
+      netperfb_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            interval_type: ["openeuler-update"],
+            os: ["openeuler"],
+            suite: ["netperf"],
+            "pp.netperf.test": ["TCP_RR", "TCP_CRR", "UDP_CRR"],
+            os_version: [],
+            group_id: [],
+          },
+          metrics: ["netperf.Throughput_tps"],
+          series: ["group_id"],
+          x_params: ["test"],
+          max_series_num: 2,
+        },
+      },
+    };
+  },
+  methods: {
+    renderDeviationAreaArray(dataArray, deviationArray) {
+      //用于生成方差区域的数组
+      var deviationAreaArray = [];
+      var len = dataArray.length;
+      for (var i = 0; i < len; i++) {
+        deviationAreaArray.push([
+          i,
+          dataArray[i] + (dataArray[i] * deviationArray[i]) / 100,
+          dataArray[i] - (dataArray[i] * deviationArray[i]) / 100,
+        ]); //[x坐标序号,最大值，最小值]
+      }
+      return deviationAreaArray;
+    },
+    renderItem(_params, api) {
+      //生成描绘方差图所需的参数
+      var xValue = api.value(0);
+      var highPoint = api.coord([xValue, api.value(1)]);
+      var lowPoint = api.coord([xValue, api.value(2)]);
+      var halfWidth = api.size([1, 0])[0] * 0.1;
+      var style = api.style({
+        stroke: api.visual("color"),
+        fill: null,
+      });
+
+      return {
+        type: "group",
+        children: [
+          {
+            type: "line",
+            transition: ["shape"],
+            shape: {
+              x1: highPoint[0] - halfWidth,
+              y1: highPoint[1],
+              x2: highPoint[0] + halfWidth,
+              y2: highPoint[1],
+            },
+            style: style,
+          },
+          {
+            type: "line",
+            transition: ["shape"],
+            shape: {
+              x1: highPoint[0],
+              y1: highPoint[1],
+              x2: lowPoint[0],
+              y2: lowPoint[1],
+            },
+            style: style,
+          },
+          {
+            type: "line",
+            transition: ["shape"],
+            shape: {
+              x1: lowPoint[0] - halfWidth,
+              y1: lowPoint[1],
+              x2: lowPoint[0] + halfWidth,
+              y2: lowPoint[1],
+            },
+            style: style,
+          },
+        ],
+      };
+    },
+    renderSeries(sourceData, echart_type) {
+      //描绘折线图+方差图所需的参数
+      var series = [];
+      for (var j = 0; j < sourceData.length; j++) {
+        var objLine = {
+          name: sourceData[j].series,
+          type: echart_type,
+          data: sourceData[j].data,
+        };
+        var objCustom = {
+          type: "custom",
+          itemStyle: {
+            normal: {
+              borderWidth: 1.5,
+              borderType: "dotted",
+            },
+          },
+          z: 100,
+        };
+
+        series.push(objLine);
+        series.push(objCustom);
+      }
+
+      return series;
+    },
+    getSeriesNames(sourceData) {
+      var s_names = [];
+      for (var i = 0; i < sourceData.length; i++) {
+        s_names[i] = sourceData[i].series;
+      }
+      return s_names;
+    },
+    clean_data() {
+      this.stream_data.table_data = [];
+      this.stream_data.echart_data = [];
+
+      this.lmbench_data.table_data = [];
+      this.lmbench_data.echart_data = [];
+
+      this.libmicro_data.table_data = [];
+      this.libmicro_data.echart_data = [];
+
+      this.unixbench_data.table_data = [];
+      this.unixbench_data.echart_data = [];
+
+      this.fio_data.table_data = [];
+      this.fio_data.echart_data = [];
+
+      this.netperfa_data.table_data = [];
+      this.netperfa_data.echart_data = [];
+
+      this.netperfb_data.table_data = [];
+      this.netperfb_data.echart_data = [];
+    },
+    getTableData(sData, table_data) {
+      var avg_data = sData.datas.average;
+      var change_data = sData.datas.change;
+      var tData = [];
+      var tHeader = [];
+
+      tHeader.push(sData.title);
+      tHeader = tHeader.concat(avg_data[0].x_params);
+      for (var i = 0; i < avg_data.length; i++) {
+        var tmp = this.getRowData(sData.title, avg_data[i]);
+        tData.push(tmp);
+      }
+
+      for (i = 0; i < change_data.length; i++) {
+        tmp = this.getRowData(sData.title, change_data[i]);
+        tData.push(tmp);
+      }
+      table_data.push({
+        header: tHeader,
+        data: tData,
+        title: sData.title,
+        test_params: sData.test_params,
+      });
+    },
+    getRowData(title, data) {
+      var tmp = {};
+      tmp[title] = data.series;
+
+      for (var i = 0; i < data.x_params.length; i++) {
+        tmp[data.x_params[i]] = data.data[i];
+      }
+      return tmp;
+    },
+    getData(JobData) {
+      getPerformanceResult(JobData.QueryData).then((res) => {
+        JobData.echart_data = res;
+        var sourceData = res;
+
+        for (var i = 0; i < sourceData.length; i++) {
+          this.getTableData(sourceData[i], JobData.table_data);
+        }
+        this.sleep(200).then(() => {
+          this.get_Echarts(JobData.echart_data);
+        });
+      });
+    },
+    radioChange() {
+      this.getVersionData();
+      this.getSelectGroup(this.os_version);
+    },
+    getVersionData() {
+      this.checkQuery.filter.suite = [this.suite];
+      this.checkQuery.filter.os_version = [];
+      this.checkQuery.field = "os_version";
+      this.groupData = [];
+      this.group_id_a = "";
+      this.group_id_b = "";
+
+      QueryField(this.checkQuery).then((res) => {
+        this.versionData = res;
+      });
+    },
+    getSelectGroup(os_version) {
+      this.checkQuery.filter.os_version = [os_version];
+      this.checkQuery.field = "group_id";
+      this.group_id_a = "";
+      this.group_id_b = "";
+
+      QueryField(this.checkQuery).then((res) => {
+        this.groupData = res;
+      });
+    },
+    sleep(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    },
+    get_Echarts(echart_data) {
+      for (var i = 0; i < echart_data.length; i++) {
+        this.getEchart(i, echart_data);
+      }
+    },
+    getEchart(index, echart_data) {
+      this.sleep(200 * index).then(() => {
+        var echart_title = echart_data[index].title;
+
+        this.drawEchart(
+          echart_title,
+          index,
+          "average",
+          "line",
+          echart_data[index].datas.average
+        );
+
+        this.drawEchart(
+          echart_title,
+          index,
+          "change",
+          "bar",
+          echart_data[index].datas.change
+        );
+      });
+    },
+    drawEchart(echart_title, index, data_type, echart_type, e_data) {
+      var echart_id =
+        data_type + "_" + echart_title.replace(".", "_") + "_" + index;
+      console.log(echart_id);
+      console.log(e_data);
+      if (e_data.length == 0) {
+        return;
+      }
+      var myChart = echarts.init(document.getElementById(echart_id));
+
+      var option = {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+
+          formatter(params) {
+            var res = "<p>x_value: " + params[0].name + "</p>";
+            var s_name;
+            var average;
+            var tmp;
+
+            for (var i = 0; i < params.length; i++) {
+              s_name = "<p>" + params[i].seriesName + "</p>";
+              tmp = params[i].data.toFixed(4);
+              average = "<p>" + data_type + ":" + tmp + "</p>";
+              res += "</br>" + s_name + average;
+            }
+            return res;
+          },
+        },
+        title: {
+          text: echart_title,
+        },
+        legend: {
+          data: this.getSeriesNames(e_data),
+        },
+        xAxis: {
+          data: e_data[0].x_params,
+        },
+        yAxis: {},
+
+        grid: {
+          left: "15%",
+        },
+      };
+      var series = this.renderSeries(e_data, echart_type);
+      option.series = series;
+      option && myChart.setOption(option, true); //绘图
+    },
+    queryCharts() {
+      this.clean_data();
+      if (this.suite === "lmbench3") {
+        this.lmbench_data.QueryData.filter.os_version = this.os_version;
+        if (this.group_id_a == "" || this.group_id_b == "") {
+          this.lmbench_data.QueryData.filter.group_id = [];
+        } else {
+          this.lmbench_data.QueryData.filter.group_id[0] = this.group_id_a;
+          this.lmbench_data.QueryData.filter.group_id[1] = this.group_id_b;
+        }
+        this.getData(this.lmbench_data);
+      }
+      if (this.suite === "unixbench") {
+        this.unixbench_data.QueryData.filter.os_version = this.os_version;
+        if (this.group_id_a == "" || this.group_id_b == "") {
+          this.unixbench_data.QueryData.filter.group_id = [];
+        } else {
+          this.unixbench_data.QueryData.filter.group_id[0] = this.group_id_a;
+          this.unixbench_data.QueryData.filter.group_id[1] = this.group_id_b;
+        }
+        this.getData(this.unixbench_data);
+      }
+      if (this.suite === "libmicro") {
+        this.libmicro_data.QueryData.filter.os_version = this.os_version;
+        if (this.group_id_a == "" || this.group_id_b == "") {
+          this.libmicro_data.QueryData.filter.group_id = [];
+        } else {
+          this.libmicro_data.QueryData.filter.group_id[0] = this.group_id_a;
+          this.libmicro_data.QueryData.filter.group_id[1] = this.group_id_b;
+        }
+        this.getData(this.libmicro_data);
+      }
+      if (this.suite === "stream") {
+        this.stream_data.QueryData.filter.os_version = [this.os_version];
+        if (this.group_id_a == "" || this.group_id_b == "") {
+          this.stream_data.QueryData.filter.group_id = [];
+        } else {
+          this.stream_data.QueryData.filter.group_id[0] = this.group_id_a;
+          this.stream_data.QueryData.filter.group_id[1] = this.group_id_b;
+        }
+        this.getData(this.stream_data);
+      }
+      if (this.suite === "fio-basic") {
+        this.fio_data.QueryData.filter.os_version = this.os_version;
+        if (this.group_id_a == "" || this.group_id_b == "") {
+          this.fio_data.QueryData.filter.group_id = [];
+        } else {
+          this.fio_data.QueryData.filter.group_id[0] = this.group_id_a;
+          this.fio_data.QueryData.filter.group_id[1] = this.group_id_b;
+        }
+        this.getData(this.fio_data);
+      }
+      if (this.suite === "netperf") {
+        this.netperfb_data.QueryData.filter.os_version = this.os_version;
+        this.netperfa_data.QueryData.filter.os_version = this.os_version;
+        if (this.group_id_a == "" || this.group_id_b == "") {
+          this.netperfb_data.QueryData.filter.group_id = [];
+          this.netperfa_data.QueryData.filter.group_id = [];
+        } else {
+          this.netperfb_data.QueryData.filter.group_id[0] = this.group_id_a;
+          this.netperfb_data.QueryData.filter.group_id[1] = this.group_id_b;
+          this.netperfa_data.QueryData.filter.group_id[0] = this.group_id_a;
+          this.netperfa_data.QueryData.filter.group_id[1] = this.group_id_b;
+        }
+        this.getData(this.netperfb_data);
+
+        this.sleep(200).then(() => {
+          this.getData(this.netperfa_data);
+        });
+      }
+    },
+    tableRowStyle({ row, rowIndex }) {
+      let rowBackground = {};
+      if (rowIndex === 0) {
+        rowBackground.background = "#eeeeee";
+      } else if (rowIndex === 2) {
+        for (var k in row) {
+          if (row[k] <= 0) {
+            rowBackground.background = "yellow";
+          }
+        }
+      }
+      return rowBackground;
+    },
+  },
+  mounted() {
+    this.getVersionData();
+    if (this.suite === "lmbench3") {
+      this.getData(this.lmbench_data);
+    }
+    if (this.suite === "unixbench") {
+      this.getData(this.unixbench_data);
+    }
+    if (this.suite === "libmicro") {
+      this.getData(this.libmicro_data);
+    }
+    if (this.suite === "stream") {
+      this.getData(this.stream_data);
+    }
+    if (this.suite === "fio-basic") {
+      this.getData(this.fio_data);
+    }
+    if (this.suite === "netperf") {
+      this.getData(this.netperfb_data);
+
+      this.sleep(200).then(() => {
+        this.getData(this.netperfa_data);
+      });
+    }
+  },
+};
+</script>
+
+<style lang='less' scoped>
+.input_class {
+  width: 85%;
+}
+.confirm {
+  float: left;
+  margin-left: 90%;
+}
+.containers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 400px;
+}
+.chart {
+  width: 1000px;
+  height: 720px;
+  margin-bottom: 10px;
+}
+.test-params {
+  margin-left: 100px;
+  margin-bottom: 20px;
+}
+.el-table.warning-row {
+  background: #02851e;
+}
+</style>

@@ -65,7 +65,13 @@ const routes = [
         path: '/performance-list',
         name: 'PerformanceList',
         component: () => import('../views/performanceresult/performancelist.vue')
+    },
+    {
+        path: '/performance-update',
+        name: 'PerformanceUpdate',
+        component: () => import('../views/performanceresult/performanceupdate.vue')
     }
+
 
 ]
 
