@@ -179,8 +179,9 @@
         <el-table
           :data="l_item.data"
           border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
           :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
           style="width: 1500px"
         >
           <el-table-column
@@ -207,8 +208,9 @@
         <el-table
           :data="l_item.data"
           border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
           :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
           style="width: 1500px"
         >
           <el-table-column
@@ -235,8 +237,9 @@
         <el-table
           :data="t_item.data"
           border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
           :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
           style="width: 1500px"
         >
           <el-table-column
@@ -263,8 +266,9 @@
         <el-table
           :data="t_item.data"
           border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
           :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
           style="width: 1500px"
         >
           <el-table-column
@@ -291,8 +295,9 @@
         <el-table
           :data="t_item.data"
           border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
           :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
           style="width: 1500px"
         >
           <el-table-column
@@ -319,8 +324,9 @@
         <el-table
           :data="l_item.data"
           border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
           :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
           style="width: 1500px"
         >
           <el-table-column
@@ -347,8 +353,9 @@
         <el-table
           :data="l_item.data"
           border
-          :header-cell-style="{ background: '#02951e', color: '#333' }"
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
           :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
           style="width: 1500px"
         >
           <el-table-column
@@ -524,6 +531,13 @@ export default {
           x_params: ["test"],
         },
       },
+      title_dic: {
+        stream: "Function",
+        "stream-copy_bandwidth_MBps": "copy",
+        "stream-scale_bandwidth_MBps": "scale",
+        "stream-add_bandwidth_MBps": "add",
+        "stream-triad_bandwidth_MBps": "triad",
+      },
     };
   },
   methods: {
@@ -650,16 +664,17 @@ export default {
       var change_data = sData.datas.change;
       var tData = [];
       var tHeader = [];
+      var title_trans = this.title_dic[sData.title];
 
-      tHeader.push(sData.title);
+      tHeader.push(title_trans);
       tHeader = tHeader.concat(avg_data[0].x_params);
       for (var i = 0; i < avg_data.length; i++) {
-        var tmp = this.getRowData(sData.title, avg_data[i]);
+        var tmp = this.getRowData(title_trans, avg_data[i]);
         tData.push(tmp);
       }
 
       for (i = 0; i < change_data.length; i++) {
-        tmp = this.getRowData(sData.title, change_data[i]);
+        tmp = this.getRowData(title_trans, change_data[i]);
         tData.push(tmp);
       }
       table_data.push({
@@ -674,14 +689,47 @@ export default {
       tmp[title] = data.series;
 
       for (var i = 0; i < data.x_params.length; i++) {
-        tmp[data.x_params[i]] = data.data[i];
+        if (data.series.includes("vs")) {
+          tmp[data.x_params[i]] = data.data[i] + "%";
+        } else {
+          tmp[data.x_params[i]] = data.data[i];
+        }
       }
       return tmp;
     },
+    trans_x(datas) {
+      var avg_data = datas.average;
+      var change_data = datas.change;
+      var tHeader = avg_data[0].x_params;
+
+      for (var i = 0; i < tHeader.length; i++) {
+        tHeader[i] = this.title_dic[tHeader[i]];
+      }
+
+      for (i = 0; i < avg_data.length; i++) {
+        avg_data[i].x_params = tHeader;
+      }
+      for (i = 0; i < change_data.length; i++) {
+        change_data[i].x_params = tHeader;
+      }
+      datas.average = avg_data;
+      datas.change = change_data;
+
+      return datas;
+    },
+    transfer_res(res) {
+      var destination = {};
+      destination = res;
+
+      for (var i = 0; i < destination.length; i++) {
+        destination[i].datas = this.trans_x(destination[i].datas);
+      }
+      return destination;
+    },
     getData(JobData) {
       getPerformanceResult(JobData.QueryData).then((res) => {
-        JobData.echart_data = res;
-        var sourceData = res;
+        JobData.echart_data = this.transfer_res(res);
+        var sourceData = JobData.echart_data;
 
         for (var i = 0; i < sourceData.length; i++) {
           this.getTableData(sourceData[i], JobData.table_data);
@@ -803,6 +851,10 @@ export default {
         data_type + "_" + echart_title.replace(".", "_") + "_" + index;
       var myChart = echarts.init(document.getElementById(echart_id));
 
+      if (e_data.length == 0) {
+        return;
+      }
+
       var option = {
         tooltip: {
           trigger: "axis",
@@ -818,7 +870,10 @@ export default {
 
             for (var i = 0; i < params.length; i++) {
               s_name = "<p>" + params[i].seriesName + "</p>";
-              tmp = params[i].data.toFixed(4);
+              tmp = params[i].data;
+              if (s_name.includes("vs")) {
+                tmp = tmp + "%";
+              }
               average = "<p>" + data_type + ":" + tmp + "</p>";
               res += "</br>" + s_name + average;
             }
@@ -833,8 +888,23 @@ export default {
         },
         xAxis: {
           data: e_data[0].x_params,
+          axisLabel: {
+            show: true,
+            //            interval: 0,
+            rotate: 40,
+            textStyle: {
+              color: "#333",
+            },
+          },
         },
-        yAxis: {},
+        yAxis: {
+          axisLabel: {
+            formatter: this.y_formatter(e_data),
+            textStyle: {
+              color: "#333",
+            },
+          },
+        },
 
         grid: {
           left: "15%",
@@ -843,6 +913,12 @@ export default {
       var series = this.renderSeries(e_data, echart_type);
       option.series = series;
       option && myChart.setOption(option, true); //绘图
+    },
+    y_formatter(e_data) {
+      var SeriesNames = this.getSeriesNames(e_data);
+      if (SeriesNames[0].includes("vs")) {
+        return "{value}%";
+      }
     },
     queryCharts() {
       this.lmbench_data.QueryData.series[0].os = this.os_a;
@@ -921,18 +997,34 @@ export default {
         });
       }
     },
-    tableRowStyle({ row, rowIndex }) {
+    tableRowStyle({ rowIndex }) {
       let rowBackground = {};
       if (rowIndex === 0) {
         rowBackground.background = "#eeeeee";
-      } else if (rowIndex === 2) {
-        for (var k in row) {
-          if (row[k] <= 0) {
-            rowBackground.background = "yellow";
+      }
+      return rowBackground;
+    },
+    tableCellStyle({ row, column }) {
+      let cellBackground = { color: "#000" };
+
+      for (var k in row) {
+        if (typeof row[k] == "string" && row[k].includes("vs")) {
+          var content = row[column.label];
+          if (typeof content == "string") {
+            if (content.includes("vs")) {
+              cellBackground.background = "yellow";
+              return cellBackground;
+            } else if (content.replace("%", "") > 0) {
+              cellBackground.background = "green";
+              return cellBackground;
+            } else if (content.replace("%", "") < 0) {
+              cellBackground.background = "red";
+              return cellBackground;
+            }
           }
         }
       }
-      return rowBackground;
+      return cellBackground;
     },
   },
   mounted() {
