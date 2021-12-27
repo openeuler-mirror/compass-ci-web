@@ -193,41 +193,18 @@
         </el-table>
 
         <div
-          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
+          :id="`average_${l_item.title.replace(
+            '.',
+            '_'
+          )}_${l_index}_${l_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
 
         <div
-          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
-          :style="{ width: '100%', height: '600px' }"
-        ></div>
-      </div>
-
-      <div v-for="(l_item, l_index) in lmbench_data.table_data" :key="l_index">
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in l_item.header"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
-
-        <div
-          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
-          :style="{ width: '100%', height: '600px' }"
-        ></div>
-
-        <div
-          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
+          :id="`change_${l_item.title.replace(
+            '.',
+            '_'
+          )}_${l_index}_${l_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
       </div>
@@ -251,12 +228,18 @@
         </el-table>
 
         <div
-          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
 
         <div
-          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
       </div>
@@ -280,18 +263,24 @@
         </el-table>
 
         <div
-          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
 
         <div
-          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
       </div>
 
       <div v-for="(t_item, t_index) in fio_data.table_data" :key="t_index">
-        <div class="test_params">test_params:</div>
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
         <el-table
           :data="t_item.data"
           border
@@ -309,15 +298,311 @@
         </el-table>
 
         <div
-          :id="`average_${t_item.title.replace('.', '_')}_${t_index}`"
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
 
         <div
-          :id="`change_${t_item.title.replace('.', '_')}_${t_index}`"
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
         ></div>
       </div>
+
+      <div v-for="(t_item, t_index) in fio_data_b.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in fio_data_c.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in lmbench_data_a.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in lmbench_data_b.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in lmbench_data_c.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in lmbench_data_d.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in lmbench_data_e.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in lmbench_data_f.table_data" :key="t_index">
+        <div class="test_params">test_params: {{ t_item.test_params }}</div>
+        <el-table
+          :data="t_item.data"
+          border
+          :header-cell-style="{ background: '#02951e', color: '#000' }"
+          :row-style="tableRowStyle"
+          :cell-style="tableCellStyle"
+          style="width: 1500px"
+        >
+          <el-table-column
+            v-for="(item, index) in t_item.header"
+            :key="index"
+            :label="item"
+            :prop="item"
+          ></el-table-column>
+        </el-table>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+          v-show="t_item.data.length > 2"
+        ></div>
+      </div>
+
 
       <div v-for="(l_item, l_index) in netperfb_data.table_data" :key="l_index">
         <div class="test_params">test_params: {{ l_item.test_params }}</div>
@@ -338,12 +623,18 @@
         </el-table>
 
         <div
-          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
+          :id="`average_${l_item.title.replace(
+            '.',
+            '_'
+          )}_${l_index}_${l_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
 
         <div
-          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
+          :id="`change_${l_item.title.replace(
+            '.',
+            '_'
+          )}_${l_index}_${l_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
       </div>
@@ -367,12 +658,18 @@
         </el-table>
 
         <div
-          :id="`average_${l_item.title.replace('.', '_')}_${l_index}`"
+          :id="`average_${l_item.title.replace(
+            '.',
+            '_'
+          )}_${l_index}_${l_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
 
         <div
-          :id="`change_${l_item.title.replace('.', '_')}_${l_index}`"
+          :id="`change_${l_item.title.replace(
+            '.',
+            '_'
+          )}_${l_index}_${l_item.test_params.replace(/\.|\s/g, '_')}`"
           :style="{ width: '100%', height: '600px' }"
         ></div>
       </div>
@@ -438,17 +735,134 @@ export default {
           x_params: ["metric"],
         },
       },
-      lmbench_data: {
+      lmbench_data_a: {
         table_data: [],
         echart_data: [],
         QueryData: {
           filter: { suite: ["lmbench3"], group_id: [] },
-          metrics: [],
+          metrics: [
+            "lmbench3.syscall.syscall.latency.us",
+            "lmbench3.syscall.stat.latency.us",
+            "lmbench3.syscall.open/close.latency.us",
+            "lmbench3.null_io",
+            "lmbench3.Process.fork+exit.latency.us",
+            ".Process.fork+execve.latency.us",
+            "lmbench3.Process.fork+/bin/sh.latency.us",
+            "lmbench3.Select.100tcp.latency.us",
+            "lmbench3.sig_inst",
+            "lmbench3.sig_hndl",
+          ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
             { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
+          title: "Processor_Processes",
+        },
+      },
+      lmbench_data_b: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["lmbench3"], group_id: [] },
+          metrics: [
+            "lmbench3.PIPE.latency.us",
+            "lmbench3.AF_UNIX.sock.stream.latency.us",
+            "lmbench3.UDP.usinglocalhost.latency.us",
+            "lmbench3.TCP.localhost.latency",
+            "lmbench3.CONNECT.localhost.latency.us",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          title: "local_latency",
+        },
+      },
+      lmbench_data_c: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["lmbench3"], group_id: [] },
+          metrics: [
+            "lmbench3.PIPE.bandwidth.MB/sec",
+            "mbench3.AF_UNIX.sock.stream.bandwidth.MB",
+            "lmbench3.TCP.socket.bandwidth.10MB.MB/sec",
+            "lmbench3.FILE.read.bandwidth.MB/sec",
+            "lmbench3.MMAP.read.bandwidth.MB/sec",
+            "lmbench3.BCOPY.libc.bandwidth.MB/sec",
+            "lmbench3.BCOPY.unrolled.bandwidth.MB/sec",
+            "lmbench3.BCOPY.memory_read.bandwidth.MB/sec",
+            "lmbench3.BCOPY.memory_write.bandwidth.MB/sec",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          title: "local_bandwidths",
+        },
+      },
+      lmbench_data_d: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["lmbench3"], group_id: [] },
+          metrics: [
+            "lmbench3.CTX.2P.0K.latency.us",
+            "lmbench3.CTX.2P.16K.latency.us",
+            "lmbench3.CTX.2P.64K.latency.us",
+            "lmbench3.CTX.8P.16K.latency.us",
+            "lmbench3.CTX.8P.64K.latency.us",
+            "lmbench3.CTX.16P.16K.latency.us",
+            "lmbench3.CTX.16P.64K.latency.us",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          title: "Context_switching",
+        },
+      },
+      lmbench_data_e: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["lmbench3"], group_id: [] },
+          metrics: [
+            "lmbench3.Mmap_Latency",
+            "lmbench3.Prot_Fault",
+            "lmbench3.Pagefaults.ms",
+            "lmbench3.Select.100fd.latency.us",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          title: "VM_latencies",
+        },
+      },
+      lmbench_data_f: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: { suite: ["lmbench3"], group_id: [] },
+          metrics: [
+            "lmbench3.L1_$",
+            "lmbench3.L2_$",
+            "lmbench3.Main_mem",
+            "lmbench3.Rand_mem",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          title: "Memor_latencies",
+          test_params: ["pp.lmbench3.nr_threads"],
         },
       },
       libmicro_data: {
@@ -481,7 +895,11 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["fio-basic"], group_id: [] },
+          filter: {
+            suite: ["fio-basic"],
+            "pp.fio-setup-basic.rw": ["randrw"],
+            group_id: [],
+          },
           metrics: [
             "fio.read_iops",
             "fio.read_bw_MBps",
@@ -493,6 +911,43 @@ export default {
             { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["bs"],
+          test_params: ["pp.fio-setup-basic.rw"],
+        },
+      },
+      fio_data_b: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["fio-basic"],
+            "pp.fio-setup-basic.rw": ["read", "randread"],
+            group_id: [],
+          },
+          metrics: ["fio.read_iops", "fio.read_bw_MBps"],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["bs"],
+          test_params: ["pp.fio-setup-basic.rw"],
+        },
+      },
+      fio_data_c: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["fio-basic"],
+            "pp.fio-setup-basic.rw": ["write", "randwrite"],
+            group_id: [],
+          },
+          metrics: ["fio.write_iops", "fio.wirte_bw_MBps"],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["bs"],
+          test_params: ["pp.fio-setup-basic.rw"],
         },
       },
       netperfa_data: {
@@ -520,7 +975,7 @@ export default {
           filter: {
             suite: ["netperf"],
             group_id: [],
-            "pp.netperf.test": ["TCP_RR", "TCP_CRR", "UDP_CRR"],
+            "pp.netperf.test": ["TCP_RR", "TCP_CRR", "UDP_RR"],
             "pp.netperf.runtime": [60],
           },
           metrics: ["netperf.Throughput_tps"],
@@ -537,6 +992,59 @@ export default {
         "stream-scale_bandwidth_MBps": "scale",
         "stream-add_bandwidth_MBps": "add",
         "stream-triad_bandwidth_MBps": "triad",
+        "netperf-Throughput_tps": "Protocol_kind",
+        libmicro: "Function",
+        "whetston-double": "Double-Precision_Whetstone",
+        shell1: "Shell_Scripts_(1_concurrent)",
+        shell8: "Shell_Scripts_(8_concurrent)",
+        pipe: "Pipe_Throughput",
+        context1: "Pipe-based_Context_Switching",
+        spawn: "Process_Creation",
+        syscall: "System_Call_Overhead",
+        dhry2reg: "Dhrystone_2_using_register_variables",
+        fstime: "File_Copy_1024_bufsize_2000_maxblocks",
+        fsbuffer: "File_Copy_256_bufsize_500_maxblocks",
+        fsdisk: "File_Copy_4096_bufsize_8000_maxblocks",
+        execl: "Execl_Throughput",
+        "lmbench3-syscall-syscall-latency-us": "null_call",
+        "lmbench3-null_io": "null_io",
+        "lmbench3-syscall-stat-latency-us": "stat",
+        "lmbench3-syscall-open/close-latency-us": "open_close",
+        "lmbench3-Select-100tcp-latency-us": "slct_TCP",
+        "lmbench3-sig_inst": "sig_inst",
+        "lmbench3-sig_hndl": "sig_hndl",
+        "lmbench3-Process-fork+exit-latency-us": "fork_proc",
+        "lmbench3-Process-fork+execve-latency-us": "exec_proc",
+        "lmbench3-Process-fork+/bin/sh-latency-us": "sh_proc",
+        "lmbench3-PIPE-latency-us": "Pipe",
+        "lmbench3-AF_UNIX-sock-stream-latency-us": "AF_UNIX",
+        "lmbench3-UDP-usinglocalhost-latency-us": "UDP",
+        "lmbench3-TCP-localhost-latency": "TCP",
+        "lmbench3-CONNECT-localhost-latency-us": "TCP_conn",
+        "lmbench3-PIPE-bandwidth-MB/sec": "Pipe",
+        "mbench3-AF_UNIX-sock-stream-bandwidth-MB": "AF_UNIX",
+        "lmbench3-TCP-socket-bandwidth-10MB-MB/sec": "TCP",
+        "lmbench3-FILE-read-bandwidth-MB/sec": "File_reread",
+        "lmbench3-MMAP-read-bandwidth-MB/sec": "Mmap_reread",
+        "lmbench3-BCOPY-libc-bandwidth-MB/sec": "copy(libc)",
+        "lmbench3-BCOPY-unrolled-bandwidth-MB/sec": "copy(hand)",
+        "lmbench3-BCOPY-memory_read-bandwidth-MB/sec": "Mem_read",
+        "lmbench3-BCOPY-memory_write-bandwidth-MB/sec": "Mem_write",
+        "lmbench3-CTX-2P-0K-latency-us": "2p/0K",
+        "lmbench3-CTX-2P-16K-latency-us": "2p/16K",
+        "lmbench3-CTX-2P-64K-latency-us": "2p/64K",
+        "lmbench3-CTX-8P-16K-latency-us": "8p16K",
+        "lmbench3-CTX-8P-64K-latency-us": "8p/64K",
+        "lmbench3-CTX-16P-16K-latency-us": "16p/16K",
+        "lmbench3-CTX-16P-64K-latency-us": "16p/64K",
+        "lmbench3-Mmap_Latency": "Mmap_Latency",
+        "lmbench3-Prot_Fault": "Prot_Fault",
+        "lmbench3-Pagefaults-ms": "Page_Fault",
+        "lmbench3-Select-100fd-latency-us": "100fd_selct",
+        "lmbench3-L1_$": "L1_$",
+        "lmbench3-L2_$": "L2_$",
+        "lmbench3-Main_mem": "Main_mem",
+        "lmbench3-Rand_mem": "Rand_mem",
       },
     };
   },
@@ -641,8 +1149,18 @@ export default {
       this.stream_data.table_data = [];
       this.stream_data.echart_data = [];
 
-      this.lmbench_data.table_data = [];
-      this.lmbench_data.echart_data = [];
+      this.lmbench_data_a.table_data = [];
+      this.lmbench_data_a.echart_data = [];
+      this.lmbench_data_b.table_data = [];
+      this.lmbench_data_b.echart_data = [];
+      this.lmbench_data_c.table_data = [];
+      this.lmbench_data_c.echart_data = [];
+      this.lmbench_data_d.table_data = [];
+      this.lmbench_data_d.echart_data = [];
+      this.lmbench_data_e.table_data = [];
+      this.lmbench_data_e.echart_data = [];
+      this.lmbench_data_f.table_data = [];
+      this.lmbench_data_f.echart_data = [];
 
       this.libmicro_data.table_data = [];
       this.libmicro_data.echart_data = [];
@@ -652,6 +1170,10 @@ export default {
 
       this.fio_data.table_data = [];
       this.fio_data.echart_data = [];
+      this.fio_data_b.table_data = [];
+      this.fio_data_b.echart_data = [];
+      this.fio_data_c.table_data = [];
+      this.fio_data_c.echart_data = [];
 
       this.netperfa_data.table_data = [];
       this.netperfa_data.echart_data = [];
@@ -664,7 +1186,22 @@ export default {
       var change_data = sData.datas.change;
       var tData = [];
       var tHeader = [];
-      var title_trans = this.title_dic[sData.title];
+      var title_trans = this.title_dic[sData.title] || sData.title;
+
+      if (title_trans == "netperf-Throughput_Mbps") {
+        if (sData.test_params.includes("TCP")) {
+          title_trans = "TCP_STREAM_MESSAGE_SIZE";
+        } else {
+          title_trans = "UDP_STREAM_MESSAGE_SIZE";
+        }
+      }
+      if (title_trans == "unixbench-score") {
+        if (sData.test_params.includes("96")) {
+          title_trans = "Index_Values_96core";
+        } else {
+          title_trans = "Index_Values_1core";
+        }
+      }
 
       tHeader.push(title_trans);
       tHeader = tHeader.concat(avg_data[0].x_params);
@@ -703,7 +1240,10 @@ export default {
       var tHeader = avg_data[0].x_params;
 
       for (var i = 0; i < tHeader.length; i++) {
-        tHeader[i] = this.title_dic[tHeader[i]];
+        tHeader[i] = this.title_dic[tHeader[i]] || tHeader[i];
+        if (tHeader[i].includes("libmicro")) {
+          tHeader[i] = tHeader[i].replace("libmicro-", "");
+        }
       }
 
       for (i = 0; i < avg_data.length; i++) {
@@ -828,9 +1368,11 @@ export default {
     getEchart(index, echart_data) {
       this.sleep(200 * index).then(() => {
         var echart_title = echart_data[index].title;
+        var echart_params = echart_data[index].test_params;
 
         this.drawEchart(
           echart_title,
+          echart_params,
           index,
           "average",
           "line",
@@ -839,6 +1381,7 @@ export default {
 
         this.drawEchart(
           echart_title,
+          echart_params,
           index,
           "change",
           "bar",
@@ -846,9 +1389,22 @@ export default {
         );
       });
     },
-    drawEchart(echart_title, index, data_type, echart_type, e_data) {
+    drawEchart(
+      echart_title,
+      echart_params,
+      index,
+      data_type,
+      echart_type,
+      e_data
+    ) {
       var echart_id =
-        data_type + "_" + echart_title.replace(".", "_") + "_" + index;
+        data_type +
+        "_" +
+        echart_title.replace(".", "_") +
+        "_" +
+        index +
+        "_" +
+        echart_params.replace(/\.|\s/g, "_");
       var myChart = echarts.init(document.getElementById(echart_id));
 
       if (e_data.length == 0) {
@@ -921,61 +1477,78 @@ export default {
       }
     },
     queryCharts() {
-      this.lmbench_data.QueryData.series[0].os = this.os_a;
-      this.lmbench_data.QueryData.series[0].os_version = this.os_version_a;
-      this.lmbench_data.QueryData.series[1].os = this.os_b;
-      this.lmbench_data.QueryData.series[1].os_version = this.os_version_b;
+      this.lmbench_data_a.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.lmbench_data_b.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.lmbench_data_c.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.lmbench_data_d.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.lmbench_data_e.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.lmbench_data_f.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
 
-      this.unixbench_data.QueryData.series[0].os = this.os_a;
-      this.unixbench_data.QueryData.series[0].os_version = this.os_version_a;
-      this.unixbench_data.QueryData.series[1].os = this.os_b;
-      this.unixbench_data.QueryData.series[1].os_version = this.os_version_b;
+      this.unixbench_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
 
-      this.libmicro_data.QueryData.series[0].os = this.os_a;
-      this.libmicro_data.QueryData.series[0].os_version = this.os_version_a;
-      this.libmicro_data.QueryData.series[1].os = this.os_b;
-      this.libmicro_data.QueryData.series[1].os_version = this.os_version_b;
+      this.libmicro_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
 
-      this.stream_data.QueryData.series[0].os = this.os_a;
-      this.stream_data.QueryData.series[0].os_version = this.os_version_a;
-      this.stream_data.QueryData.series[1].os = this.os_b;
-      this.stream_data.QueryData.series[1].os_version = this.os_version_b;
+      this.stream_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
 
-      this.netperfa_data.QueryData.series[0].os = this.os_a;
-      this.netperfa_data.QueryData.series[0].os_version = this.os_version_a;
-      this.netperfa_data.QueryData.series[1].os = this.os_b;
-      this.netperfa_data.QueryData.series[1].os_version = this.os_version_b;
+      this.netperfa_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.netperfb_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
 
-      this.netperfb_data.QueryData.series[0].os = this.os_a;
-      this.netperfb_data.QueryData.series[0].os_version = this.os_version_a;
-      this.netperfb_data.QueryData.series[1].os = this.os_b;
-      this.netperfb_data.QueryData.series[1].os_version = this.os_version_b;
+      this.fio_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.fio_data_b.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.fio_data_c.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
 
       if (this.group_id_a == "" || this.group_id_b == "") {
-        this.lmbench_data.QueryData.filter.group_id = [];
+        this.lmbench_data_a.QueryData.filter.group_id = [];
+        this.lmbench_data_b.QueryData.filter.group_id = [];
+        this.lmbench_data_c.QueryData.filter.group_id = [];
+        this.lmbench_data_d.QueryData.filter.group_id = [];
+        this.lmbench_data_e.QueryData.filter.group_id = [];
+        this.lmbench_data_f.QueryData.filter.group_id = [];
         this.unixbench_data.QueryData.filter.group_id = [];
         this.libmicro_data.QueryData.filter.group_id = [];
         this.stream_data.QueryData.filter.group_id = [];
         this.netperfa_data.QueryData.filter.group_id = [];
         this.netperfb_data.QueryData.filter.group_id = [];
+        this.fio_data.QueryData.filter.group_id = [];
+        this.fio_data_b.QueryData.filter.group_id = [];
+        this.fio_data_c.QueryData.filter.group_id = [];
       } else {
-        this.lmbench_data.QueryData.filter.group_id[0] = this.group_id_a;
-        this.lmbench_data.QueryData.filter.group_id[1] = this.group_id_b;
-        this.unixbench_data.QueryData.filter.group_id[0] = this.group_id_a;
-        this.unixbench_data.QueryData.filter.group_id[1] = this.group_id_b;
-        this.libmicro_data.QueryData.filter.group_id[0] = this.group_id_a;
-        this.libmicro_data.QueryData.filter.group_id[1] = this.group_id_b;
-        this.stream_data.QueryData.filter.group_id[0] = this.group_id_a;
-        this.stream_data.QueryData.filter.group_id[1] = this.group_id_b;
-        this.netperfa_data.QueryData.filter.group_id[0] = this.group_id_a;
-        this.netperfa_data.QueryData.filter.group_id[1] = this.group_id_b;
-        this.netperfb_data.QueryData.filter.group_id[0] = this.group_id_a;
-        this.netperfb_data.QueryData.filter.group_id[1] = this.group_id_b;
+        this.lmbench_data_a.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.lmbench_data_b.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.lmbench_data_c.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.lmbench_data_d.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.lmbench_data_e.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.lmbench_data_f.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+
+        this.unixbench_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.libmicro_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.stream_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.netperfa_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.netperfb_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+
+        this.fio_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.fio_data_b.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.fio_data_c.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
       }
 
       this.clean_data();
       if (this.suite === "lmbench3") {
-        this.getData(this.lmbench_data);
+        this.getData(this.lmbench_data_a);
+        this.sleep(100).then(() => {
+          this.getData(this.lmbench_data_b);
+        });
+        this.sleep(200).then(() => {
+          this.getData(this.lmbench_data_c);
+        });
+        this.sleep(300).then(() => {
+          this.getData(this.lmbench_data_d);
+        });
+        this.sleep(1000).then(() => {
+          this.getData(this.lmbench_data_e);
+        });
+        this.sleep(1900).then(() => {
+          this.getData(this.lmbench_data_f);
+        });
       }
       if (this.suite === "unixbench") {
         this.getData(this.unixbench_data);
@@ -988,6 +1561,12 @@ export default {
       }
       if (this.suite === "fio-basic") {
         this.getData(this.fio_data);
+        this.sleep(200).then(() => {
+          this.getData(this.fio_data_b);
+        });
+        this.sleep(400).then(() => {
+          this.getData(this.fio_data_c);
+        });
       }
       if (this.suite === "netperf") {
         this.getData(this.netperfb_data);
