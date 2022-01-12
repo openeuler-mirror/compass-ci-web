@@ -14,5 +14,10 @@ module.exports = {
             msTileImage: null
         }
     },
-    productionSourceMap: false
+    productionSourceMap: false,
+    configureWebpack: {
+        externals: {
+            './cptable': 'var cptable'
+        },
+    }
 };

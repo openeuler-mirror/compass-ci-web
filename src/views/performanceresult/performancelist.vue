@@ -151,7 +151,7 @@
         </el-form>
       </div>
       <div style="float: left; width: 100%; margin-top: 20px">
-        <div style="float: left; width: 50%; margin-left: 20%">
+        <div style="float: left; width: 45%; margin-left: 20%">
           <el-radio-group v-model="suite" @change="radioChange">
             <el-radio label="stream">stream</el-radio>
             <el-radio label="netperf">netperf</el-radio>
@@ -165,6 +165,13 @@
           <el-form>
             <el-form-item class="confirm">
               <el-button @click="queryCharts">确定</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div style="float: left; margin-left: 7%">
+          <el-form>
+            <el-form-item class="confirm">
+              <el-button @click="getExcel">导出</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -681,6 +688,9 @@
 import { getPerformanceResult, QueryField } from "@/api/jobs.js";
 import Header from "@/components/Header";
 import echarts from "echarts";
+import XLSX from "xlsx";
+import XLSXS from "xlsx-style";
+import filesaver from "file-saver";
 export default {
   name: "CustomErrorBar",
   components: { Header },
@@ -1604,6 +1614,137 @@ export default {
         }
       }
       return cellBackground;
+    },
+    setStyle(worksheet) {
+      worksheet["!cols"] = [{ wpx: 300 }];
+
+      for (var k in worksheet) {
+        if (k.includes("!") || worksheet[k].v === "") {
+          continue;
+        }
+        worksheet[k].s = {
+          border: {
+            top: {
+              style: "thin",
+            },
+            bottom: {
+              style: "thin",
+            },
+            left: {
+              style: "thin",
+            },
+            right: {
+              style: "thin",
+            },
+          },
+        };
+        if (k.includes("1")) {
+          worksheet[k].s.alignment = {
+            horizontal: "center",
+            vertical: "center",
+            wrapText: true,
+          };
+          worksheet[k].s.fill = {
+            bgColor: {
+              indexed: 64,
+            },
+            fgColor: {
+              rgb: "92d050",
+            },
+          };
+        }
+        if (worksheet[k]["t"] == "s" && worksheet[k]["v"].includes("vs")) {
+          worksheet[k].s.alignment = {
+            wrapText: true,
+          };
+          worksheet[k].s.fill = {
+            bgColor: {
+              indexed: 64,
+            },
+            fgColor: {
+              rgb: "FFFF00",
+            },
+          };
+        } else {
+          var col_head = "A" + k.replace(/[A-Z]{1,}/, "");
+          if (worksheet[col_head].v.includes("vs")) {
+            worksheet[k].z = "0.00%";
+            if (worksheet[k].v > 0.1) {
+              worksheet[k].s.fill = {
+                bgColor: {
+                  indexed: 64,
+                },
+                fgColor: {
+                  rgb: "00B050",
+                },
+              };
+            }
+            if (worksheet[k].v < -0.1) {
+              worksheet[k].s.fill = {
+                bgColor: {
+                  indexed: 64,
+                },
+                fgColor: {
+                  rgb: "FF0000",
+                },
+              };
+            }
+          }
+        }
+      }
+    },
+    getExcel() {
+      var c_children = document.getElementById("container").children;
+      let wb = XLSX.utils.book_new();
+      var used_name = {};
+
+      for (var i = 0; i < c_children.length; i++) {
+        var el_table = c_children[i].children[1];
+        let sheet = XLSX.utils.table_to_sheet(el_table);
+        this.setStyle(sheet);
+        var sheet_name = sheet["A1"].v;
+        if (sheet_name == "Function") sheet_name = this.suite;
+        if (used_name[sheet_name] == null) {
+          used_name[sheet_name] = 1;
+        } else {
+          used_name[sheet_name]++;
+        }
+        if (used_name[sheet_name] > 1) {
+          sheet_name = sheet_name + (used_name[sheet_name] - 1);
+        }
+        XLSX.utils.book_append_sheet(wb, sheet, sheet_name);
+      }
+      let wbout = XLSXS.write(wb, {
+        book_Type: "xlsx",
+        bookSST: false,
+        type: "binary",
+      });
+      filesaver.saveAs(
+        new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }),
+        "测试数据.xlsx"
+      );
+    },
+    s2ab(s) {
+      let buf = null;
+
+      if (typeof ArrayBuffer !== "undefined") {
+        buf = new ArrayBuffer(s.length);
+        let view = new Uint8Array(buf);
+
+        for (let i = 0; i != s.length; ++i) {
+          view[i] = s.charCodeAt(i) & 0xff;
+        }
+
+        return buf;
+      }
+
+      buf = new Array(s.length);
+
+      for (let i = 0; i != s.length; ++i) {
+        buf[i] = s.charCodeAt(i) & 0xff;
+      }
+
+      return buf;
     },
   },
   mounted() {
