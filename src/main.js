@@ -22,8 +22,10 @@ import {
     Submenu,
     MenuItem,
     Checkbox,
+    CheckboxGroup,
     Radio,
-    RadioGroup
+    RadioGroup,
+    Transfer
 } from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -48,8 +50,10 @@ Vue.use(Menu);
 Vue.use(Submenu);
 Vue.use(MenuItem);
 Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
 Vue.use(Radio);
 Vue.use(RadioGroup);
+Vue.use(Transfer);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 

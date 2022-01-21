@@ -147,6 +147,16 @@
             </el-form-item>
           </el-form>
         </div>
+        <div style="float: left; margin-left: 30%">
+          <el-transfer
+            filterable
+            :titles="['可选项', '已选项']"
+            v-model="transfer_chosen"
+            :data="transfer_data"
+            @change="transferChange"
+          >
+          </el-transfer>
+        </div>
       </div>
     </div>
     <div id="container" class="containers">
@@ -164,7 +174,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in unixbench_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -202,7 +212,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in lmbench3_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -241,7 +251,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in lmbench3_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -280,7 +290,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in lmbench3_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -319,7 +329,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in lmbench3_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -358,7 +368,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in lmbench3_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -397,7 +407,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in lmbench3_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -433,7 +443,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in t_item.header"
+            v-for="(item, index) in libmicro_filter(t_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -468,7 +478,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in t_item.header"
+            v-for="(item, index) in stream_filter(t_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -503,7 +513,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in t_item.header"
+            v-for="(item, index) in fio_filter(t_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -539,7 +549,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in t_item.header"
+            v-for="(item, index) in fio_filter(t_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -575,7 +585,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in t_item.header"
+            v-for="(item, index) in fio_filter(t_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -611,7 +621,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in netperf_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -647,7 +657,7 @@
           style="width: 1500px"
         >
           <el-table-column
-            v-for="(item, index) in l_item.header"
+            v-for="(item, index) in netperf_filter(l_item.header)"
             :key="index"
             :label="item"
             :prop="item"
@@ -682,11 +692,21 @@ import echarts from "echarts";
 import XLSX from "xlsx";
 import XLSXS from "xlsx-style";
 import filesaver from "file-saver";
+//const cityOptions = ['上海', '北京', '广州', '深圳'];
 export default {
   name: "CustomErrorBar",
   components: { Header },
   data() {
     return {
+      stream_selected: [],
+      netperf_selected: [],
+      unixbench_selected: [],
+      lmbench3_selected: [],
+      libmicro_selected: [],
+      fio_selected: [],
+      t_headers: ["copy", "scale", "add", "triad"],
+      transfer_data: [],
+      transfer_chosen: [],
       suite: "stream",
       osData: [],
       versionData: [],
@@ -1049,7 +1069,7 @@ export default {
         "lmbench3-CTX-2P-0K-latency-us": "2p/0K",
         "lmbench3-CTX-2P-16K-latency-us": "2p/16K",
         "lmbench3-CTX-2P-64K-latency-us": "2p/64K",
-        "lmbench3-CTX-8P-16K-latency-us": "8p16K",
+        "lmbench3-CTX-8P-16K-latency-us": "8p/16K",
         "lmbench3-CTX-8P-64K-latency-us": "8p/64K",
         "lmbench3-CTX-16P-16K-latency-us": "16p/16K",
         "lmbench3-CTX-16P-64K-latency-us": "16p/64K",
@@ -1317,9 +1337,365 @@ export default {
         });
       });
     },
+    getTableHeaders() {
+      if (this.suite == "stream") {
+        this.t_headers = ["copy", "scale", "add", "triad"];
+        this.stream_selected = this.t_headers;
+      } else if (this.suite == "netperf") {
+        this.t_headers = [
+          "TCP_RR",
+          "TCP_CRR",
+          "UDP_RR",
+          "1",
+          "64",
+          "128",
+          "256",
+          "512",
+          "1024",
+          "1500",
+          "2048",
+          "4096",
+          "9000",
+          "16384",
+          "32768",
+          "65536",
+        ];
+        this.netperf_selected = this.t_headers;
+      } else if (this.suite == "unixbench") {
+        this.t_headers = [
+          "Double-Precision_Whetstone",
+          "Shell_Scripts_(1_concurrent)",
+          "Shell_Scripts_(8_concurrent)",
+          "Pipe_Throughput",
+          "Pipe-based_Context_Switching",
+          "Process_Creation",
+          "System_Call_Overhead",
+          "Dhrystone_2_using_register_variables",
+          "File_Copy_1024_bufsize_2000_maxblocks",
+          "File_Copy_256_bufsize_500_maxblocks",
+          "File_Copy_4096_bufsize_8000_maxblocks",
+          "Execl_Throughput",
+          "System_Benchmarks_Index_Score",
+        ];
+        this.unixbench_selected = this.t_headers;
+      } else if (this.suite == "lmbench3") {
+        this.t_headers = [
+          "null_call",
+          "null_io",
+          "stat",
+          "open_close",
+          "slct_TCP",
+          "sig_inst",
+          "sig_hndl",
+          "fork_proc",
+          "exec_proc",
+          "sh_proc",
+          "Pipe",
+          "AF_UNIX",
+          "UDP",
+          "TCP",
+          "TCP_conn",
+          "File_reread",
+          "Mmap_reread",
+          "copy(libc)",
+          "copy(hand)",
+          "Mem_read",
+          "Mem_write",
+          "2p/0K",
+          "2p/16K",
+          "2p/64K",
+          "8p/16K",
+          "8p/64K",
+          "16p/16K",
+          "16p/64K",
+          "Mmap_Latency",
+          "Prot_Fault",
+          "Page_Fault",
+          "100fd_selct",
+          "L1_$",
+          "L2_$",
+          "Main_mem",
+          "Rand_mem",
+        ];
+        this.lmbench3_selected = this.t_headers;
+      } else if (this.suite == "fio-basic") {
+        this.t_headers = [
+          "4k",
+          "16k",
+          "32k",
+          "64k",
+          "128k",
+          "256k",
+          "512k",
+          "1024k",
+        ];
+        this.fio_selected = this.t_headers;
+      } else if (this.suite == "libmicro") {
+        this.t_headers = [
+          "getpid",
+          "getenv",
+          "getenvT2",
+          "gettimeofday",
+          "log",
+          "exp",
+          "lrand48",
+          "memset_10",
+          "memset_256",
+          "memset_256_u",
+          "memset_1k",
+          "memset_4k",
+          "memset_4k_uc",
+          "memset_10k",
+          "memset_1m",
+          "memset_10m",
+          "memsetP2_10m",
+          "memrand",
+          "isatty_yes",
+          "isatty_no",
+          "malloc_10",
+          "malloc_100",
+          "malloc_1k",
+          "malloc_10k",
+          "malloc_100k",
+          "mallocT2_10",
+          "mallocT2_100",
+          "mallocT2_1k",
+          "mallocT2_10k",
+          "mallocT2_100k",
+          "close_bad",
+          "close_tmp",
+          "close_usr",
+          "close_zero",
+          "memcpy_10",
+          "memcpy_1k",
+          "memcpy_10k",
+          "memcpy_1m",
+          "memcpy_10m",
+          "strcpy_10",
+          "strchr_1k",
+          "strcmp_10",
+          "strcmp_1k",
+          "scasecmp_10",
+          "scasecmp_1k",
+          "strtol",
+          "getcontext",
+          "setcontext",
+          "mutex_st",
+          "mutex_mt",
+          "mutex_T2",
+          "longjmp",
+          "siglongjmp",
+          "getrusage",
+          "times",
+          "time",
+          "localtime_r",
+          "strftime",
+          "mktime",
+          "mktimeT2",
+          "c_mutex_1",
+          "c_mutex_10",
+          "c_mutex_200",
+          "c_cond_1",
+          "c_cond_10",
+          "c_cond_200",
+          "c_lockf_1",
+          "c_lockf_10",
+          "c_lockf_200",
+          "c_flock",
+          "c_flock_10",
+          "c_flock_200",
+          "c_fcntl_1",
+          "c_fcntl_10",
+          "c_fcntl_200",
+          "file_lock",
+          "getsockname",
+          "getpeername",
+          "chdir_tmp",
+          "chdir_usr",
+          "chgetwd_tmp",
+          "chgetwd_usr",
+          "realpath_tmp",
+          "realpath_usr",
+          "stat_tmp",
+          "stat_usr",
+          "fcntl_tmp",
+          "fcntl_usr",
+          "fcntl_ndelay",
+          "lseek_t8k",
+          "lseek_u8k",
+          "open_tmp",
+          "open_usr",
+          "open_zero",
+          "dup",
+          "socket_u",
+          "socket_i",
+          "socketpair",
+          "setsockopt",
+          "bind",
+          "listen",
+          "connection",
+          "poll_10",
+          "poll_100",
+          "poll_1000",
+          "poll_w10",
+          "poll_w100",
+          "poll_w1000",
+          "select_10",
+          "select_100",
+          "select_1000",
+          "select_w10",
+          "select_w100",
+          "select_w1000",
+          "semop",
+          "sigaction",
+          "signal",
+          "sigprocmask",
+          "pthread_8",
+          "pthread_32",
+          "pthread_128",
+          "pthread_512",
+          "fork_10",
+          "fork_100",
+          "fork_1000",
+          "exit_10",
+          "exit_100",
+          "exit_1000",
+          "exit_10_nolibc",
+          "exec",
+          "system",
+          "recurse",
+          "read_t1k",
+          "read_t10k",
+          "read_t100k",
+          "read_u1k",
+          "read_u10k",
+          "read_u100k",
+          "read_z1k",
+          "read_z10k",
+          "read_z100k",
+          "read_zw100k",
+          "write_t1k",
+          "write_t10k",
+          "write_t100k",
+          "write_u1k",
+          "write_u10k",
+          "write_u100k",
+          "write_n1k",
+          "write_n10k",
+          "write_n100k",
+          "writev_t1k",
+          "writev_t10k",
+          "writev_t100k",
+          "writev_u1k",
+          "writev_u10k",
+          "writev_u100k",
+          "writev_n1k",
+          "writev_n10k",
+          "writev_n100k",
+          "pread_t1k",
+          "pread_t10k",
+          "pread_t100k",
+          "pread_u1k",
+          "pread_u10k",
+          "pread_u100k",
+          "pread_z1k",
+          "pread_z10k",
+          "pread_z100k",
+          "pread_zw100k",
+          "pwrite_t1k",
+          "pwrite_t10k",
+          "pwrite_t100k",
+          "pwrite_u1k",
+          "pwrite_u10k",
+          "pwrite_u100k",
+          "pwrite_n1k",
+          "pwrite_n10k",
+          "pwrite_n100k",
+          "mmap_z8k",
+          "mmap_z128k",
+          "mmap_t8k",
+          "mmap_t128k",
+          "mmap_u8k",
+          "mmap_u128k",
+          "mmap_a8k",
+          "mmap_a128k",
+          "mmap_rz8k",
+          "mmap_rz128k",
+          "mmap_rt8k",
+          "mmap_rt128k",
+          "mmap_ru8k",
+          "mmap_ru128k",
+          "mmap_ra8k",
+          "mmap_ra128k",
+          "mmap_wz8k",
+          "mmap_wz128k",
+          "mmap_wt8k",
+          "mmap_wt128k",
+          "mmap_wu8k",
+          "mmap_wu128k",
+          "mmap_wa8k",
+          "mmap_wa128k",
+          "unmap_z8k",
+          "unmap_z128k",
+          "unmap_t8k",
+          "unmap_t128k",
+          "unmap_u8k",
+          "unmap_u128k",
+          "unmap_a8k",
+          "unmap_a128k",
+          "unmap_rz8k",
+          "unmap_rz128k",
+          "unmap_rt8k",
+          "unmap_rt128k",
+          "unmap_ru8k",
+          "unmap_ru128k",
+          "unmap_ra8k",
+          "unmap_ra128k",
+          "conn_connect",
+          "unmap_wz8k",
+          "unmap_wz128k",
+          "unmap_wt8k",
+          "unmap_wt128k",
+          "unmap_wu8k",
+          "unmap_wu128k",
+          "unmap_wa8k",
+          "unmap_wa128k",
+          "mprot_z8k",
+          "mprot_z128k",
+          "mprot_wz8k",
+          "mprot_wz128k",
+          "mprot_twz8k",
+          "mprot_tw128k",
+          "mprot_tw4m",
+          "pipe_pst1",
+          "pipe_pmt1",
+          "pipe_pmp1",
+          "pipe_pst4k",
+          "pipe_pmt4k",
+          "pipe_pmp4k",
+          "pipe_sst1",
+          "pipe_smt1",
+          "pipe_smp1",
+          "pipe_sst4k",
+          "pipe_smt4k",
+          "pipe_smp4k",
+          "pipe_tst1",
+          "pipe_tmt1",
+          "pipe_tmp1",
+          "pipe_tst4k",
+          "pipe_tmt4k",
+          "pipe_tmp4k",
+          "conn_accept",
+          "close_tcp",
+        ];
+        this.libmicro_selected = this.t_headers;
+      }
+    },
     radioChange() {
       this.getVersionData();
       this.getSelectGroup(this.os_version);
+      this.getTableHeaders();
+      this.getTransferData();
     },
     getVersionData() {
       this.checkQuery.filter.suite = [this.suite];
@@ -1749,15 +2125,139 @@ export default {
       buf = new Array(s.length);
 
       for (let i = 0; i != s.length; ++i) {
-        // 转换成二进制流
         buf[i] = s.charCodeAt(i) & 0xff;
       }
 
       return buf;
     },
+    stream_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.stream_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    netperf_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.netperf_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    unixbench_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.unixbench_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    lmbench3_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.lmbench3_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    libmicro_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.libmicro_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    fio_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.fio_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    getTransferData() {
+      this.transfer_data = [];
+      this.transfer_chosen = [];
+      for (var i = 0; i < this.t_headers.length; i++) {
+        this.transfer_data.push({
+          key: i,
+          label: this.t_headers[i],
+        });
+        this.transfer_chosen.push(i);
+      }
+    },
+    transferChange() {
+      if (this.suite == "stream") {
+        this.stream_selected = [];
+        for (var i = 0; i < this.transfer_chosen.length; i++) {
+          var index = this.transfer_chosen[i];
+          this.stream_selected[i] = this.transfer_data[index].label;
+        }
+      } else if (this.suite == "netperf") {
+        this.netperf_selected = [];
+        for (i = 0; i < this.transfer_chosen.length; i++) {
+          index = this.transfer_chosen[i];
+          this.netperf_selected[i] = this.transfer_data[index].label;
+        }
+      } else if (this.suite == "unixbench") {
+        this.unixbench_selected = [];
+        for (i = 0; i < this.transfer_chosen.length; i++) {
+          index = this.transfer_chosen[i];
+          this.unixbench_selected[i] = this.transfer_data[index].label;
+        }
+      } else if (this.suite == "lmbench3") {
+        this.lmbench3_selected = [];
+        for (i = 0; i < this.transfer_chosen.length; i++) {
+          index = this.transfer_chosen[i];
+          this.lmbench3_selected[i] = this.transfer_data[index].label;
+        }
+      } else if (this.suite == "libmicro") {
+        this.libmicro_selected = [];
+        for (i = 0; i < this.transfer_chosen.length; i++) {
+          index = this.transfer_chosen[i];
+          this.libmicro_selected[i] = this.transfer_data[index].label;
+        }
+      } else if (this.suite == "fio-basic") {
+        this.fio_selected = [];
+        for (i = 0; i < this.transfer_chosen.length; i++) {
+          index = this.transfer_chosen[i];
+          this.fio_selected[i] = this.transfer_data[index].label;
+        }
+      }
+    },
   },
+  computed: {},
   mounted() {
     this.getVersionData();
+    this.getTableHeaders();
+    this.getTransferData();
     if (this.suite === "lmbench3") {
       this.getData(this.lmbench_data_a);
       this.getData(this.lmbench_data_b);
@@ -1807,7 +2307,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 400px;
+  margin-top: 700px;
 }
 .chart {
   width: 1000px;
