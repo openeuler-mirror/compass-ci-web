@@ -13,7 +13,12 @@
             class="select-page"
             @change="getJobs(listQuery)"
           >
-            <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
+            <el-option
+              v-for="item in pageSizeOptions"
+              :key="item"
+              :label="item"
+              :value="item"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="search">
@@ -26,13 +31,21 @@
             clearable
             @clear="getJobs(listQuery)"
           >
-            <el-button slot="append" icon="el-icon-search" @click="handSearch"></el-button>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="handSearch"
+            ></el-button>
           </el-input>
         </el-form-item>
       </el-form>
       <el-table :data="tableData" stripe class="jobs-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
-        <el-table-column :label="item" :key="index" v-for="(item, index) in tableHead">
+        <el-table-column
+          :label="item"
+          :key="index"
+          v-for="(item, index) in tableHead"
+        >
           <template slot-scope="scope">
             <el-tooltip
               class="item"
@@ -52,25 +65,34 @@
                 @click="goBlank(testBoxUrl + checkStr(scope.row.testbox))"
                 v-if="item === 'testbox'"
                 @mouseover="showtip(item)"
-              >{{ scope.row[item] }}</span>
+                >{{ scope.row[item] }}</span
+              >
               <span
                 class="goUrl wrap"
                 @click="goBlank(resultUrl + scope.row.result_root)"
                 v-else-if="item === 'job_state'"
                 @mouseover="showtip(item)"
-              >{{ scope.row[item] }}</span>
+                >{{ scope.row[item] }}</span
+              >
               <span
                 class="goUrl wrap"
                 @click="goTree(scope.row[item])"
                 v-else-if="item == 'upstream_repo'"
                 @mouseover="showtip(item)"
-              >{{ scope.row[item] }}</span>
-              <span class="wrap" v-else-if="item == 'error_ids'" @mouseover="showtip(item)">
+                >{{ scope.row[item] }}</span
+              >
+              <span
+                class="wrap"
+                v-else-if="item == 'error_ids'"
+                @mouseover="showtip(item)"
+              >
                 <template v-for="item in scope.row[item]">
                   <span :key="item">{{ item }}</span>
                 </template>
               </span>
-              <span class="wrap" v-else @mouseover="showtip(item)">{{ scope.row[item] }}</span>
+              <span class="wrap" v-else @mouseover="showtip(item)">{{
+                scope.row[item]
+              }}</span>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -95,7 +117,7 @@ import Header from "@/components/Header";
 export default {
   name: "Jobs",
   components: {
-    Header
+    Header,
   },
   data() {
     return {
@@ -106,14 +128,14 @@ export default {
       filter: null,
       listQuery: {
         page_size: 10,
-        page_num: 1
+        page_num: 1,
       },
       pageSizeOptions: [10, 20, 30],
       jobsQuery: {},
       isSmall: false,
       toolDisabled: false,
       resultUrl: "",
-      testBoxUrl: ""
+      testBoxUrl: "",
     };
   },
   methods: {
@@ -127,7 +149,8 @@ export default {
         item == "id" ||
         item == "error_ids" ||
         item == "upstream_branch" ||
-        item == "suite"
+        item == "suite" ||
+        item == "os_version"
       ) {
         this.toolDisabled = false;
       } else {
@@ -138,8 +161,8 @@ export default {
       this.$router.push({
         path: "/tree",
         query: {
-          upstream_repo: item
-        }
+          upstream_repo: item,
+        },
       });
     },
     goBlank(src) {
@@ -161,7 +184,7 @@ export default {
       }
       this.$router.push({
         path: this.$route.path,
-        query: routeQuery
+        query: routeQuery,
       });
     },
     handSearch() {
@@ -180,7 +203,7 @@ export default {
     },
     getJobs(data) {
       this.updateURL(data);
-      getJobs(data).then(res => {
+      getJobs(data).then((res) => {
         this.jobsQuery = res;
         this.tableHead = this.jobsQuery.fields;
         this.tableData = this.jobsQuery.jobs;
@@ -217,7 +240,7 @@ export default {
         }
       }
       return resultStr;
-    }
+    },
   },
   mounted() {
     this.testBoxUrl = BASEURLTESTBOX;
@@ -227,7 +250,7 @@ export default {
     data.page_num = this.listQuery.page_num;
 
     this.getJobs(data);
-  }
+  },
 };
 </script>
 <style lang="less" scoped>
