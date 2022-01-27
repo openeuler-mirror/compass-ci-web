@@ -4,151 +4,209 @@
     <Header class="main-header"></Header>
     <h1 class="title">Performance Result</h1>
     <div class="content">
-      <div
-        style="
-          background-color: #eeeeee;
-          float: left;
-          width: 30%;
-          margin-left: 10%;
-        "
-      >
+      <div style="background-color: #eeeeee; float: left">
         <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
           <font size="5">比较基线</font>
         </p>
-        <el-form>
-          <el-form-item label="os" label-width="120px" class="input_class">
-            <el-select
-              v-model="os_a"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
-              @change="selectChangeVersiona"
+        <div style="float: left">
+          <el-form>
+            <el-form-item label="os" label-width="120px" class="input_class">
+              <el-select
+                v-model="os_a"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="selectChangeVersiona"
+              >
+                <el-option
+                  v-for="item in osData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="os_version"
+              label-width="120px"
+              class="input_class"
             >
-              <el-option
-                v-for="item in osData"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="os_version"
-            label-width="120px"
-            class="input_class"
-          >
-            <el-select
-              v-model="os_version_a"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
-              @change="getSelectGroupa"
-            >
-              <el-option
-                v-for="item in versionData_a"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
+              <el-select
+                v-model="os_version_a"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroupa"
+              >
+                <el-option
+                  v-for="item in versionData_a"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
 
-          <el-form-item
-            label="group_id"
-            label-width="120px"
-            class="input_class"
-          >
-            <el-select
-              v-model="group_id_a"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
+            <el-form-item
+              label="group_id"
+              label-width="120px"
+              class="input_class"
             >
-              <el-option
-                v-for="item in groupData_a"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
+              <el-select
+                v-model="group_id_a"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+              >
+                <el-option
+                  v-for="item in groupData_a"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+
+      <div style="float: right">
+        <el-form>
+          <el-form-item>
+            <el-button @click="addObject">增加</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="delObject">删除</el-button>
           </el-form-item>
         </el-form>
       </div>
-
-      <div
-        style="
-          background-color: #eeeeee;
-          float: left;
-          width: 30%;
-          margin-left: 20%;
-        "
-      >
+      <div id="compareObject" style="background-color: #eeeeee; float: right; margin-right: 20px">
         <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
           <font size="5">对比对象</font>
         </p>
-        <el-form>
-          <el-form-item label="os" label-width="120px" class="input_class">
-            <el-select
-              v-model="os_b"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
-              @change="selectChangeVersionb"
+        <div style="float: left">
+          <el-form>
+            <el-form-item label="os" label-width="120px" class="input_class">
+              <el-select
+                v-model="os_b"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="selectChangeVersionb"
+              >
+                <el-option
+                  v-for="item in osData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="os_version"
+              label-width="120px"
+              class="input_class"
             >
-              <el-option
-                v-for="item in osData"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="os_version"
-            label-width="120px"
-            class="input_class"
-          >
-            <el-select
-              v-model="os_version_b"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
-              @change="getSelectGroupb"
+              <el-select
+                v-model="os_version_b"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroupb"
+              >
+                <el-option
+                  v-for="item in versionData_b"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="group_id"
+              label-width="120px"
+              class="input_class"
             >
-              <el-option
-                v-for="item in versionData_b"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="group_id"
-            label-width="120px"
-            class="input_class"
-          >
-            <el-select
-              v-model="group_id_b"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
-            >
-              <el-option
-                v-for="item in groupData_b"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
+              <el-select
+                v-model="group_id_b"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+              >
+                <el-option
+                  v-for="item in groupData_b"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div
+          v-for="(obj, index) in compare_object"
+          :key="index"
+          style="float: left"
+        >
+          <el-form>
+            <el-form-item class="input_class">
+              <el-select
+                v-model="obj.os"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="selectChangeVersion(index, obj.os)"
+              >
+                <el-option
+                  v-for="item in osData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item class="input_class">
+              <el-select
+                v-model="obj.os_version"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroup(index, obj.os_version)"
+              >
+                <el-option
+                  v-for="item in obj.versionData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item class="input_class">
+              <el-select
+                v-model="obj.group_id"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+              >
+                <el-option
+                  v-for="item in obj.groupData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
       <div style="float: left; width: 100%; margin-top: 20px">
         <div style="float: left; width: 45%; margin-left: 20%">
@@ -404,7 +462,10 @@
         ></div>
       </div>
 
-      <div v-for="(t_item, t_index) in lmbench_data_a.table_data" :key="t_index">
+      <div
+        v-for="(t_item, t_index) in lmbench_data_a.table_data"
+        :key="t_index"
+      >
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
         <el-table
           :data="t_item.data"
@@ -440,7 +501,10 @@
         ></div>
       </div>
 
-      <div v-for="(t_item, t_index) in lmbench_data_b.table_data" :key="t_index">
+      <div
+        v-for="(t_item, t_index) in lmbench_data_b.table_data"
+        :key="t_index"
+      >
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
         <el-table
           :data="t_item.data"
@@ -476,7 +540,10 @@
         ></div>
       </div>
 
-      <div v-for="(t_item, t_index) in lmbench_data_c.table_data" :key="t_index">
+      <div
+        v-for="(t_item, t_index) in lmbench_data_c.table_data"
+        :key="t_index"
+      >
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
         <el-table
           :data="t_item.data"
@@ -512,7 +579,10 @@
         ></div>
       </div>
 
-      <div v-for="(t_item, t_index) in lmbench_data_d.table_data" :key="t_index">
+      <div
+        v-for="(t_item, t_index) in lmbench_data_d.table_data"
+        :key="t_index"
+      >
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
         <el-table
           :data="t_item.data"
@@ -548,7 +618,10 @@
         ></div>
       </div>
 
-      <div v-for="(t_item, t_index) in lmbench_data_e.table_data" :key="t_index">
+      <div
+        v-for="(t_item, t_index) in lmbench_data_e.table_data"
+        :key="t_index"
+      >
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
         <el-table
           :data="t_item.data"
@@ -584,7 +657,10 @@
         ></div>
       </div>
 
-      <div v-for="(t_item, t_index) in lmbench_data_f.table_data" :key="t_index">
+      <div
+        v-for="(t_item, t_index) in lmbench_data_f.table_data"
+        :key="t_index"
+      >
         <div class="test_params">test_params: {{ t_item.test_params }}</div>
         <el-table
           :data="t_item.data"
@@ -619,7 +695,6 @@
           v-show="t_item.data.length > 2"
         ></div>
       </div>
-
 
       <div v-for="(l_item, l_index) in netperfb_data.table_data" :key="l_index">
         <div class="test_params">test_params: {{ l_item.test_params }}</div>
@@ -715,6 +790,7 @@ export default {
       t_headers: ["copy", "scale", "add", "triad"],
       transfer_data: [],
       transfer_chosen: [],
+      compare_object: [],
       suite: "stream",
       osData: [],
       versionData_a: [],
@@ -1700,6 +1776,21 @@ export default {
       this.os_version_b = "";
       this.getSelectVersionb(os);
     },
+    selectChangeVersion(index, os) {
+      this.compare_object[index].os_version = "";
+      this.compare_object[index].group_id = "";
+      this.compare_object[index].versionData = [];
+      this.compare_object[index].groupData = [];
+      var checkQuery = this.compare_object[index].checkQuery;
+
+      checkQuery.filter.suite = [this.suite];
+      checkQuery.filter.os = [os];
+      checkQuery.filter.os_version = [];
+      checkQuery.field = "os_version";
+      QueryField(checkQuery).then((res) => {
+        this.compare_object[index].versionData = res;
+      });
+    },
     getSelectVersiona(os) {
       this.checkQuery.filter.os = [os];
       this.checkQuery.filter.os_version = [];
@@ -1740,6 +1831,18 @@ export default {
 
       QueryField(this.checkQuery_b).then((res) => {
         this.groupData_b = res;
+      });
+    },
+    getSelectGroup(index, os_version) {
+      this.compare_object[index].group_id = "";
+      this.compare_object[index].groupData = [];
+      var checkQuery = this.compare_object[index].checkQuery;
+
+      checkQuery.filter.suite = [this.suite];
+      checkQuery.filter.os_version = [os_version];
+      checkQuery.field = "group_id";
+      QueryField(checkQuery).then((res) => {
+        this.compare_object[index].groupData = res;
       });
     },
     sleep(time) {
@@ -1861,28 +1964,51 @@ export default {
         return "{value}%";
       }
     },
+    groupIdEmpty() {
+      for (var i = 0; i < this.compare_object.length; i++) {
+        if (this.compare_object[i].group_id == "") {
+          return true;
+        }
+      }
+      return false;
+    },
     queryCharts() {
-      this.lmbench_data_a.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.lmbench_data_b.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.lmbench_data_c.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.lmbench_data_d.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.lmbench_data_e.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.lmbench_data_f.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      var series = [
+        { os: this.os_a, os_version: this.os_version_a },
+        { os: this.os_b, os_version: this.os_version_b },
+      ];
+      for (var i = 0; i < this.compare_object.length; i++) {
+        var every_set = {
+          os: this.compare_object[i].os,
+          os_version: this.compare_object[i].os_version,
+        };
+        series.push(every_set);
+      }
+      this.lmbench_data_a.QueryData.series = series;
+      this.lmbench_data_b.QueryData.series = series;
+      this.lmbench_data_c.QueryData.series = series;
+      this.lmbench_data_d.QueryData.series = series;
+      this.lmbench_data_e.QueryData.series = series;
+      this.lmbench_data_f.QueryData.series = series;
 
-      this.unixbench_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.unixbench_data.QueryData.series = series;
 
-      this.libmicro_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.libmicro_data.QueryData.series = series;
 
-      this.stream_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.stream_data.QueryData.series = series;
 
-      this.netperfa_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.netperfb_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.netperfa_data.QueryData.series = series;
+      this.netperfb_data.QueryData.series = series;
 
-      this.fio_data.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.fio_data_b.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
-      this.fio_data_c.QueryData.series = [{"os": this.os_a, "os_version":this.os_version_a},{"os": this.os_b, "os_version":this.os_version_b}];
+      this.fio_data.QueryData.series = series;
+      this.fio_data_b.QueryData.series = series;
+      this.fio_data_c.QueryData.series = series;
 
-      if (this.group_id_a == "" || this.group_id_b == "") {
+      if (
+        this.group_id_a == "" ||
+        this.group_id_b == "" ||
+        this.groupIdEmpty()
+      ) {
         this.lmbench_data_a.QueryData.filter.group_id = [];
         this.lmbench_data_b.QueryData.filter.group_id = [];
         this.lmbench_data_c.QueryData.filter.group_id = [];
@@ -1898,22 +2024,29 @@ export default {
         this.fio_data_b.QueryData.filter.group_id = [];
         this.fio_data_c.QueryData.filter.group_id = [];
       } else {
-        this.lmbench_data_a.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.lmbench_data_b.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.lmbench_data_c.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.lmbench_data_d.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.lmbench_data_e.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.lmbench_data_f.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        var group_ids = [this.group_id_a, this.group_id_b];
+        for (i = 0; i < this.compare_object.length; i++) {
+          var every_group_id = this.compare_object[i].group_id;
+          if (every_group_id != "") {
+            group_ids.push(every_group_id);
+          }
+        }
+        this.lmbench_data_a.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_b.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_c.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_d.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_e.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_f.QueryData.filter.group_id = group_ids;
 
-        this.unixbench_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.libmicro_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.stream_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.netperfa_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.netperfb_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.unixbench_data.QueryData.filter.group_id = group_ids;
+        this.libmicro_data.QueryData.filter.group_id = group_ids;
+        this.stream_data.QueryData.filter.group_id = group_ids;
+        this.netperfa_data.QueryData.filter.group_id = group_ids;
+        this.netperfb_data.QueryData.filter.group_id = group_ids;
 
-        this.fio_data.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.fio_data_b.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
-        this.fio_data_c.QueryData.filter.group_id = [this.group_id_a, this.group_id_b];
+        this.fio_data.QueryData.filter.group_id = group_ids;
+        this.fio_data_b.QueryData.filter.group_id = group_ids;
+        this.fio_data_c.QueryData.filter.group_id = group_ids;
       }
 
       this.clean_data();
@@ -2243,6 +2376,27 @@ export default {
         }
       }
     },
+    addObject() {
+      var obj = {
+        os: "",
+        os_version: "",
+        group_id: "",
+        versionData: [],
+        groupData: [],
+        checkQuery: {
+          filter: {
+            suite: [this.suite],
+            os: [],
+            os_version: [],
+          },
+          field: "os",
+        },
+      };
+      this.compare_object.push(obj);
+    },
+    delObject() {
+      this.compare_object.pop();
+    },
   },
   mounted() {
     this.getosData();
@@ -2258,7 +2412,7 @@ export default {
 }
 .confirm {
   float: left;
-  margin-left: 90%;
+  margin-left: 30%;
 }
 .containers {
   display: flex;

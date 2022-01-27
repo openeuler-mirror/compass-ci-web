@@ -4,14 +4,7 @@
     <Header class="main-header"></Header>
     <h1 class="title">Performance Result for Update</h1>
     <div class="content">
-      <div
-        style="
-          background-color: #eeeeee;
-          float: left;
-          width: 30%;
-          margin-left: 10%;
-        "
-      >
+      <div style="background-color: #eeeeee; float: left">
         <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
           <font size="5">比较基线</font>
         </p>
@@ -64,63 +57,115 @@
         </el-form>
       </div>
 
-      <div
-        style="
-          background-color: #eeeeee;
-          float: left;
-          width: 30%;
-          margin-left: 20%;
-        "
-      >
+      <div style="float: right">
+        <el-form>
+          <el-form-item>
+            <el-button @click="addObject">增加</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="delObject">删除</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div style="background-color: #eeeeee; float: right; margin-right: 20px">
         <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
           <font size="5">对比对象</font>
         </p>
-        <el-form>
-          <el-form-item label="os" label-width="120px" class="input_class">
-            <el-select v-model="os_select" size="medium" disabled> </el-select>
-          </el-form-item>
-          <el-form-item
-            label="os_version"
-            label-width="120px"
-            class="input_class"
-          >
-            <el-select
-              v-model="os_version"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
-              @change="getSelectGroup"
+        <div style="float: left">
+          <el-form>
+            <el-form-item label="os" label-width="120px" class="input_class">
+              <el-select v-model="os_select" size="medium" disabled>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="os_version"
+              label-width="120px"
+              class="input_class"
             >
-              <el-option
-                v-for="item in versionData"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item
-            label="group_id"
-            label-width="120px"
-            class="input_class"
-          >
-            <el-select
-              v-model="group_id_b"
-              filterable
-              placeholder="请选择"
-              size="medium"
-              clearable
+              <el-select
+                v-model="os_version"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroup"
+              >
+                <el-option
+                  v-for="item in versionData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="group_id"
+              label-width="120px"
+              class="input_class"
             >
-              <el-option
-                v-for="item in groupData"
-                :key="item"
-                :label="item"
-                :value="item"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
+              <el-select
+                v-model="group_id_b"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+              >
+                <el-option
+                  v-for="item in groupData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <div
+          v-for="(obj, index) in compare_object"
+          :key="index"
+          style="float: left"
+        >
+          <el-form>
+            <el-form-item class="input_class">
+              <el-select v-model="os_select" size="medium" disabled>
+              </el-select>
+            </el-form-item>
+            <el-form-item class="input_class">
+              <el-select
+                v-model="os_version"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroup"
+              >
+                <el-option
+                  v-for="item in versionData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item class="input_class">
+              <el-select
+                v-model="obj.group_id"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+              >
+                <el-option
+                  v-for="item in groupData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
       <div style="float: left; width: 100%; margin-top: 20px">
         <div style="float: left; width: 45%; margin-left: 20%">
@@ -707,6 +752,7 @@ export default {
       t_headers: ["copy", "scale", "add", "triad"],
       transfer_data: [],
       transfer_chosen: [],
+      compare_object: [],
       suite: "stream",
       osData: [],
       versionData: [],
@@ -750,7 +796,7 @@ export default {
           ],
           series: ["group_id"],
           x_params: ["metric"],
-          max_series_num: 2,
+          max_series_num: 3,
         },
       },
       lmbench_data_a: {
@@ -1840,6 +1886,14 @@ export default {
     },
     queryCharts() {
       this.clean_data();
+      var group_ids = [this.group_id_a, this.group_id_b];
+        for (var i = 0; i < this.compare_object.length; i++) {
+          var every_group_id = this.compare_object[i].group_id;
+          if (every_group_id != "") {
+            group_ids.push(every_group_id);
+          }
+        }
+
       if (this.suite === "lmbench3") {
         this.lmbench_data_a.QueryData.filter.os_version = [this.os_version];
         this.lmbench_data_b.QueryData.filter.os_version = [this.os_version];
@@ -1855,30 +1909,12 @@ export default {
           this.lmbench_data_e.QueryData.filter.group_id = [];
           this.lmbench_data_f.QueryData.filter.group_id = [];
         } else {
-          this.lmbench_data_a.QueryData.filter.group_id = [
-            this.group_id_a,
-            this.group_id_b,
-          ];
-          this.lmbench_data_b.QueryData.filter.group_id = [
-            this.group_id_a,
-            this.group_id_b,
-          ];
-          this.lmbench_data_c.QueryData.filter.group_id = [
-            this.group_id_a,
-            this.group_id_b,
-          ];
-          this.lmbench_data_d.QueryData.filter.group_id = [
-            this.group_id_a,
-            this.group_id_b,
-          ];
-          this.lmbench_data_e.QueryData.filter.group_id = [
-            this.group_id_a,
-            this.group_id_b,
-          ];
-          this.lmbench_data_f.QueryData.filter.group_id = [
-            this.group_id_a,
-            this.group_id_b,
-          ];
+          this.lmbench_data_a.QueryData.filter.group_id = group_ids;
+          this.lmbench_data_b.QueryData.filter.group_id = group_ids;
+          this.lmbench_data_c.QueryData.filter.group_id = group_ids;
+          this.lmbench_data_d.QueryData.filter.group_id = group_ids;
+          this.lmbench_data_e.QueryData.filter.group_id = group_ids;
+          this.lmbench_data_f.QueryData.filter.group_id = group_ids;
         }
         this.getData(this.lmbench_data_a);
         this.sleep(50).then(() => {
@@ -1902,8 +1938,7 @@ export default {
         if (this.group_id_a == "" || this.group_id_b == "") {
           this.unixbench_data.QueryData.filter.group_id = [];
         } else {
-          this.unixbench_data.QueryData.filter.group_id[0] = this.group_id_a;
-          this.unixbench_data.QueryData.filter.group_id[1] = this.group_id_b;
+          this.unixbench_data.QueryData.filter.group_id = group_ids;
         }
         this.getData(this.unixbench_data);
       }
@@ -1912,8 +1947,7 @@ export default {
         if (this.group_id_a == "" || this.group_id_b == "") {
           this.libmicro_data.QueryData.filter.group_id = [];
         } else {
-          this.libmicro_data.QueryData.filter.group_id[0] = this.group_id_a;
-          this.libmicro_data.QueryData.filter.group_id[1] = this.group_id_b;
+          this.libmicro_data.QueryData.filter.group_id = group_ids;
         }
         this.getData(this.libmicro_data);
       }
@@ -1922,8 +1956,7 @@ export default {
         if (this.group_id_a == "" || this.group_id_b == "") {
           this.stream_data.QueryData.filter.group_id = [];
         } else {
-          this.stream_data.QueryData.filter.group_id[0] = this.group_id_a;
-          this.stream_data.QueryData.filter.group_id[1] = this.group_id_b;
+          this.stream_data.QueryData.filter.group_id = group_ids;
         }
         this.getData(this.stream_data);
       }
@@ -1936,12 +1969,9 @@ export default {
           this.fio_data_b.QueryData.filter.group_id = [];
           this.fio_data_c.QueryData.filter.group_id = [];
         } else {
-          this.fio_data.QueryData.filter.group_id[0] = this.group_id_a;
-          this.fio_data.QueryData.filter.group_id[1] = this.group_id_b;
-          this.fio_data_b.QueryData.filter.group_id[0] = this.group_id_a;
-          this.fio_data_b.QueryData.filter.group_id[1] = this.group_id_b;
-          this.fio_data_c.QueryData.filter.group_id[0] = this.group_id_a;
-          this.fio_data_c.QueryData.filter.group_id[1] = this.group_id_b;
+          this.fio_data.QueryData.filter.group_id = group_ids;
+          this.fio_data_b.QueryData.filter.group_id = group_ids;
+          this.fio_data_c.QueryData.filter.group_id = group_ids;
         }
         this.getData(this.fio_data);
         this.sleep(200).then(() => {
@@ -1958,10 +1988,8 @@ export default {
           this.netperfb_data.QueryData.filter.group_id = [];
           this.netperfa_data.QueryData.filter.group_id = [];
         } else {
-          this.netperfb_data.QueryData.filter.group_id[0] = this.group_id_a;
-          this.netperfb_data.QueryData.filter.group_id[1] = this.group_id_b;
-          this.netperfa_data.QueryData.filter.group_id[0] = this.group_id_a;
-          this.netperfa_data.QueryData.filter.group_id[1] = this.group_id_b;
+          this.netperfb_data.QueryData.filter.group_id = group_ids;
+          this.netperfa_data.QueryData.filter.group_id = group_ids;
         }
         this.getData(this.netperfb_data);
 
@@ -2252,6 +2280,15 @@ export default {
         }
       }
     },
+    addObject() {
+      var obj = {
+        group_id: "",
+      };
+      this.compare_object.push(obj);
+    },
+    delObject() {
+      this.compare_object.pop();
+    },
   },
   computed: {},
   mounted() {
@@ -2301,7 +2338,7 @@ export default {
 }
 .confirm {
   float: left;
-  margin-left: 80%;
+  margin-left: 30%;
 }
 .containers {
   display: flex;
