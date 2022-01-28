@@ -83,7 +83,10 @@
           </el-form-item>
         </el-form>
       </div>
-      <div id="compareObject" style="background-color: #eeeeee; float: right; margin-right: 20px">
+      <div
+        id="compareObject"
+        style="background-color: #eeeeee; float: right; margin-right: 20px"
+      >
         <p style="text-align: center; margin-top: 10px; margin-bottom: 10px">
           <font size="5">对比对象</font>
         </p>
@@ -1746,6 +1749,10 @@ export default {
       this.getSelectGroupb(this.os_version_b);
       this.getTableHeaders();
       this.getTransferData();
+      for (var index = 0; index < this.compare_object.length; index++) {
+        this.getSelectVersion(index, this.compare_object[index].os);
+        this.getSelectGroup(index, this.compare_object[index].os_version);
+      }
     },
     getosData() {
       this.checkQuery.filter.suite = [this.suite];
@@ -1778,6 +1785,9 @@ export default {
     },
     selectChangeVersion(index, os) {
       this.compare_object[index].os_version = "";
+      this.getSelectVersion(index, os);
+    },
+    getSelectVersion(index, os) {
       this.compare_object[index].group_id = "";
       this.compare_object[index].versionData = [];
       this.compare_object[index].groupData = [];

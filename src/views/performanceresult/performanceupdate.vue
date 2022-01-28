@@ -796,7 +796,7 @@ export default {
           ],
           series: ["group_id"],
           x_params: ["metric"],
-          max_series_num: 3,
+          max_series_num: 2,
         },
       },
       lmbench_data_a: {
@@ -1760,6 +1760,9 @@ export default {
       this.checkQuery.field = "group_id";
       this.group_id_a = "";
       this.group_id_b = "";
+      for (var i = 0; i < this.compare_object.length; i++) {
+        this.compare_object[i].group_id = "";
+      }
 
       QueryField(this.checkQuery).then((res) => {
         this.groupData = res;
@@ -1886,13 +1889,24 @@ export default {
     },
     queryCharts() {
       this.clean_data();
-      var group_ids = [this.group_id_a, this.group_id_b];
-        for (var i = 0; i < this.compare_object.length; i++) {
-          var every_group_id = this.compare_object[i].group_id;
-          if (every_group_id != "") {
-            group_ids.push(every_group_id);
-          }
+      var group_ids = [];
+      if (this.group_id_a != "") {
+        group_ids.push(this.group_id_a);
+      }
+      if (this.group_id_b != "") {
+        group_ids.push(this.group_id_b);
+      }
+      for (var i = 0; i < this.compare_object.length; i++) {
+        var every_group_id = this.compare_object[i].group_id;
+        if (every_group_id != "") {
+          group_ids.push(every_group_id);
         }
+      }
+
+      var series = [];
+      for (i = 0; i < group_ids.length; i++) {
+        series.push({ group_id: group_ids[i] });
+      }
 
       if (this.suite === "lmbench3") {
         this.lmbench_data_a.QueryData.filter.os_version = [this.os_version];
@@ -1901,20 +1915,42 @@ export default {
         this.lmbench_data_d.QueryData.filter.os_version = [this.os_version];
         this.lmbench_data_e.QueryData.filter.os_version = [this.os_version];
         this.lmbench_data_f.QueryData.filter.os_version = [this.os_version];
-        if (this.group_id_a == "" || this.group_id_b == "") {
-          this.lmbench_data_a.QueryData.filter.group_id = [];
-          this.lmbench_data_b.QueryData.filter.group_id = [];
-          this.lmbench_data_c.QueryData.filter.group_id = [];
-          this.lmbench_data_d.QueryData.filter.group_id = [];
-          this.lmbench_data_e.QueryData.filter.group_id = [];
-          this.lmbench_data_f.QueryData.filter.group_id = [];
+
+        this.lmbench_data_a.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_b.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_c.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_d.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_e.QueryData.filter.group_id = group_ids;
+        this.lmbench_data_f.QueryData.filter.group_id = group_ids;
+
+        if (group_ids.length == 0) {
+          this.lmbench_data_a.QueryData.max_series_num = 2;
+          this.lmbench_data_b.QueryData.max_series_num = 2;
+          this.lmbench_data_c.QueryData.max_series_num = 2;
+          this.lmbench_data_d.QueryData.max_series_num = 2;
+          this.lmbench_data_f.QueryData.max_series_num = 2;
+          this.lmbench_data_f.QueryData.max_series_num = 2;
+
+          this.lmbench_data_a.QueryData.series = ["group_id"];
+          this.lmbench_data_b.QueryData.series = ["group_id"];
+          this.lmbench_data_c.QueryData.series = ["group_id"];
+          this.lmbench_data_d.QueryData.series = ["group_id"];
+          this.lmbench_data_f.QueryData.series = ["group_id"];
+          this.lmbench_data_f.QueryData.series = ["group_id"];
         } else {
-          this.lmbench_data_a.QueryData.filter.group_id = group_ids;
-          this.lmbench_data_b.QueryData.filter.group_id = group_ids;
-          this.lmbench_data_c.QueryData.filter.group_id = group_ids;
-          this.lmbench_data_d.QueryData.filter.group_id = group_ids;
-          this.lmbench_data_e.QueryData.filter.group_id = group_ids;
-          this.lmbench_data_f.QueryData.filter.group_id = group_ids;
+          this.lmbench_data_a.QueryData.max_series_num = -1;
+          this.lmbench_data_b.QueryData.max_series_num = -1;
+          this.lmbench_data_c.QueryData.max_series_num = -1;
+          this.lmbench_data_d.QueryData.max_series_num = -1;
+          this.lmbench_data_f.QueryData.max_series_num = -1;
+          this.lmbench_data_f.QueryData.max_series_num = -1;
+
+          this.lmbench_data_a.QueryData.series = series;
+          this.lmbench_data_b.QueryData.series = series;
+          this.lmbench_data_c.QueryData.series = series;
+          this.lmbench_data_d.QueryData.series = series;
+          this.lmbench_data_f.QueryData.series = series;
+          this.lmbench_data_f.QueryData.series = series;
         }
         this.getData(this.lmbench_data_a);
         this.sleep(50).then(() => {
@@ -1935,28 +1971,37 @@ export default {
       }
       if (this.suite === "unixbench") {
         this.unixbench_data.QueryData.filter.os_version = [this.os_version];
-        if (this.group_id_a == "" || this.group_id_b == "") {
-          this.unixbench_data.QueryData.filter.group_id = [];
+        this.unixbench_data.QueryData.filter.group_id = group_ids;
+        if (group_ids.length == 0) {
+          this.unixbench_data.QueryData.max_series_num = 2;
+          this.unixbench_data.QueryData.series = ["group_id"];
         } else {
-          this.unixbench_data.QueryData.filter.group_id = group_ids;
+          this.unixbench_data.QueryData.max_series_num = -1;
+          this.unixbench_data.QueryData.series = series;
         }
         this.getData(this.unixbench_data);
       }
       if (this.suite === "libmicro") {
         this.libmicro_data.QueryData.filter.os_version = [this.os_version];
-        if (this.group_id_a == "" || this.group_id_b == "") {
-          this.libmicro_data.QueryData.filter.group_id = [];
+        this.libmicro_data.QueryData.filter.group_id = group_ids;
+        if (group_ids.length == 0) {
+          this.libmicro_data.QueryData.max_series_num = 2;
+          this.libmicro_data.QueryData.series = ["group_id"];
         } else {
-          this.libmicro_data.QueryData.filter.group_id = group_ids;
+          this.libmicro_data.QueryData.max_series_num = -1;
+          this.libmicro_data.QueryData.series = series;
         }
         this.getData(this.libmicro_data);
       }
       if (this.suite === "stream") {
         this.stream_data.QueryData.filter.os_version = [this.os_version];
-        if (this.group_id_a == "" || this.group_id_b == "") {
-          this.stream_data.QueryData.filter.group_id = [];
+        this.stream_data.QueryData.filter.group_id = group_ids;
+        if (group_ids.length == 0) {
+          this.stream_data.QueryData.max_series_num = 2;
+          this.stream_data.QueryData.series = ["group_id"];
         } else {
-          this.stream_data.QueryData.filter.group_id = group_ids;
+          this.stream_data.QueryData.max_series_num = -1;
+          this.stream_data.QueryData.series = series;
         }
         this.getData(this.stream_data);
       }
@@ -1964,14 +2009,26 @@ export default {
         this.fio_data.QueryData.filter.os_version = [this.os_version];
         this.fio_data_b.QueryData.filter.os_version = [this.os_version];
         this.fio_data_c.QueryData.filter.os_version = [this.os_version];
-        if (this.group_id_a == "" || this.group_id_b == "") {
-          this.fio_data.QueryData.filter.group_id = [];
-          this.fio_data_b.QueryData.filter.group_id = [];
-          this.fio_data_c.QueryData.filter.group_id = [];
+
+        this.fio_data.QueryData.filter.group_id = group_ids;
+        this.fio_data_b.QueryData.filter.group_id = group_ids;
+        this.fio_data_c.QueryData.filter.group_id = group_ids;
+        if (group_ids.length == 0) {
+          this.fio_data.QueryData.max_series_num = 2;
+          this.fio_data_b.QueryData.max_series_num = 2;
+          this.fio_data_c.QueryData.max_series_num = 2;
+
+          this.fio_data.QueryData.series = ["group_id"];
+          this.fio_data_b.QueryData.series = ["group_id"];
+          this.fio_data_c.QueryData.series = ["group_id"];
         } else {
-          this.fio_data.QueryData.filter.group_id = group_ids;
-          this.fio_data_b.QueryData.filter.group_id = group_ids;
-          this.fio_data_c.QueryData.filter.group_id = group_ids;
+          this.fio_data.QueryData.max_series_num = -1;
+          this.fio_data_b.QueryData.max_series_num = -1;
+          this.fio_data_c.QueryData.max_series_num = -1;
+
+          this.fio_data.QueryData.series = series;
+          this.fio_data_b.QueryData.series = series;
+          this.fio_data_c.QueryData.series = series;
         }
         this.getData(this.fio_data);
         this.sleep(200).then(() => {
@@ -1984,12 +2041,21 @@ export default {
       if (this.suite === "netperf") {
         this.netperfb_data.QueryData.filter.os_version = [this.os_version];
         this.netperfa_data.QueryData.filter.os_version = [this.os_version];
-        if (this.group_id_a == "" || this.group_id_b == "") {
-          this.netperfb_data.QueryData.filter.group_id = [];
-          this.netperfa_data.QueryData.filter.group_id = [];
+
+        this.netperfb_data.QueryData.filter.group_id = group_ids;
+        this.netperfa_data.QueryData.filter.group_id = group_ids;
+        if (group_ids.length == 0) {
+          this.netperfb_data.QueryData.max_series_num = 2;
+          this.netperfa_data.QueryData.max_series_num = 2;
+
+          this.netperfb_data.QueryData.series = ["group_id"];
+          this.netperfa_data.QueryData.series = ["group_id"];
         } else {
-          this.netperfb_data.QueryData.filter.group_id = group_ids;
-          this.netperfa_data.QueryData.filter.group_id = group_ids;
+          this.netperfb_data.QueryData.max_series_num = -1;
+          this.netperfa_data.QueryData.max_series_num = -1;
+
+          this.netperfb_data.QueryData.series = series;
+          this.netperfa_data.QueryData.series = series;
         }
         this.getData(this.netperfb_data);
 
@@ -2295,39 +2361,6 @@ export default {
     this.getVersionData();
     this.getTableHeaders();
     this.getTransferData();
-    if (this.suite === "lmbench3") {
-      this.getData(this.lmbench_data_a);
-      this.getData(this.lmbench_data_b);
-      this.getData(this.lmbench_data_c);
-      this.getData(this.lmbench_data_d);
-      this.getData(this.lmbench_data_e);
-      this.getData(this.lmbench_data_f);
-    }
-    if (this.suite === "unixbench") {
-      this.getData(this.unixbench_data);
-    }
-    if (this.suite === "libmicro") {
-      this.getData(this.libmicro_data);
-    }
-    if (this.suite === "stream") {
-      this.getData(this.stream_data);
-    }
-    if (this.suite === "fio-basic") {
-      this.getData(this.fio_data);
-      this.sleep(200).then(() => {
-        this.getData(this.fio_data_b);
-      });
-      this.sleep(200).then(() => {
-        this.getData(this.fio_data_c);
-      });
-    }
-    if (this.suite === "netperf") {
-      this.getData(this.netperfb_data);
-
-      this.sleep(200).then(() => {
-        this.getData(this.netperfa_data);
-      });
-    }
   },
 };
 </script>
