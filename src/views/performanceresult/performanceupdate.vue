@@ -1889,6 +1889,10 @@ export default {
     },
     queryCharts() {
       this.clean_data();
+      var os_version = [];
+      if(this.os_version != ""){
+        os_version.push(this.os_version);
+      }
       var group_ids = [];
       if (this.group_id_a != "") {
         group_ids.push(this.group_id_a);
@@ -1909,12 +1913,12 @@ export default {
       }
 
       if (this.suite === "lmbench3") {
-        this.lmbench_data_a.QueryData.filter.os_version = [this.os_version];
-        this.lmbench_data_b.QueryData.filter.os_version = [this.os_version];
-        this.lmbench_data_c.QueryData.filter.os_version = [this.os_version];
-        this.lmbench_data_d.QueryData.filter.os_version = [this.os_version];
-        this.lmbench_data_e.QueryData.filter.os_version = [this.os_version];
-        this.lmbench_data_f.QueryData.filter.os_version = [this.os_version];
+        this.lmbench_data_a.QueryData.filter.os_version = os_version;
+        this.lmbench_data_b.QueryData.filter.os_version = os_version;
+        this.lmbench_data_c.QueryData.filter.os_version = os_version;
+        this.lmbench_data_d.QueryData.filter.os_version = os_version;
+        this.lmbench_data_e.QueryData.filter.os_version = os_version;
+        this.lmbench_data_f.QueryData.filter.os_version = os_version;
 
         this.lmbench_data_a.QueryData.filter.group_id = group_ids;
         this.lmbench_data_b.QueryData.filter.group_id = group_ids;
@@ -1970,7 +1974,7 @@ export default {
         });
       }
       if (this.suite === "unixbench") {
-        this.unixbench_data.QueryData.filter.os_version = [this.os_version];
+        this.unixbench_data.QueryData.filter.os_version = os_version;
         this.unixbench_data.QueryData.filter.group_id = group_ids;
         if (group_ids.length == 0) {
           this.unixbench_data.QueryData.max_series_num = 2;
@@ -1982,7 +1986,7 @@ export default {
         this.getData(this.unixbench_data);
       }
       if (this.suite === "libmicro") {
-        this.libmicro_data.QueryData.filter.os_version = [this.os_version];
+        this.libmicro_data.QueryData.filter.os_version = os_version;
         this.libmicro_data.QueryData.filter.group_id = group_ids;
         if (group_ids.length == 0) {
           this.libmicro_data.QueryData.max_series_num = 2;
@@ -1994,7 +1998,7 @@ export default {
         this.getData(this.libmicro_data);
       }
       if (this.suite === "stream") {
-        this.stream_data.QueryData.filter.os_version = [this.os_version];
+        this.stream_data.QueryData.filter.os_version = os_version;
         this.stream_data.QueryData.filter.group_id = group_ids;
         if (group_ids.length == 0) {
           this.stream_data.QueryData.max_series_num = 2;
@@ -2006,9 +2010,9 @@ export default {
         this.getData(this.stream_data);
       }
       if (this.suite === "fio-basic") {
-        this.fio_data.QueryData.filter.os_version = [this.os_version];
-        this.fio_data_b.QueryData.filter.os_version = [this.os_version];
-        this.fio_data_c.QueryData.filter.os_version = [this.os_version];
+        this.fio_data.QueryData.filter.os_version = os_version;
+        this.fio_data_b.QueryData.filter.os_version = os_version;
+        this.fio_data_c.QueryData.filter.os_version = os_version;
 
         this.fio_data.QueryData.filter.group_id = group_ids;
         this.fio_data_b.QueryData.filter.group_id = group_ids;
@@ -2039,8 +2043,8 @@ export default {
         });
       }
       if (this.suite === "netperf") {
-        this.netperfb_data.QueryData.filter.os_version = [this.os_version];
-        this.netperfa_data.QueryData.filter.os_version = [this.os_version];
+        this.netperfb_data.QueryData.filter.os_version = os_version;
+        this.netperfa_data.QueryData.filter.os_version = os_version;
 
         this.netperfb_data.QueryData.filter.group_id = group_ids;
         this.netperfa_data.QueryData.filter.group_id = group_ids;
