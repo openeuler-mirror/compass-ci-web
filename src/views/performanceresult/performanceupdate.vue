@@ -205,26 +205,50 @@
       </div>
     </div>
     <div id="container" class="containers">
+      <div>
+        <el-dialog :title="testbox" :visible.sync="dialogTableVisible">
+          <textarea
+            v-model="textData"
+            style="font-size: 15pt"
+            cols="89"
+            rows="33"
+            disabled
+          ></textarea>
+        </el-dialog>
+      </div>
       <div
         v-for="(l_item, l_index) in unixbench_data.table_data"
         :key="l_index"
       >
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in unixbench_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in unixbench_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -247,22 +271,35 @@
         v-for="(l_item, l_index) in lmbench_data_a.table_data"
         :key="l_index"
       >
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in lmbench3_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in lmbench3_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -286,22 +323,35 @@
         v-for="(l_item, l_index) in lmbench_data_b.table_data"
         :key="l_index"
       >
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in lmbench3_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in lmbench3_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -325,22 +375,35 @@
         v-for="(l_item, l_index) in lmbench_data_c.table_data"
         :key="l_index"
       >
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in lmbench3_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in lmbench3_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -364,22 +427,35 @@
         v-for="(l_item, l_index) in lmbench_data_d.table_data"
         :key="l_index"
       >
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in lmbench3_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in lmbench3_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -403,22 +479,35 @@
         v-for="(l_item, l_index) in lmbench_data_e.table_data"
         :key="l_index"
       >
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in lmbench3_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in lmbench3_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -442,22 +531,35 @@
         v-for="(l_item, l_index) in lmbench_data_f.table_data"
         :key="l_index"
       >
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in lmbench3_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in lmbench3_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -478,22 +580,35 @@
       </div>
 
       <div v-for="(t_item, t_index) in libmicro_data.table_data" :key="t_index">
-        <div class="test_params">test_params: {{ t_item.test_params }}</div>
-        <el-table
-          :data="t_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in libmicro_filter(t_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in libmicro_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${t_item.title.replace(
@@ -513,22 +628,35 @@
       </div>
 
       <div v-for="(t_item, t_index) in stream_data.table_data" :key="t_index">
-        <div class="test_params">test_params: {{ t_item.test_params }}</div>
-        <el-table
-          :data="t_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in stream_filter(t_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in stream_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${t_item.title.replace(
@@ -548,22 +676,35 @@
       </div>
 
       <div v-for="(t_item, t_index) in fio_data.table_data" :key="t_index">
-        <div class="test_params">test_params:{{ t_item.test_params }}</div>
-        <el-table
-          :data="t_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in fio_filter(t_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params:{{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in fio_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${t_item.title.replace(
@@ -584,22 +725,35 @@
       </div>
 
       <div v-for="(t_item, t_index) in fio_data_b.table_data" :key="t_index">
-        <div class="test_params">test_params:{{ t_item.test_params }}</div>
-        <el-table
-          :data="t_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in fio_filter(t_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params:{{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in fio_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${t_item.title.replace(
@@ -620,22 +774,35 @@
       </div>
 
       <div v-for="(t_item, t_index) in fio_data_c.table_data" :key="t_index">
-        <div class="test_params">test_params:{{ t_item.test_params }}</div>
-        <el-table
-          :data="t_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in fio_filter(t_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params:{{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in fio_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${t_item.title.replace(
@@ -656,22 +823,35 @@
       </div>
 
       <div v-for="(l_item, l_index) in netperfb_data.table_data" :key="l_index">
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in netperf_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in netperf_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -692,22 +872,35 @@
       </div>
 
       <div v-for="(l_item, l_index) in netperfa_data.table_data" :key="l_index">
-        <div class="test_params">test_params: {{ l_item.test_params }}</div>
-        <el-table
-          :data="l_item.data"
-          border
-          :header-cell-style="{ background: '#02951e', color: '#000' }"
-          :row-style="tableRowStyle"
-          :cell-style="tableCellStyle"
-          style="width: 1500px"
-        >
-          <el-table-column
-            v-for="(item, index) in netperf_filter(l_item.header)"
-            :key="index"
-            :label="item"
-            :prop="item"
-          ></el-table-column>
-        </el-table>
+        <div class="test_params" style="float: left">
+          test_params: {{ l_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(l_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="l_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in netperf_filter(l_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
 
         <div
           :id="`average_${l_item.title.replace(
@@ -731,7 +924,7 @@
 </template>
 
 <script>
-import { getPerformanceResult, QueryField } from "@/api/jobs.js";
+import { getPerformanceResult, QueryField, getHostInfo } from "@/api/jobs.js";
 import Header from "@/components/Header";
 import echarts from "echarts";
 import XLSX from "xlsx";
@@ -743,6 +936,9 @@ export default {
   components: { Header },
   data() {
     return {
+      textData: "",
+      testbox: "",
+      dialogTableVisible: false,
       stream_selected: [],
       netperf_selected: [],
       unixbench_selected: [],
@@ -1322,6 +1518,7 @@ export default {
         title: sData.title,
         title_trans: title_trans,
         test_params: sData.test_params,
+        testbox: sData.testbox,
       });
     },
     getRowData(title, data) {
@@ -1371,7 +1568,7 @@ export default {
     },
     getData(JobData) {
       getPerformanceResult(JobData.QueryData).then((res) => {
-        //        console.log(res);
+        //console.log(res);
         JobData.echart_data = this.transfer_res(res);
         var sourceData = JobData.echart_data;
 
@@ -1890,7 +2087,7 @@ export default {
     queryCharts() {
       this.clean_data();
       var os_version = [];
-      if(this.os_version != ""){
+      if (this.os_version != "") {
         os_version.push(this.os_version);
       }
       var group_ids = [];
@@ -2359,6 +2556,13 @@ export default {
     delObject() {
       this.compare_object.pop();
     },
+    getHostInfo(testbox) {
+      this.testbox = testbox;
+      getHostInfo({ testbox: testbox }).then((res) => {
+        this.textData = JSON.stringify(res, null, "\t");
+        this.dialogTableVisible = true;
+      });
+    },
   },
   computed: {},
   mounted() {
@@ -2391,6 +2595,7 @@ export default {
 .test-params {
   margin-left: 100px;
   margin-bottom: 20px;
+  float: left;
 }
 .el-table.warning-row {
   background: #0c5c02;

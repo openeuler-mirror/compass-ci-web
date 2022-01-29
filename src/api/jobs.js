@@ -45,3 +45,10 @@ export function QueryField(data) {
         }
     });
 }
+export function getHostInfo(data) {
+    return service({
+        url: '/host_info',
+        method: 'get',
+        params: data
+    });
+}
