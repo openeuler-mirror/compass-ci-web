@@ -2377,8 +2377,8 @@ export default {
       let wb = XLSX.utils.book_new();
       var used_name = {};
 
-      for (var i = 0; i < c_children.length; i++) {
-        var el_table = c_children[i].children[1];
+      for (var i = 1; i < c_children.length; i++) {
+        var el_table = c_children[i].children[2];
         let sheet = XLSX.utils.table_to_sheet(el_table);
         this.setStyle(sheet);
         var sheet_name = sheet["A1"].v;
