@@ -25,7 +25,8 @@ import {
     CheckboxGroup,
     Radio,
     RadioGroup,
-    Transfer
+    Transfer,
+    Dialog
 } from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -54,6 +55,7 @@ Vue.use(CheckboxGroup);
 Vue.use(Radio);
 Vue.use(RadioGroup);
 Vue.use(Transfer);
+Vue.use(Dialog);
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 
