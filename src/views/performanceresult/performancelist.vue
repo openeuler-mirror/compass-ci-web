@@ -239,7 +239,7 @@
         <div style="float: left; margin-left: 30%">
           <el-transfer
             filterable
-            :titles="['可选项', '已选项']"
+            :titles="['可选表头项', '已选表头项']"
             v-model="transfer_chosen"
             :data="transfer_data"
             @change="transferChange"
@@ -264,7 +264,7 @@
         v-for="(l_item, l_index) in unixbench_data.table_data"
         :key="l_index"
       >
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ l_item.test_params }}
         </div>
         <div style="float: right">
@@ -312,7 +312,7 @@
       </div>
 
       <div v-for="(t_item, t_index) in libmicro_data.table_data" :key="t_index">
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -360,7 +360,7 @@
       </div>
 
       <div v-for="(t_item, t_index) in stream_data.table_data" :key="t_index">
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -408,7 +408,7 @@
       </div>
 
       <div v-for="(t_item, t_index) in fio_data.table_data" :key="t_index">
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -457,7 +457,7 @@
       </div>
 
       <div v-for="(t_item, t_index) in fio_data_b.table_data" :key="t_index">
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -506,7 +506,7 @@
       </div>
 
       <div v-for="(t_item, t_index) in fio_data_c.table_data" :key="t_index">
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -558,7 +558,7 @@
         v-for="(t_item, t_index) in lmbench_data_a.table_data"
         :key="t_index"
       >
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -610,7 +610,7 @@
         v-for="(t_item, t_index) in lmbench_data_b.table_data"
         :key="t_index"
       >
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -662,7 +662,7 @@
         v-for="(t_item, t_index) in lmbench_data_c.table_data"
         :key="t_index"
       >
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -714,7 +714,7 @@
         v-for="(t_item, t_index) in lmbench_data_d.table_data"
         :key="t_index"
       >
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -766,7 +766,7 @@
         v-for="(t_item, t_index) in lmbench_data_e.table_data"
         :key="t_index"
       >
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -818,7 +818,7 @@
         v-for="(t_item, t_index) in lmbench_data_f.table_data"
         :key="t_index"
       >
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ t_item.test_params }}
         </div>
         <div style="float: right">
@@ -867,7 +867,7 @@
       </div>
 
       <div v-for="(l_item, l_index) in netperfb_data.table_data" :key="l_index">
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ l_item.test_params }}
         </div>
         <div style="float: right">
@@ -915,7 +915,7 @@
       </div>
 
       <div v-for="(l_item, l_index) in netperfa_data.table_data" :key="l_index">
-        <div class="test_params" style="float: left">
+        <div class="test_params" style="float: left" v-show="false">
           test_params: {{ l_item.test_params }}
         </div>
         <div style="float: right">
@@ -1579,7 +1579,7 @@ export default {
         for (var i = 0; i < sourceData.length; i++) {
           this.getTableData(sourceData[i], JobData.table_data);
         }
-        this.sleep(200).then(() => {
+        this.sleep(2000).then(() => {
           this.get_Echarts(JobData.echart_data);
         });
       });
