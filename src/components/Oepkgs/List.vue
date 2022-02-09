@@ -1,31 +1,5 @@
 <template>
 	<div class="row">
-		<!-- 展示用户列表 -->
-		<!--
-		<div v-show="info.users.length" class="card" v-for="(software,index) in info.users" :key="index">
-			{{software.softwareName}}-{{software.arch}}-{{software.type}}
-
-		</div>
-		-->
-		<!--
-		<el-main>
-      <el-table v-show="info.users.length" :data="filtpackages">
-	          <el-table-column prop="srpm_addr" label="软件包来源" width="140">
-        </el-table-column>
-        <el-table-column prop="softwareName" label="软件名" width="140">
-        </el-table-column>
-        <el-table-column prop="version" label="版本号" width="120">
-        </el-table-column>
-		        <el-table-column prop="arch" label="架构" width="120">
-        </el-table-column>
-		        <el-table-column prop="result_url" label="安装测试结果" width="120">
-        </el-table-column>
-		        <el-table-column prop="rpmbuild_result_url" label="构建测试结果" width="120">
-        </el-table-column>
-        <el-table-column prop="type" label="类型">
-        </el-table-column>
-      </el-table>
-	  -->
 
 <el-table v-show="info.users.length" :data="filtpackages" stripe class="jobs-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
