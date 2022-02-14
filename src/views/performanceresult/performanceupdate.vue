@@ -209,8 +209,7 @@
         <el-dialog :title="testbox" :visible.sync="dialogTableVisible">
           <textarea
             v-model="textData"
-            style="font-size: 15pt"
-            cols="89"
+            style="font-size: 15pt; width: 100%"
             rows="33"
             disabled
           ></textarea>
@@ -2376,6 +2375,11 @@ export default {
       var c_children = document.getElementById("container").children;
       let wb = XLSX.utils.book_new();
       var used_name = {};
+
+      if (c_children.length < 2) {
+        this.$message("导出失败");
+        return;
+      }
 
       for (var i = 1; i < c_children.length; i++) {
         var el_table = c_children[i].children[2];
