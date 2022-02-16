@@ -165,25 +165,27 @@ import { getSrpms } from "../../api/jobs.js";
         }
       },
     parseFilter() {
+      this.clearListQuery();
       this.listQuery["softwareName"] = this.filter;
     },
     handleCurrentChange(val) {
       this.listQuery.page_num = val;
       this.getSrpms(this.listQuery);
     },
-    handSearch() {
+    clearListQuery(){
       var tmp = { page_size: null, page_num: null };
       tmp.page_size = this.listQuery.page_size;
-      tmp.page_num = this.listQuery.page_num;
-
+      tmp.page_num = 1;
+      this.listQuery = tmp;
+    },
+    handSearch() {
       if (this.filter) {
         this.parseFilter();
-        this.listQuery.page_num = 0;
         this.getSrpms(this.listQuery);
       } else {
-        this.$message("请输入筛选条件");
+        this.clearListQuery();
+        this.getSrpms(this.listQuery);
       }
-      this.listQuery = tmp;
     },
     updateURL(data) {
       var routeQuery = {};
