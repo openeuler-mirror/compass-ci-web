@@ -29,7 +29,7 @@
             size="medium"
             @keydown.enter.native="handSearch"
             clearable
-            @clear="getJobs(listQuery)"
+            @clear="clearFilter"
           >
             <el-button
               slot="append"
@@ -170,6 +170,7 @@ export default {
     },
     parseFilter() {
       var filters = this.filter.split(" ");
+      this.clearListQuery();
       for (var f of filters) {
         var key_vaule = f.split("=");
         this.listQuery[key_vaule[0]] = key_vaule[1];
@@ -187,19 +188,24 @@ export default {
         query: routeQuery,
       });
     },
-    handSearch() {
+    clearListQuery(){
       var tmp = { page_size: null, page_num: null };
       tmp.page_size = this.listQuery.page_size;
-      tmp.page_num = this.listQuery.page_num;
-
+      tmp.page_num = 1;
+      this.listQuery = tmp;
+    },
+    clearFilter(){
+      this.clearListQuery();
+      this.getJobs(this.listQuery);
+    },
+    handSearch() {
       if (this.filter) {
         this.parseFilter();
-        this.listQuery.page_num = 1;
         this.getJobs(this.listQuery);
       } else {
-        this.$message("请输入筛选条件");
+        this.clearListQuery();
+        this.getJobs(this.listQuery);
       }
-      this.listQuery = tmp;
     },
     getJobs(data) {
       this.updateURL(data);
