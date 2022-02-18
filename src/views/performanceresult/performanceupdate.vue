@@ -215,6 +215,24 @@
           ></textarea>
         </el-dialog>
       </div>
+      <div>
+        <el-table
+          :data="table_improve"
+          border
+          :header-cell-style="{ background: '#ffc000', color: '#000' }"
+          style="width: 500px"
+        >
+          <el-table-column
+            :label="suite"
+            prop="compare_versions"
+          ></el-table-column>
+          <el-table-column
+            label="总体性能提升比例"
+            prop="improvement"
+            width="150"
+          ></el-table-column>
+        </el-table>
+      </div>
       <div
         v-for="(l_item, l_index) in unixbench_data.table_data"
         :key="l_index"
@@ -1323,6 +1341,8 @@ export default {
         "lmbench3-Main_mem": "Main_mem",
         "lmbench3-Rand_mem": "Rand_mem",
       },
+      improve_percent: {},
+      table_improve: [],
     };
   },
   methods: {
@@ -1524,10 +1544,19 @@ export default {
       var tmp = {};
       tmp[title] = data.series;
 
-      for (var i = 0; i < data.x_params.length; i++) {
-        if (data.series.includes("vs")) {
+      if (data.series.includes("vs")) {
+        if (this.improve_percent[data.series] == null) {
+          this.improve_percent[data.series] = { total: 0, num: 0, percent:0 };
+        }
+        for (var i = 0; i < data.x_params.length; i++) {
           tmp[data.x_params[i]] = data.data[i] + "%";
-        } else {
+          this.improve_percent[data.series].total += data.data[i];
+          this.improve_percent[data.series].num += 1;
+        }
+        this.improve_percent[data.series].percent = this.improve_percent[data.series].total / this.improve_percent[data.series].num;
+        this.table_improve = [{"compare_versions": data.series, "improvement": this.improve_percent[data.series].percent.toFixed(4) + "%"}];
+      } else {
+        for (i = 0; i < data.x_params.length; i++) {
           tmp[data.x_params[i]] = data.data[i];
         }
       }
@@ -1938,6 +1967,7 @@ export default {
       this.getSelectGroup(this.os_version);
       this.getTableHeaders();
       this.getTransferData();
+      this.improve_percent = {};
     },
     getVersionData() {
       this.checkQuery.filter.suite = [this.suite];
