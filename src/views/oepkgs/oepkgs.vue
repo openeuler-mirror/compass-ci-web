@@ -110,7 +110,7 @@
         :current-page.sync="listQuery.page_num"
         :page-size="listQuery.page_size"
         layout="total, prev, pager, next"
-        :total="10000">
+        :total="jobsQuery.total">
       </el-pagination>
     </div>
   </div>
