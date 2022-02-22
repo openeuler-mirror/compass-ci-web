@@ -29,6 +29,7 @@
             size="medium"
             @keydown.enter.native="handSearch"
             clearable
+            @clear="clearFilter"
           >
             <el-button
               slot="append"
@@ -41,12 +42,13 @@
       <el-table :data="tableData" stripe class="jobs-data">
         <el-table-column label="序号" type="index" width="50"></el-table-column>
         <el-table-column
-          :label="item"
+          :label="getLable(item)"
           :key="index"
           v-for="(item, index) in tableHead"
           :prop="item"
+          :width="getWidth(item)"
         >
-        <template slot-scope="scope">
+          <template slot-scope="scope">
             <el-tooltip
               class="item"
               effect="light"
@@ -65,11 +67,18 @@
                 @click="goBlank(scope.row.result_url)"
                 v-if="item === 'result_url'"
                 @mouseover="showtip(item)"
-                >Link</span
+                >测试结果</span
               >
               <span
                 class="goUrl wrap"
-                @click="goBlank('https://repo.oepkgs.net/openEuler/rpm/' + updateOs(scope.row.os) + '/' + scope.row.repo_name)"
+                @click="
+                  goBlank(
+                    'https://repo.oepkgs.net/openEuler/rpm/' +
+                      updateOs(scope.row.os) +
+                      '/' +
+                      scope.row.repo_name
+                  )
+                "
                 v-else-if="item === 'repo_name'"
                 @mouseover="showtip(item)"
                 >仓库地址</span
@@ -79,7 +88,7 @@
                 @click="goBlank(scope.row.rpmbuild_result_url)"
                 v-else-if="item === 'rpmbuild_result_url'"
                 @mouseover="showtip(item)"
-                >Link</span
+                >测试结果</span
               >
               <span
                 class="goUrl wrap"
@@ -110,7 +119,8 @@
         :current-page.sync="listQuery.page_num"
         :page-size="listQuery.page_size"
         layout="total, prev, pager, next"
-        :total="jobsQuery.total">
+        :total="total"
+      >
       </el-pagination>
     </div>
   </div>
@@ -118,52 +128,57 @@
 <script>
 import { getSrpms } from "../../api/jobs.js";
 //import { BASEURLTESTBOX, BASEURLRESULT } from "../../utils/baseUrl.js";
-	export default {
-		name:'Oepkgs',
-		data() {
-			return {
-                pageSizeOptions: [10, 20, 30],
-                tableData: [],
-                totalData: [],
-                total: 1000,
-                filter: null,
-                tableHeader: {},
-                toolDisabled: false,
-                jobsQuery: {},
-                listQuery: {
-                    page_size: 10,
-                    page_num: 0,
-                },
-                tableHead: ['srpm_addr','softwareName', 'version','arch', 'os', 'repo_name','result_url', 'rpmbuild_result_url'],
-        }
-		},
-		computed:{
-      filtpackages(){
-        return this.tableData.filter((p)=>{
-          return p.softwareName.indexOf(this.filter) !== -1;
-        });
-      }
-		},
-    methods: {
-      showtip(item) {
-        if (
-          item == "result_url" ||
-          item == "rpmbuild_result_url" ||
-          item == "repo_name" ||
-          item == "srpm_addr" ||
-          item == "upstream_commit" ||
-          item == "start_time" ||
-          item == "id" ||
-          item == "error_ids" ||
-          item == "upstream_branch" ||
-          item == "suite" ||
-          item == "os_version"
-        ) {
-          this.toolDisabled = false;
-        } else {
-          this.toolDisabled = true;
-        }
+export default {
+  name: "Oepkgs",
+  data() {
+    return {
+      pageSizeOptions: [10, 20, 30],
+      tableData: [],
+      totalData: [],
+      total: 1000,
+      filter: null,
+      tableHeader: {},
+      toolDisabled: false,
+      jobsQuery: {},
+      listQuery: {
+        page_size: 10,
+        page_num: 0,
       },
+      tableHead: [
+        "srpm_addr",
+        "softwareName",
+        "version",
+        "arch",
+        "os",
+        "repo_name",
+        "result_url",
+        "rpmbuild_result_url",
+      ],
+    };
+  },
+  computed: {
+    filtpackages() {
+      return this.tableData.filter((p) => {
+        return p.softwareName.indexOf(this.filter) !== -1;
+      });
+    },
+  },
+  methods: {
+    showtip(item) {
+      if (
+        item == "srpm_addr" ||
+        item == "softwareName" ||
+        item == "version" ||
+        item == "os" ||
+        item == "repo_name" ||
+        item == "result_url" ||
+        item == "rpmbuild_result_url"
+      ) {
+        this.toolDisabled = false;
+      } else {
+        this.toolDisabled = true;
+      }
+    },
     parseFilter() {
       this.clearListQuery();
       this.listQuery["softwareName"] = this.filter;
@@ -172,11 +187,15 @@ import { getSrpms } from "../../api/jobs.js";
       this.listQuery.page_num = val;
       this.getSrpms(this.listQuery);
     },
-    clearListQuery(){
+    clearListQuery() {
       var tmp = { page_size: null, page_num: null };
       tmp.page_size = this.listQuery.page_size;
       tmp.page_num = 1;
       this.listQuery = tmp;
+    },
+    clearFilter() {
+      this.clearListQuery();
+      this.getSrpms(this.listQuery);
     },
     handSearch() {
       if (this.filter) {
@@ -203,9 +222,14 @@ import { getSrpms } from "../../api/jobs.js";
       this.updateURL(data);
       getSrpms(data).then((res) => {
         this.jobsQuery = res;
-        console.log(this.jobsQuery,'jobquery是什么？');
+        console.log(this.jobsQuery, "jobquery是什么？");
         this.tableData = this.jobsQuery.info;
         this.total = this.jobsQuery.total;
+        if (this.jobsQuery.total > 10000) {
+          this.total = 10000;
+        } else {
+          this.total = this.jobsQuery.total;
+        }
         console.log(this.tableData);
       });
     },
@@ -217,27 +241,47 @@ import { getSrpms } from "../../api/jobs.js";
       this.getSrpms(this.listQuery);
     },
     updateOs(str) {
-        let resultStr = "";
-          let strArr = str.split(" ");
-          let firstStr = strArr[0];
-          let sedStr = strArr[1];
-          if (firstStr) {
-            resultStr = "openEuler-" + sedStr;
-          } else {
-            resultStr = firstStr;
-          }
-        return resultStr;
+      let resultStr = "";
+      let strArr = str.split(" ");
+      let firstStr = strArr[0];
+      let sedStr = strArr[1];
+      if (firstStr) {
+        resultStr = "openEuler-" + sedStr;
+      } else {
+        resultStr = firstStr;
+      }
+      return resultStr;
+    },
+    getWidth(item) {
+      if (
+        item == "srpm_addr" ||
+        item == "version" ||
+        item == "arch" ||
+        item == "repo_name"
+      ) {
+        return 140;
+      } else if (item == "os") {
+        return 230;
+      } else if (item == "result_url" || item == "rpmbuild_result_url") {
+        return 160;
       }
     },
-		mounted() {
-      var data = this.$route.query;
-      console.log(data,'data是什么？');
-      data.page_size = this.listQuery.page_size;
-      data.page_num = this.listQuery.page_num;
+    getLable(item) {
+      if (item == "result_url") {
+        return "install_result_url";
+      }
+      return item;
+    },
+  },
+  mounted() {
+    var data = this.$route.query;
+    console.log(data, "data是什么？");
+    data.page_size = this.listQuery.page_size;
+    data.page_num = this.listQuery.page_num;
 
-      this.getSrpms(data);
-		},
-	};
+    this.getSrpms(data);
+  },
+};
 </script>
 
 
