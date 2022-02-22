@@ -343,8 +343,8 @@ export default {
       option && myChart.setOption(option, true); //绘图
     },
     showExample() {
-      this.filter = "suite:netperf;";
-      this.series = "os_version:21.09-iso;os_version:21.03-iso;";
+      this.filter = "suite:netperf;pp.netperf.test:TCP_STREAM;tbox_group:vm-2p8g;";
+      this.series = "os:centos;os:openeuler;";
       this.metrics = "netperf.workload";
       this.x_params = "send_size";
     },
