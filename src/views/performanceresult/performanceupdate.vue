@@ -215,7 +215,7 @@
           ></textarea>
         </el-dialog>
       </div>
-      <div>
+      <div v-show="im_show">
         <el-table
           :data="table_improve"
           border
@@ -953,6 +953,7 @@ export default {
   components: { Header },
   data() {
     return {
+      im_show: false,
       textData: "",
       testbox: "",
       dialogTableVisible: false,
@@ -1546,15 +1547,24 @@ export default {
 
       if (data.series.includes("vs")) {
         if (this.improve_percent[data.series] == null) {
-          this.improve_percent[data.series] = { total: 0, num: 0, percent:0 };
+          this.improve_percent[data.series] = { total: 0, num: 0, percent: 0 };
         }
         for (var i = 0; i < data.x_params.length; i++) {
           tmp[data.x_params[i]] = data.data[i] + "%";
           this.improve_percent[data.series].total += data.data[i];
           this.improve_percent[data.series].num += 1;
         }
-        this.improve_percent[data.series].percent = this.improve_percent[data.series].total / this.improve_percent[data.series].num;
-        this.table_improve = [{"compare_versions": data.series, "improvement": this.improve_percent[data.series].percent.toFixed(4) + "%"}];
+        this.improve_percent[data.series].percent =
+          this.improve_percent[data.series].total /
+          this.improve_percent[data.series].num;
+        this.table_improve = [
+          {
+            compare_versions: data.series,
+            improvement:
+              this.improve_percent[data.series].percent.toFixed(4) + "%",
+          },
+        ];
+        this.im_show = true;
       } else {
         for (i = 0; i < data.x_params.length; i++) {
           tmp[data.x_params[i]] = data.data[i];
@@ -1968,6 +1978,8 @@ export default {
       this.getTableHeaders();
       this.getTransferData();
       this.improve_percent = {};
+      this.table_improve = [];
+      this.im_show = false;
     },
     getVersionData() {
       this.checkQuery.filter.suite = [this.suite];
@@ -2411,7 +2423,7 @@ export default {
         return;
       }
 
-      for (var i = 1; i < c_children.length; i++) {
+      for (var i = 2; i < c_children.length; i++) {
         var el_table = c_children[i].children[2];
         let sheet = XLSX.utils.table_to_sheet(el_table);
         this.setStyle(sheet);
