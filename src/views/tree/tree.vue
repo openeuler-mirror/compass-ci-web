@@ -52,7 +52,7 @@
               >
               <span
                 class="goUrl wrap"
-                @click="goBlank(resultUrl + scope.row.result_root)"
+                @click="goBlank(resultUrl + scope.row.result_root + '/')"
                 v-else-if="item === 'job_state'"
                 @mouseover="showtip(item)"
                 >{{ scope.row[item] }}</span

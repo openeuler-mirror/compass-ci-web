@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     goBlank(src) {
-      src = BASEURLRESULT + src;
+      src = BASEURLRESULT + src + '/';
       window.open(src, "_blank");
     },
     getData() {
