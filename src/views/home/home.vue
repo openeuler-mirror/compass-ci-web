@@ -31,7 +31,7 @@ export default {
       },
       compare: {
         name: "Compare results",
-        describe: "查询及比较历史测试结果（敬请期待......）",
+        describe: "查询及比较历史测试结果",
       },
       Testboxes: {
         name: "Testboxes",
