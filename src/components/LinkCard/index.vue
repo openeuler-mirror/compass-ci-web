@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="less" scoped>
 .link-card {
   position: relative;
   margin: 30px;

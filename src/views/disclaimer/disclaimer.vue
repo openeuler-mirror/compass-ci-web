@@ -21,7 +21,7 @@ export default {
   },
 };
 </script>
-<style lang="scss" scope>
+<style lang="less" scope>
 .tips, .title-tip{
     text-indent: 2em;
     line-height: 30px;

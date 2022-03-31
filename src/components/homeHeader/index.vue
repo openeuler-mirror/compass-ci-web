@@ -22,7 +22,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scpoed>
+<style lang="less" scpoed>
 .home-header {
   background-image: url("./../../../public/img/home_header.png");
   width: 100%;

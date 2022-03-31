@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scpoed>
+<style lang="less" scpoed>
 .header-title {
   background-image: url("./../../../public/img/header.png");
   width: 100%;

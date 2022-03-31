@@ -68,7 +68,7 @@ export default {
   }
 };
 </script>
-<style lang='scss' scoped>
+<style lang="less" scoped>
 .go {
   cursor: pointer;
   color: blue;

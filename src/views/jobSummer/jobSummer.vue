@@ -116,10 +116,9 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
-.filter,
-.group-by {
-  width: 30%;
+<style lang="less" scoped>
+.filter,.group-by {
+  width:30%;
   @media screen and (max-width: 1000px) {
     width: 100%;
   }

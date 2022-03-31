@@ -134,7 +134,7 @@ export default {
   }
 };
 </script>
-<style lang='scss' scoped>
+<style lang="less" scoped>
 .page-tips {
   font-weight: bold;
   margin-right: 2%;

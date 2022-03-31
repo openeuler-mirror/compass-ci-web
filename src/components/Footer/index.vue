@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="less" scoped>
 #footer {
   position: relative;
   width: 100%;

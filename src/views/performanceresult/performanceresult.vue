@@ -250,30 +250,28 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
-.input_class {
-  width: 30%;
-  @media screen and (max-width: 1000px) {
-    width: 100%;
-  }
-}
-.confirm {
-  position: absolute;
-  top: 550px;
-  left: 750px;
-  @media screen and (max-width: 1000px) {
-    display: none;
-  }
-}
-.containers {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
-}
-.chart {
-  width: 700px;
-  height: 720px;
-  margin-bottom: 10px;
-}
+<style lang="less" scoped>
+    .containers {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .chart {
+        width: 700px;
+        height: 720px;
+        margin-bottom: 10px;
+    }
+    .el-textarea {
+        margin-top: 20px;
+        margin-left: 40px;
+        width: 50%;
+    } 
+    .el-button {
+        width: 100px;
+        height: 35px;
+        display: block;
+        margin-left: 40px;
+        margin-top: 10px;
+    } 
 </style>

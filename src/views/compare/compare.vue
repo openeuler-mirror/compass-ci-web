@@ -253,7 +253,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .filters {
   font-weight: bold;
   padding: 13px 0;

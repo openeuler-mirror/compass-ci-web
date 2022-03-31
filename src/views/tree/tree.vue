@@ -201,7 +201,7 @@ export default {
   },
 };
 </script>
-<style lang='scss' scoped>
+<style lang="less" scoped>
 .tree-infos {
   padding: 10px 0;
 }

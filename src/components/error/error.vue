@@ -17,7 +17,7 @@ export default {
   },
 }
 </script>
-<style lang="scss" scope>
+<style lang="less" scope>
    .tips {
        font-size: 30px;
        font-weight: bold;

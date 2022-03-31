@@ -11,7 +11,7 @@
             placeholder="请选择"
             size="medium"
             class="select-page"
-            @change="getJobs"
+            @change="getJobs(listQuery)"
           >
             <el-option v-for="item in pageSizeOptions" :key="item" :label="item" :value="item"></el-option>
           </el-select>
@@ -24,7 +24,7 @@
             size="medium"
             @keydown.enter.native="handSearch"
             clearable
-            @clear="getJobs"
+            @clear="getJobs(listQuery)"
           >
             <el-button slot="append" icon="el-icon-search" @click="handSearch"></el-button>
           </el-input>
@@ -152,6 +152,18 @@ export default {
         this.listQuery[key_vaule[0]] = key_vaule[1];
       }
     },
+    updateURL(data) {
+      var routeQuery = {};
+      for (var x in data) {
+        if (x != "page_num" && x != "page_size") {
+          routeQuery[x] = data[x];
+        }
+      }
+      this.$router.push({
+        path: this.$route.path,
+        query: routeQuery
+      });
+    },
     handSearch() {
       var tmp = { page_size: null, page_num: null };
       tmp.page_size = this.listQuery.page_size;
@@ -160,14 +172,15 @@ export default {
       if (this.filter) {
         this.parseFilter();
         this.listQuery.page_num = 1;
-        this.getJobs();
+        this.getJobs(this.listQuery);
       } else {
         this.$message("请输入筛选条件");
       }
       this.listQuery = tmp;
     },
-    getJobs() {
-      getJobs(this.listQuery).then(res => {
+    getJobs(data) {
+      this.updateURL(data);
+      getJobs(data).then(res => {
         this.jobsQuery = res;
         this.tableHead = this.jobsQuery.fields;
         this.tableData = this.jobsQuery.jobs;
@@ -209,11 +222,15 @@ export default {
   mounted() {
     this.testBoxUrl = BASEURLTESTBOX;
     this.resultUrl = BASEURLRESULT;
-    this.getJobs();
+    var data = this.$route.query;
+    data.page_size = this.listQuery.page_size;
+    data.page_num = this.listQuery.page_num;
+
+    this.getJobs(data);
   }
 };
 </script>
-<style lang='scss' scoped>
+<style lang="less" scoped>
 .jobs-data {
   width: 100%;
 }
