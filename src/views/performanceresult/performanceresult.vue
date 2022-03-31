@@ -5,24 +5,27 @@
     <h1 class="title">Performance Result</h1>
     <div class="content">
       <el-form :model="QueryData">
-        <el-form-item label="Filter" class="input_class">
+        <el-form-item label="Filter" label-width="80px" class="input_class">
           <el-input v-model="filter" placeholder="eg: suite:fio-basic;os_arch:aarch64,x86;"></el-input>
         </el-form-item>
-        <el-form-item label="series" class="input_class">
+        <el-form-item label="series" label-width="80px" class="input_class">
           <el-input
             v-model="series"
             placeholder="eg: os:openeuler,os_version:20.03;os:debian,os_version:sid;"
           ></el-input>
         </el-form-item>
-        <el-form-item label="metrics" class="input_class">
+        <el-form-item label="metrics" label-width="80px" class="input_class">
           <el-input v-model="metrics" placeholder="eg: iperf.tcp.sender.dps"></el-input>
         </el-form-item>
-        <el-form-item label="x_params" class="input_class">
+        <el-form-item label="x_params" label-width="80px" class="input_class">
           <el-input v-model="x_params" placeholder="eg: test_size"></el-input>
         </el-form-item>
 
         <el-form-item class="confirm">
           <el-button @click="getEcharts">确定</el-button>
+        </el-form-item>
+        <el-form-item class="example">
+          <el-button @click="showExample">Example</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -166,11 +169,9 @@ export default {
       var series = [];
       for (var j = 0; j < sourceData.datas.length; j++) {
         var objLine = {
+          name: sourceData.datas[j].name,
           type: "line",
-          data: sourceData.datas[j].data,
-          itemStyle: {
-            color: "#77bef7"
-          }
+          data: sourceData.datas[j].data
         };
         var objCustom = {
           type: "custom",
@@ -203,7 +204,7 @@ export default {
             var el = document.createElement("div");
             el.id = "chart" + i;
             el.className = "chart";
-            el.style = "width:700px;height:720px;";
+            el.style = "width:1600px;height:720px;";
             container.appendChild(el);
             var myChart = echarts.init(document.getElementById("chart" + i));
 
@@ -215,20 +216,24 @@ export default {
                 },
 
                 formatter(params) {
-                  var res = "<p>runtime:" + params[0].name + "</p>";
-                  var average1 = "<p>" + "average:" + params[0].data + "</p>";
-                  var deviation1 =
-                    "<p>" + "deviation:" + params[1].data[1] + "</p>" + "</br>";
-                  var average2 = "<p>" + "average:" + params[2].data + "</p>";
-                  var deviation2 =
-                    "<p>" + "deviation:" + params[3].data[1] + "</p>";
-                  return res + average1 + deviation1 + average2 + deviation2;
+                  var res = "<p>x_value:" + params[0].name + "</p>";
+                  var s_name;
+                  var average;
+                  var deviation;
+
+                  for (var i = 0; i < params.length; i = i + 2) {
+                    s_name = "<p>" + params[i].seriesName + "</p>";
+                    average = "<p>" + "average:" + params[i].data + "</p>";
+                    deviation =
+                      "<p>" + "deviation:" + params[i + 1].data[1] + "</p>";
+                    res += "</br>" + s_name + average + deviation;
+                  }
+                  return res;
                 }
               },
               title: {
                 text: sourceData[i].title
               },
-
               xAxis: {
                 data: sourceData[i].datas[0].x_params
               },
@@ -240,38 +245,55 @@ export default {
             };
             var series = this.renderSeries(sourceData[i]);
             option.series = series;
-            option && myChart.setOption(option); //绘图
+            option && myChart.setOption(option, true); //绘图
           }
         });
       }
+    },
+    showExample() {
+      this.filter = "suite:atomic;";
+      this.series = "os:openeuler;os:centos;";
+      this.metrics = "atomic.score";
+      this.x_params = "nr_threads";
     }
   },
   mounted() {}
 };
 </script>
 
-<style lang="less" scoped>
-    .containers {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 20px;
-    }
-    .chart {
-        width: 700px;
-        height: 720px;
-        margin-bottom: 10px;
-    }
-    .el-textarea {
-        margin-top: 20px;
-        margin-left: 40px;
-        width: 50%;
-    } 
-    .el-button {
-        width: 100px;
-        height: 35px;
-        display: block;
-        margin-left: 40px;
-        margin-top: 10px;
-    } 
+<style lang='less' scoped>
+.input_class {
+  width: 35%;
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+  }
+}
+.confirm {
+  position: absolute;
+  top: 390px;
+  left: 800px;
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+.example {
+  position: absolute;
+  top: 390px;
+  left: 1000px;
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.containers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+.chart {
+  width: 1000px;
+  height: 720px;
+  margin-bottom: 10px;
+}
 </style>
