@@ -13,5 +13,6 @@ module.exports = {
             maskIcon: null,
             msTileImage: null
         }
-    }
+    },
+    productionSourceMap: false
 };
