@@ -8,6 +8,11 @@
 <script>
 import Footer from "@/components/Footer";
 export default {
+  data() {
+    return {
+      
+    }
+  },
   components: {
     Footer,
   },
@@ -15,14 +20,14 @@ export default {
     notice() {
       this.$notify({
         title: "通知",
-        message: "由于国庆机房维护，从10月1日22点~10月4日22点暂时无法提供服务，给您带来不便之处敬请谅解。",
+        message: "机房于2020年11月28日20:00至2020年11月29日20:00维护，将不能正常访问数据，给您带来的不便，敬请谅解！",
         duration: 0,
         showClose: false,
       });
     },
   },
   mounted() {
-    // this.notice();
+    
   },
   updated() {
     window.scroll(0, 0);
