@@ -32,6 +32,11 @@ const routes = [
         component: () => import('../views/jobs/jobs.vue')
     },
     {
+        path: '/oepkgs',
+        name: 'Oepkgs',
+        component: () => import('../views/oepkgs/oepkgs.vue')
+    },
+    {
         path: '/tree',
         name: 'Tree',
         component: () => import('../views/tree/tree.vue')

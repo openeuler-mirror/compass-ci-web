@@ -10,6 +10,14 @@ export function getJobs(data) {
     });
 }
 
+export function getSrpms(data) {
+    return service({
+        url: '/srpm_info',
+        method: 'get',
+        params: data
+    });
+}
+
 export function getJobsSummary(data) {
     return service({
         url: '/get_jobs_summary',
