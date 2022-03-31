@@ -13,6 +13,11 @@ Vue.use(VueRouter)
 
 const routes = [
     {
+        path: '/testMatrix',
+        name: 'test',
+        component: () => import('../views/testMatrix/testMatrix.vue')
+    },
+    {
         path: '*',
         name: 'Error',
         component: () => import('../components/error/error.vue')
