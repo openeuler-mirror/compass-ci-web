@@ -19,14 +19,26 @@
         :cell-class-name="tableCellClassName"
         @cell-click="cell_result">
         <el-table-column
-        prop="combination"
-        label="组合"
+        prop="repoName"
+        label="包名"
+        align="center">
+        </el-table-column>
+        <el-table-column
+        prop="os"
+        label="os"
+        width="250"
+        align="center">
+        </el-table-column>
+        <el-table-column
+        prop="arch"
+        label="架构"
+        width="200"
         align="center">
         </el-table-column>
         <el-table-column
         prop="build"
-        label="构建"
-        width="150"
+        label="构建测试"
+        width="200"
         align="center">
             <template slot-scope="scope">
                 <img :src="scope.row.build"/>
@@ -34,8 +46,8 @@
         </el-table-column>
         <el-table-column
         prop="compatibility"
-        label="兼容性"
-        width="150"
+        label="兼容性测试"
+        width="200"
         align="center">
             <template slot-scope="scope_comp">
                 <img :src="scope_comp.row.compatibility"/>
@@ -43,8 +55,8 @@
         </el-table-column>
         <el-table-column
         prop="function"
-        label="功能"
-        width="150"
+        label="功能测试"
+        width="200"
         align="center">
             <template slot-scope="scope_func">
                 <img :src="scope_func.row.function"/>
@@ -81,7 +93,7 @@ export default {
   },
   methods: {
       cellClsNm(row){
-          if(row.columnIndex=="0"){
+          if(row.columnIndex=="0" || row.columnIndex=="1" ||row.columnIndex=="2"){
               return 'background:#f8f8ff'
           }
       },
@@ -93,16 +105,19 @@ export default {
           testMatrix(data).then( res => {
               this.response=res
               this.toTable();
-          })          
+          })
       },
       toTable:function(){
           this.tableData=[];
+          
           for(var i in this.response){
               var tmp=this.response[i];
               let item={
-                  combination : tmp.os + "\u3000" + tmp.os_version + "\u3000 X \u3000 " + tmp.os_arch,
-                  build: tmp.build_job_health=="success" ? require("../../assets/success.png"):require("../../assets/fail.png"),
-                  compatibility: !('install_job_health' in tmp) ? require("../../assets/null.png") :tmp.install_job_health=="success" ? require("../../assets/success.png"):require("../../assets/fail.png"),
+                  repoName :this.groupId.split('-')[0],
+                  os:tmp.os + "\u3000" + tmp.os_version,
+                  arch:tmp.os_arch,
+                  build: tmp.build_job_health=="success" ? require("../../assets/success.png"): tmp.build_job_health==null ? require("../../assets/null.png"):require("../../assets/fail.png"),
+                  compatibility: !('install_job_health' in tmp) || tmp.install_job_health==null ? require("../../assets/null.png") :tmp.install_job_health=="success" ? require("../../assets/success.png"):require("../../assets/fail.png"),
                   function:!('func_job_health' in tmp) ? require("../../assets/null.png") :tmp.func_job_health=="success" ? require("../../assets/success.png"):require("../../assets/fail.png"),
               }
               this.tableData.push(item)
@@ -111,14 +126,8 @@ export default {
       cell_result:function(row,column){
           var href;
           console.log()
-          if(column.index==1){
-            href="https://api.compass-ci.openeuler.org:20007/"+this.response[row.index].build_id;
-            window.open(href,'_blank');
-          }else if(column.index==2 && ('install_id' in this.response[row.index])){
-            href="https://api.compass-ci.openeuler.org:20007/"+this.response[row.index].install_id;
-            window.open(href,'_blank');
-          }else if(column.index==3 && ('func_job_health' in this.response[row.index])){
-            href="https://api.compass-ci.openeuler.org:20007/"+this.response[row.index].build_id;
+          if(column.index >= 3){
+            href="https://api.compass-ci.openeuler.org:20007"+this.response[row.index].result_root;
             window.open(href,'_blank');
           }
       },
