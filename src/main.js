@@ -23,6 +23,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import '../public/style/public.css';
 import './../public/style/base.css';
+import './../public/style/theme/index.css';
 
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
