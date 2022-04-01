@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # compass-ci-web
 
 #### 介绍
@@ -36,14 +35,3 @@ Web server for Compass-CI
 4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
 5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
 6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
-=======
-# crystal-ci
-
-#### 使用说明
-
-1.  安装node.js(自带npm)
-2.  cd crystal-ci
-3.  npm install
-4.  npm run serve
-
->>>>>>> dev-b
