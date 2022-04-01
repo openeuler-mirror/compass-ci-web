@@ -1,0 +1,59 @@
+.title,
+.summary {
+    text-align: center;
+}
+
+.title {
+    font-size: 36px;
+    margin: 50px 0 20px;
+}
+
+.summary {
+    color: rgba(0, 0, 0, .5);
+    margin-bottom: 59px;
+    font-size: 14px;
+    font-family: FZLTHJW--GB1-0, FZLTHJW--GB1;
+}
+
+.content {
+    padding: 0 10%;
+    height: 100%;
+}
+
+.goUrl {
+    color: #002FA7;
+    cursor: pointer;
+}
+
+.pagination {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ci-logo {
+    margin-left: 10%;
+    margin-top: 25px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background-color: rgba(0, 0, 0, 0);
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 36px;
+    cursor: pointer;
+}
+
+.nav-div {
+    float: right;
+    margin-right: 10%;
+    border-bottom: none;
+}
