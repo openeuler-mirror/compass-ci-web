@@ -38,7 +38,7 @@
         <el-table-column
         prop="build"
         label="构建测试"
-        width="200"
+        width="150"
         align="center">
             <template slot-scope="scope">
                 <img :src="scope.row.build"/>
@@ -47,7 +47,7 @@
         <el-table-column
         prop="compatibility"
         label="兼容性测试"
-        width="200"
+        width="150"
         align="center">
             <template slot-scope="scope_comp">
                 <img :src="scope_comp.row.compatibility"/>
@@ -56,7 +56,7 @@
         <el-table-column
         prop="function"
         label="功能测试"
-        width="200"
+        width="150"
         align="center">
             <template slot-scope="scope_func">
                 <img :src="scope_func.row.function"/>

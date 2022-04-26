@@ -4,7 +4,7 @@
 import { service } from '../utils/axios.utils';
 export function testMatrix(data) {
     return service({
-        url: '/web_backend/test_matrix',
+        url: '/test_matrix',
         method: 'get',
         params: data
     });
