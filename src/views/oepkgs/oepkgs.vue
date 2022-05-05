@@ -64,7 +64,10 @@
               <div slot="content" v-else>{{ scope.row[item] }}</div>
               <span
                 class="goUrl wrap"
-                @click="goBlank(scope.row.result_url)"
+                @click="goBlank(
+                    updateRT(scope.row.result_url) + '/'
+                  )
+                "
                 v-if="item === 'result_url'"
                 @mouseover="showtip(item)"
                 >测试结果</span
@@ -73,10 +76,7 @@
                 class="goUrl wrap"
                 @click="
                   goBlank(
-                    'https://repo.oepkgs.net/openEuler/rpm/' +
-                      updateOs(scope.row.os) +
-                      '/' +
-                      scope.row.repo_name
+                    updateRepo(scope.row)
                   )
                 "
                 v-else-if="item === 'repo_name'"
@@ -85,7 +85,10 @@
               >
               <span
                 class="goUrl wrap"
-                @click="goBlank(scope.row.rpmbuild_result_url)"
+                @click="goBlank(
+                    updateRT(scope.row.rpmbuild_result_url) + '/'
+                  )
+                "
                 v-else-if="item === 'rpmbuild_result_url'"
                 @mouseover="showtip(item)"
                 >测试结果</span
@@ -127,9 +130,12 @@
 </template>
 <script>
 import { getSrpms } from "../../api/jobs.js";
-//import { BASEURLTESTBOX, BASEURLRESULT } from "../../utils/baseUrl.js";
+import Header from "@/components/Header";
 export default {
   name: "Oepkgs",
+  components: {
+    Header,
+  },
   data() {
     return {
       pageSizeOptions: [10, 20, 30],
@@ -167,12 +173,7 @@ export default {
     showtip(item) {
       if (
         item == "srpm_addr" ||
-        item == "softwareName" ||
-        item == "version" ||
-        item == "os" ||
-        item == "repo_name" ||
-        item == "result_url" ||
-        item == "rpmbuild_result_url"
+        item == "softwareName"
       ) {
         this.toolDisabled = false;
       } else {
@@ -222,7 +223,6 @@ export default {
       this.updateURL(data);
       getSrpms(data).then((res) => {
         this.jobsQuery = res;
-        console.log(this.jobsQuery, "jobquery是什么？");
         this.tableData = this.jobsQuery.info;
         this.total = this.jobsQuery.total;
         if (this.jobsQuery.total > 10000) {
@@ -230,7 +230,6 @@ export default {
         } else {
           this.total = this.jobsQuery.total;
         }
-        console.log(this.tableData);
       });
     },
     goBlank(src) {
@@ -252,16 +251,46 @@ export default {
       }
       return resultStr;
     },
+    updateRepo(data) {
+      let resultStr = "";
+      let strArr = data.repo_name.split("/");
+      let firstStr = strArr[0];
+      let lastStr = strArr.slice(-1);
+      if (firstStr == "stable" || firstStr == "unstable" ) {
+        if (lastStr == "6" || lastStr == "7" || lastStr == "8" ) {
+          strArr[strArr.length - 1] = 'c' + lastStr;
+          resultStr = 'https://repo.oepkgs.net/openEuler/rpm/' +
+                      this.updateOs(data.os) +
+                      '/' + strArr.slice(1).join('/') + '/' + data.arch + '/';
+        } else {
+          resultStr = 'https://repo.oepkgs.net/openEuler/rpm/' +
+                      this.updateOs(data.os) +
+                      '/' + strArr.slice(1).join('/') + '/' + data.arch + '/';
+        }
+      } else if (firstStr == "experimental") {
+          resultStr = "https://gitee.com/src-openeuler/" + data.srpm_addr.split('/').slice(-1);
+      } else {
+        resultStr = 'https://repo.oepkgs.net/openEuler/rpm/' +
+                    this.updateOs(data.os) + '/' + data.repo_name;
+      }
+      return resultStr;
+    },
+    updateRT(str) {
+      let resultStr = str.replace("api.compass-ci.openeuler.org:20007", "api.compass-ci.openeuler.org");
+      return resultStr;
+    },
     getWidth(item) {
       if (
         item == "srpm_addr" ||
+        item == "repo_name" ||
         item == "version" ||
-        item == "arch" ||
-        item == "repo_name"
+        item == "arch"
       ) {
-        return 140;
+        return 100;
       } else if (item == "os") {
-        return 230;
+        return 200;
+      } else if (item == "softwareName") {
+        return 300;
       } else if (item == "result_url" || item == "rpmbuild_result_url") {
         return 160;
       }
@@ -275,7 +304,6 @@ export default {
   },
   mounted() {
     var data = this.$route.query;
-    console.log(data, "data是什么？");
     data.page_size = this.listQuery.page_size;
     data.page_num = this.listQuery.page_num;
 
