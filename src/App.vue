@@ -2,8 +2,8 @@
   <div id="app" >
     <div id="nav" >
       <el-menu
-          router="true"
-          :default-active="1"
+          :router="true"
+          default-active="1"
           class="header_title"
           mode="horizontal">
         <el-menu-item index="1" route="/"><div ><i class="el-icon-house"></i>home</div></el-menu-item>
