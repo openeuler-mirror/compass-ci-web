@@ -225,11 +225,6 @@ export default {
         this.jobsQuery = res;
         this.tableData = this.jobsQuery.info;
         this.total = this.jobsQuery.total;
-        if (this.jobsQuery.total > 10000) {
-          this.total = 10000;
-        } else {
-          this.total = this.jobsQuery.total;
-        }
       });
     },
     goBlank(src) {
@@ -271,7 +266,7 @@ export default {
           resultStr = "https://gitee.com/src-openeuler/" + data.srpm_addr.split('/').slice(-1);
       } else {
         resultStr = 'https://repo.oepkgs.net/openEuler/rpm/' +
-                    this.updateOs(data.os) + '/' + data.repo_name;
+                    this.updateOs(data.os) + '/' + data.repo_name + '/' + data.arch + '/';
       }
       return resultStr;
     },
