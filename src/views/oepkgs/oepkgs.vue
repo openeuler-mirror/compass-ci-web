@@ -263,7 +263,11 @@ export default {
                       '/' + strArr.slice(1).join('/') + '/' + data.arch + '/';
         }
       } else if (firstStr == "experimental") {
+        if (data.srpm_addr.split('/').length > 3) {
+          resultStr = "https://gitee.com/src-openeuler/" + data.srpm_addr.split('/').slice(-1)[0].split('-').slice(0,-2).join('-');
+        } else {
           resultStr = "https://gitee.com/src-openeuler/" + data.srpm_addr.split('/').slice(-1);
+        }
       } else {
         resultStr = 'https://repo.oepkgs.net/openEuler/rpm/' +
                     this.updateOs(data.os) + '/' + data.repo_name + '/' + data.arch + '/';
@@ -334,3 +338,4 @@ export default {
   font-weight: bold;
 }
 </style>
+
