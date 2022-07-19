@@ -1526,6 +1526,23 @@ export default {
           title_trans = "Index_Values_1core";
         }
       }
+      var re = /pp.fio-setup-basic.rw=\w+\S/i;
+      var found = sData.test_params.match(re);
+      var rw = found[0].split("=")[1];
+      if (rw == "randrw") {
+        var read_or_write = title_trans.replace("fio-", "").split("_")[0];
+        rw = rw + read_or_write;
+      }
+      if (title_trans == "fio-read_iops" || title_trans == "fio-write_iops") {
+        if (sData.test_params.includes("pp.fio-setup-basic.rw")) {
+          title_trans = rw + "_iops_blocksize";
+        }
+      }
+      if (title_trans == "fio-read_bw_MBps" || title_trans == "fio-write_bw_MBps") {
+        if (sData.test_params.includes("pp.fio-setup-basic.rw")) {
+          title_trans = rw + "_bw_blocksize";
+        }
+      }
 
       tHeader.push(title_trans);
       tHeader = tHeader.concat(avg_data[0].x_params);
