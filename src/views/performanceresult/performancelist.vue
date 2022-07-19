@@ -1526,6 +1526,24 @@ export default {
           title_trans = "Index_Values_1core";
         }
       }
+      /*
+      原始表头 title_trans:
+        fio-read_iops
+        fio-write_iops
+        fio-read_bw_MBps
+        fio-write_bw_MBps
+      无法声明fio测试的读写方式，需结合sData.test_params中的pp.fio-setup-basic.rw参数，声明读写方式。
+
+      sData.test_params:
+        "pp.fio-setup-basic.rw=randrw pp.fio-setup-basic.rwmixread=70"
+      found:  ["pp.fio-setup-basic.rw=randrw",
+                index: 0,
+                input: "pp.fio-setup-basic.rw=randrw pp.fio-setup-basic.rwmixread=70",
+                groups: undefined]
+      rw: randrw
+      title_trans:
+        fio-read_iops --> randrwread_iop_blocksize
+      */
       var re = /pp.fio-setup-basic.rw=\w+\S/i;
       var found = sData.test_params.match(re);
       var rw = found[0].split("=")[1];
