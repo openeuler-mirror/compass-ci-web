@@ -1546,7 +1546,9 @@ export default {
       */
       var re = /pp.fio-setup-basic.rw=\w+\S/i;
       var found = sData.test_params.match(re);
-      var rw = found[0].split("=")[1];
+      console.log("found", found);
+      var rw = null;
+      if (found !== null) { rw = found[0].split("=")[1];}
       if (rw == "randrw") {
         var read_or_write = title_trans.replace("fio-", "").split("_")[0];
         rw = rw + read_or_write;
