@@ -1312,7 +1312,7 @@ export default {
             "pp.fio-setup-basic.rw": ["write", "randwrite"],
             group_id: [],
           },
-          metrics: ["fio.write_iops", "fio.wirte_bw_MBps"],
+          metrics: ["fio.write_iops", "fio.write_bw_MBps"],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
             { os: "openeuler", os_version: "21.09-iso" },
