@@ -236,6 +236,13 @@
             </el-form-item>
           </el-form>
         </div>
+        <div style="float: left; margin-left: 4%">
+          <el-form>
+            <el-form-item class="confirm">
+              <el-button @click="getAllDataExcel">总体数据导出</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
         <div style="float: left; margin-left: 30%">
           <el-transfer
             filterable
@@ -1049,6 +1056,13 @@ export default {
       os_version_a: "",
       os_version_b: "",
       group_id_a: "",
+      base_all_data: {"stream": [],
+                      "netperf": [],
+                      "unixbench": [],
+                      "libmicro": [],
+                      "fio-basic": [],
+                      "lmbench3": [],
+                    },
       group_id_b: "",
       stream_data: {
         table_data: [],
@@ -1621,7 +1635,6 @@ export default {
       */
       var re = /pp.fio-setup-basic.rw=\w+\S/i;
       var found = sData.test_params.match(re);
-      console.log("found", found);
       var rw = null;
       if (found !== null) { rw = found[0].split("=")[1];}
       if (rw == "randrw") {
@@ -1657,6 +1670,8 @@ export default {
         test_params: sData.test_params,
         testbox: sData.testbox,
       });
+      var tmp_table_data = JSON.parse(JSON.stringify(table_data))
+      this.base_all_data[this.suite] = this.get_table_data(tmp_table_data)
     },
     getRowData(title, data) {
       var tmp = {};
@@ -1790,7 +1805,6 @@ export default {
               );
             }
           }
-          console.log(this.improve_percent);
         }
       }
       return tmp;
@@ -1827,8 +1841,8 @@ export default {
       }
       return destination;
     },
-    getData(JobData) {
-      getPerformanceResult(JobData.QueryData).then((res) => {
+    async getData(JobData) {
+      await getPerformanceResult(JobData.QueryData).then((res) => {
         JobData.echart_data = this.transfer_res(res);
         var sourceData = JobData.echart_data;
         if (sourceData.length == 0) {
@@ -1842,6 +1856,41 @@ export default {
           this.get_Echarts(JobData.echart_data);
         });
       });
+    },
+    get_table_data(data) {
+      var all_data = []
+      var data_header = []
+      for (var i=0; i < data.length;i++) {
+        data_header = JSON.parse(JSON.stringify(data[i].header))
+        all_data.push(data_header)
+        for (var j=0; j < data[i].data.length; j++) {
+          var tmp_list = JSON.parse(JSON.stringify(data_header))
+          for (var key in data[i].data[j]) {
+            var index = data_header.indexOf(key)
+            tmp_list[index] = data[i].data[j][key]
+          }
+          all_data.push(tmp_list)
+        }
+        all_data.push("")
+      }
+      return all_data
+    },
+    async getBaseAlldata() {
+      this.suite =  "stream"
+      await this.queryCharts()
+      this.suite = "netperf"
+      await this.queryCharts()
+      this.suite = "unixbench"
+      await this.queryCharts()
+      this.suite = "lmbench3"
+      await this.queryCharts()
+      this.suite = "libmicro"
+      await this.queryCharts()
+      this.suite = "fio-basic"
+      await this.queryCharts()
+      await location.reload()
+      var data = JSON.parse(JSON.stringify(this.base_all_data))
+      return data
     },
     getTableHeaders() {
       if (this.suite == "stream") {
@@ -2447,7 +2496,7 @@ export default {
       }
       return false;
     },
-    queryCharts() {
+    async queryCharts() {
       var series = [
         { os: this.os_a, os_version: this.os_version_a },
         { os: this.os_b, os_version: this.os_version_b },
@@ -2526,7 +2575,7 @@ export default {
 
       this.clean_data();
       if (this.suite === "lmbench3") {
-        this.getData(this.lmbench_data_a);
+        await this.getData(this.lmbench_data_a);
         this.sleep(100).then(() => {
           this.getData(this.lmbench_data_b);
         });
@@ -2544,16 +2593,17 @@ export default {
         });
       }
       if (this.suite === "unixbench") {
-        this.getData(this.unixbench_data);
+        await this.getData(this.unixbench_data);
       }
       if (this.suite === "libmicro") {
-        this.getData(this.libmicro_data);
+        await this.getData(this.libmicro_data);
       }
       if (this.suite === "stream") {
-        this.getData(this.stream_data);
+        await this.getData(this.stream_data);
+
       }
       if (this.suite === "fio-basic") {
-        this.getData(this.fio_data);
+        await this.getData(this.fio_data);
         this.sleep(200).then(() => {
           this.getData(this.fio_data_b);
         });
@@ -2562,7 +2612,7 @@ export default {
         });
       }
       if (this.suite === "netperf") {
-        this.getData(this.netperfb_data);
+        await this.getData(this.netperfb_data);
 
         this.sleep(200).then(() => {
           this.getData(this.netperfa_data);
@@ -2676,32 +2726,43 @@ export default {
         }
       }
     },
+    async getAllDataExcel() {
+      var sheet_data_hash = await this.getBaseAlldata()
+      let wb = XLSX.utils.book_new();
+      for (var key in sheet_data_hash) {
+        var sheet_name = key
+        var jsonObj = sheet_data_hash[key]
+        let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
+        XLSX.utils.book_append_sheet(wb, worksheet, sheet_name)
+      }
+      let wbout = XLSXS.write(wb, {
+        book_Type: "xlsx",
+        bookSST: false,
+        type: "binary",
+      });
+      filesaver.saveAs(
+        new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }),
+        "测试数据.xlsx"
+      );
+    },
     getExcel() {
       var c_children = document.getElementById("container").children;
       let wb = XLSX.utils.book_new();
-      var used_name = {};
 
       if (c_children.length < 2) {
         this.$message("导出失败");
         return;
       }
-
+      var jsonObj = [];
       for (var i = 2; i < c_children.length; i++) {
         var el_table = c_children[i].children[2];
         let sheet = XLSX.utils.table_to_sheet(el_table);
         this.setStyle(sheet);
-        var sheet_name = sheet["A1"].v;
-        if (sheet_name == "Function") sheet_name = this.suite;
-        if (used_name[sheet_name] == null) {
-          used_name[sheet_name] = 1;
-        } else {
-          used_name[sheet_name]++;
-        }
-        if (used_name[sheet_name] > 1) {
-          sheet_name = sheet_name + (used_name[sheet_name] - 1);
-        }
-        XLSX.utils.book_append_sheet(wb, sheet, sheet_name);
+        let a = XLSX.utils.sheet_to_json(sheet, {header: 1});
+        jsonObj = jsonObj.concat(a).concat([''])
       }
+      let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
+      XLSX.utils.book_append_sheet(wb, worksheet, "测试结果")
       let wbout = XLSXS.write(wb, {
         book_Type: "xlsx",
         bookSST: false,
