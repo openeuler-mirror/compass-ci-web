@@ -236,6 +236,13 @@
             </el-form-item>
           </el-form>
         </div>
+        <div style="float: left; margin-left: 4%">
+          <el-form>
+            <el-form-item class="confirm">
+              <el-button @click="getAllDataExcel">总体数据导出</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
         <div style="float: left; margin-left: 30%">
           <el-transfer
             filterable
@@ -264,16 +271,29 @@
           :data="table_improve"
           border
           :header-cell-style="{ background: '#ffc000', color: '#000' }"
-          style="width: 500px"
+          style="width: 650px"
         >
           <el-table-column
             :label="suite"
             prop="compare_versions"
+            width="350"
           ></el-table-column>
           <el-table-column
             label="总体性能提升比例"
             prop="improvement"
+            v-if="!lmbench_show"
+          ></el-table-column>
+          <el-table-column
+            label="latency提升比例"
+            prop="latency_improvement"
             width="150"
+            v-if="lmbench_show"
+          ></el-table-column>
+          <el-table-column
+            label="bandwidth提升比例"
+            prop="bandwidth_improvement"
+            width="150"
+            v-if="lmbench_show"
           ></el-table-column>
         </el-table>
       </div>
@@ -1018,6 +1038,7 @@ export default {
           suite: [],
           os: [],
           os_version: [],
+          job_state: ["finished"],
         },
         field: "os",
       },
@@ -1026,6 +1047,7 @@ export default {
           suite: [],
           os: [],
           os_version: [],
+          job_state: ["finished"],
         },
         field: "os",
       },
@@ -1034,6 +1056,13 @@ export default {
       os_version_a: "",
       os_version_b: "",
       group_id_a: "",
+      base_all_data: {"stream": [],
+                      "netperf": [],
+                      "unixbench": [],
+                      "libmicro": [],
+                      "fio-basic": [],
+                      "lmbench3": [],
+                    },
       group_id_b: "",
       stream_data: {
         table_data: [],
@@ -1067,7 +1096,7 @@ export default {
             "lmbench3.syscall.open/close.latency.us",
             "lmbench3.null_io",
             "lmbench3.Process.fork+exit.latency.us",
-            ".Process.fork+execve.latency.us",
+            "lmbench3.Process.fork+execve.latency.us",
             "lmbench3.Process.fork+/bin/sh.latency.us",
             "lmbench3.Select.100tcp.latency.us",
             "lmbench3.sig_inst",
@@ -1098,7 +1127,7 @@ export default {
             { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
-          title: "local_latency",
+          title: "local_latencies",
         },
       },
       lmbench_data_c: {
@@ -1108,7 +1137,7 @@ export default {
           filter: { suite: ["lmbench3"], group_id: [] },
           metrics: [
             "lmbench3.PIPE.bandwidth.MB/sec",
-            "mbench3.AF_UNIX.sock.stream.bandwidth.MB",
+            "lmbench3.AF_UNIX.sock.stream.bandwidth.MB/sec",
             "lmbench3.TCP.socket.bandwidth.10MB.MB/sec",
             "lmbench3.FILE.read.bandwidth.MB/sec",
             "lmbench3.MMAP.read.bandwidth.MB/sec",
@@ -1144,7 +1173,7 @@ export default {
             { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
-          title: "Context_switching",
+          title: "Context_switching_ctxsw",
         },
       },
       lmbench_data_e: {
@@ -1163,7 +1192,7 @@ export default {
             { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
-          title: "VM_latencies",
+          title: "File_&_VM_latencies",
         },
       },
       lmbench_data_f: {
@@ -1182,7 +1211,7 @@ export default {
             { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["metric"],
-          title: "Memor_latencies",
+          title: "Memory_latencies",
           test_params: ["pp.lmbench3.nr_threads"],
         },
       },
@@ -1199,6 +1228,8 @@ export default {
           x_params: ["metric"],
         },
       },
+      /**
+       * old data template
       unixbench_data: {
         table_data: [],
         echart_data: [],
@@ -1210,6 +1241,39 @@ export default {
             { os: "openeuler", os_version: "21.09-iso" },
           ],
           x_params: ["test"],
+        },
+      },
+      **/
+      unixbench_data: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["unixbench"],
+            "pp.unixbench.nr_task": [1, 96],
+            "pp.unixbench.mount_to": ["/test"],
+            group_id: [],
+          },
+          metrics: [
+            "unixbench.Dhrystone_2_using_register_variables",
+            "unixbench.Double-Precision_Whetstone",
+            "unixbench.Execl_Throughput",
+            "unixbench.File_Copy_1024_bufsize_2000_maxblocks",
+            "unixbench.File_Copy_256_bufsize_500_maxblocks",
+            "unixbench.File_Copy_4096_bufsize_8000_maxblocks",
+            "unixbench.Pipe_Throughput",
+            "unixbench.Pipe-based_Context_Switching",
+            "unixbench.Process_Creation",
+            "unixbench.Shell_Scripts_(1_concurrent)",
+            "unixbench.Shell_Scripts_(8_concurrent)",
+            "unixbench.System_Call_Overhead",
+            "unixbench.System_Benchmarks_Index_Score",
+          ],
+          series: [
+            { os: "openeuler", os_version: "20.03-LTS-SP3-iso" },
+            { os: "openeuler", os_version: "22.03-LTS-iso" },
+          ],
+          x_params: ["metric"],
         },
       },
       fio_data: {
@@ -1262,7 +1326,7 @@ export default {
             "pp.fio-setup-basic.rw": ["write", "randwrite"],
             group_id: [],
           },
-          metrics: ["fio.write_iops", "fio.wirte_bw_MBps"],
+          metrics: ["fio.write_iops", "fio.write_bw_MBps"],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
             { os: "openeuler", os_version: "21.09-iso" },
@@ -1297,7 +1361,7 @@ export default {
             suite: ["netperf"],
             group_id: [],
             "pp.netperf.test": ["TCP_RR", "TCP_CRR", "UDP_RR"],
-            "pp.netperf.runtime": [60],
+            "pp.netperf.runtime": [10],
           },
           metrics: ["netperf.Throughput_tps"],
           series: [
@@ -1343,7 +1407,7 @@ export default {
         "lmbench3-TCP-localhost-latency": "TCP",
         "lmbench3-CONNECT-localhost-latency-us": "TCP_conn",
         "lmbench3-PIPE-bandwidth-MB/sec": "Pipe",
-        "mbench3-AF_UNIX-sock-stream-bandwidth-MB": "AF_UNIX",
+        "lmbench3-AF_UNIX-sock-stream-bandwidth-MB/sec": "AF_UNIX",
         "lmbench3-TCP-socket-bandwidth-10MB-MB/sec": "TCP",
         "lmbench3-FILE-read-bandwidth-MB/sec": "File_reread",
         "lmbench3-MMAP-read-bandwidth-MB/sec": "Mmap_reread",
@@ -1366,10 +1430,32 @@ export default {
         "lmbench3-L2_$": "L2_$",
         "lmbench3-Main_mem": "Main_mem",
         "lmbench3-Rand_mem": "Rand_mem",
+        "unixbench-Dhrystone_2_using_register_variables":
+          "Dhrystone_2_using_register_variables",
+        "unixbench-Double-Precision_Whetstone": "Double-Precision_Whetstone",
+        "unixbench-Execl_Throughput": "Execl_Throughput",
+        "unixbench-File_Copy_1024_bufsize_2000_maxblocks":
+          "File_Copy_1024_bufsize_2000_maxblocks",
+        "unixbench-File_Copy_256_bufsize_500_maxblocks":
+          "File_Copy_256_bufsize_500_maxblocks",
+        "unixbench-File_Copy_4096_bufsize_8000_maxblocks":
+          "File_Copy_4096_bufsize_8000_maxblocks",
+        "unixbench-Pipe_Throughput": "Pipe_Throughput",
+        "unixbench-Pipe-based_Context_Switching":
+          "Pipe-based_Context_Switching",
+        "unixbench-Process_Creation": "Process_Creation",
+        "unixbench-Shell_Scripts_(1_concurrent)":
+          "Shell_Scripts_(1_concurrent)",
+        "unixbench-Shell_Scripts_(8_concurrent)":
+          "Shell_Scripts_(8_concurrent)",
+        "unixbench-System_Call_Overhead": "System_Call_Overhead",
+        "unixbench-System_Benchmarks_Index_Score":
+          "System_Benchmarks_Index_Score",
       },
       improve_percent: {},
       table_improve: [],
       im_show: false,
+      lmbench_show: false,
     };
   },
   methods: {
@@ -1470,6 +1556,8 @@ export default {
       return s_names;
     },
     clean_data() {
+      this.improve_percent = {};
+      this.table_improve = [];
       this.stream_data.table_data = [];
       this.stream_data.echart_data = [];
 
@@ -1526,6 +1614,7 @@ export default {
           title_trans = "Index_Values_1core";
         }
       }
+
       /*
       原始表头 title_trans:
         fio-read_iops
@@ -1546,7 +1635,8 @@ export default {
       */
       var re = /pp.fio-setup-basic.rw=\w+\S/i;
       var found = sData.test_params.match(re);
-      var rw = found[0].split("=")[1];
+      var rw = null;
+      if (found !== null) { rw = found[0].split("=")[1];}
       if (rw == "randrw") {
         var read_or_write = title_trans.replace("fio-", "").split("_")[0];
         rw = rw + read_or_write;
@@ -1580,26 +1670,141 @@ export default {
         test_params: sData.test_params,
         testbox: sData.testbox,
       });
+      var tmp_table_data = JSON.parse(JSON.stringify(table_data))
+      this.base_all_data[this.suite] = this.get_table_data(tmp_table_data)
     },
     getRowData(title, data) {
       var tmp = {};
       tmp[title] = data.series;
 
       if (data.series.includes("vs")) {
-        if (this.improve_percent[data.series] == null) {
-          this.improve_percent[data.series] = { total: 0, num: 0, percent:0 };
-        }
         for (var i = 0; i < data.x_params.length; i++) {
           tmp[data.x_params[i]] = data.data[i] + "%";
-          this.improve_percent[data.series].total += data.data[i];
-          this.improve_percent[data.series].num += 1;
+          if (this.suite == "unixbench") {
+            if (data.x_params[i] == "System_Benchmarks_Index_Score") {
+              this.table_improve = [
+                {
+                  compare_versions: data.series,
+                  improvement: tmp[data.x_params[i]],
+                },
+              ];
+            }
+          }
         }
-        this.improve_percent[data.series].percent = this.improve_percent[data.series].total / this.improve_percent[data.series].num;
-        this.table_improve = [{"compare_versions": data.series, "improvement": this.improve_percent[data.series].percent.toFixed(4) + "%"}];
+        if (this.suite != "unixbench") {
+          var series = data.series.split(" vs ");
+          var base = series[1];
+          var test_obj = series[0];
+          var found = 0;
+          if (this.suite == "lmbench3") {
+            var base_average = this.improve_percent[base].g_average;
+            var base_bd_average = this.improve_percent[base].bd_g_average;
+            var average = this.improve_percent[test_obj].g_average;
+            var bd_average = this.improve_percent[test_obj].bd_g_average;
+
+            for (i = 0; i < this.table_improve.length; i++) {
+              if (this.table_improve[i].compare_versions == data.series) {
+                this.table_improve[i].latency_improvement =
+                  ((1 - average / base_average) * 100).toFixed(2) + "%";
+                this.table_improve[i].bandwidth_improvement =
+                  ((bd_average / base_bd_average - 1) * 100).toFixed(2) + "%";
+                found = 1;
+              }
+            }
+            if (found == 0) {
+              this.table_improve.push({
+                compare_versions: data.series,
+                latency_improvement:
+                  ((1 - average / base_average) * 100).toFixed(2) + "%",
+                bandwidth_improvement:
+                  ((bd_average / base_bd_average - 1) * 100).toFixed(2) + "%",
+              });
+            }
+          } else {
+            base_average = this.improve_percent[base].g_average;
+            average = this.improve_percent[test_obj].g_average;
+            var improve = ((average / base_average - 1) * 100).toFixed(2) + "%";
+            if (this.suite == "libmicro") {
+              improve = ((1 - average / base_average) * 100).toFixed(2) + "%";
+            }
+
+            found = 0;
+            for (i = 0; i < this.table_improve.length; i++) {
+              if (this.table_improve[i].compare_versions == data.series) {
+                this.table_improve[i].improvement = improve;
+                found = 1;
+              }
+            }
+            if (found == 0) {
+              this.table_improve.push({
+                compare_versions: data.series,
+                improvement: improve,
+              });
+            }
+          }
+        }
         this.im_show = true;
       } else {
+        var product = 1;
+        var num = 0;
         for (i = 0; i < data.x_params.length; i++) {
           tmp[data.x_params[i]] = data.data[i];
+          if (data.data[i] != 0) {
+            product *= data.data[i];
+            num += 1;
+          }
+        }
+        var g_average = 0;
+        if (num > 0) {
+          g_average = Math.pow(product, 1 / num);
+        }
+
+        if (this.suite != "unixbench") {
+          if (this.suite == "lmbench3") {
+            if (this.improve_percent[data.series] == null) {
+              this.improve_percent[data.series] = {
+                product: 1,
+                num: 0,
+                g_average: 0,
+                bd_product: 1,
+                bd_num: 0,
+                bd_g_average: 0,
+              };
+            }
+            if (g_average != 0) {
+              if (title == "local_bandwidths") {
+                this.improve_percent[data.series].bd_product *= g_average;
+                this.improve_percent[data.series].bd_num += 1;
+                this.improve_percent[data.series].bd_g_average = Math.pow(
+                  this.improve_percent[data.series].bd_product,
+                  1 / this.improve_percent[data.series].bd_num
+                );
+              } else {
+                this.improve_percent[data.series].product *= g_average;
+                this.improve_percent[data.series].num += 1;
+                this.improve_percent[data.series].g_average = Math.pow(
+                  this.improve_percent[data.series].product,
+                  1 / this.improve_percent[data.series].num
+                );
+              }
+            }
+          } else {
+            if (this.improve_percent[data.series] == null) {
+              this.improve_percent[data.series] = {
+                product: 1,
+                num: 0,
+                g_average: 0,
+              };
+            }
+            if (g_average != 0) {
+              this.improve_percent[data.series].product *= g_average;
+              this.improve_percent[data.series].num += 1;
+              this.improve_percent[data.series].g_average = Math.pow(
+                this.improve_percent[data.series].product,
+                1 / this.improve_percent[data.series].num
+              );
+            }
+          }
         }
       }
       return tmp;
@@ -1636,10 +1841,13 @@ export default {
       }
       return destination;
     },
-    getData(JobData) {
-      getPerformanceResult(JobData.QueryData).then((res) => {
+    async getData(JobData) {
+      await getPerformanceResult(JobData.QueryData).then((res) => {
         JobData.echart_data = this.transfer_res(res);
         var sourceData = JobData.echart_data;
+        if (sourceData.length == 0) {
+          this.$message("本次请求数据为空");
+        }
 
         for (var i = 0; i < sourceData.length; i++) {
           this.getTableData(sourceData[i], JobData.table_data);
@@ -1648,6 +1856,41 @@ export default {
           this.get_Echarts(JobData.echart_data);
         });
       });
+    },
+    get_table_data(data) {
+      var all_data = []
+      var data_header = []
+      for (var i=0; i < data.length;i++) {
+        data_header = JSON.parse(JSON.stringify(data[i].header))
+        all_data.push(data_header)
+        for (var j=0; j < data[i].data.length; j++) {
+          var tmp_list = JSON.parse(JSON.stringify(data_header))
+          for (var key in data[i].data[j]) {
+            var index = data_header.indexOf(key)
+            tmp_list[index] = data[i].data[j][key]
+          }
+          all_data.push(tmp_list)
+        }
+        all_data.push("")
+      }
+      return all_data
+    },
+    async getBaseAlldata() {
+      this.suite =  "stream"
+      await this.queryCharts()
+      this.suite = "netperf"
+      await this.queryCharts()
+      this.suite = "unixbench"
+      await this.queryCharts()
+      this.suite = "lmbench3"
+      await this.queryCharts()
+      this.suite = "libmicro"
+      await this.queryCharts()
+      this.suite = "fio-basic"
+      await this.queryCharts()
+      await location.reload()
+      var data = JSON.parse(JSON.stringify(this.base_all_data))
+      return data
     },
     getTableHeaders() {
       if (this.suite == "stream") {
@@ -1675,18 +1918,18 @@ export default {
         this.netperf_selected = this.t_headers;
       } else if (this.suite == "unixbench") {
         this.t_headers = [
-          "Double-Precision_Whetstone",
-          "Shell_Scripts_(1_concurrent)",
-          "Shell_Scripts_(8_concurrent)",
-          "Pipe_Throughput",
-          "Pipe-based_Context_Switching",
-          "Process_Creation",
-          "System_Call_Overhead",
           "Dhrystone_2_using_register_variables",
+          "Double-Precision_Whetstone",
+          "Execl_Throughput",
           "File_Copy_1024_bufsize_2000_maxblocks",
           "File_Copy_256_bufsize_500_maxblocks",
           "File_Copy_4096_bufsize_8000_maxblocks",
-          "Execl_Throughput",
+          "Pipe_Throughput",
+          "Pipe-based_Context_Switching",
+          "Process_Creation",
+          "Shell_Scripts_(1_concurrent)",
+          "Shell_Scripts_(8_concurrent)",
+          "System_Call_Overhead",
           "System_Benchmarks_Index_Score",
         ];
         this.unixbench_selected = this.t_headers;
@@ -2004,6 +2247,7 @@ export default {
       }
     },
     radioChange() {
+      this.$forceUpdate();
       this.getosData();
       this.getSelectVersiona(this.os_a);
       this.getSelectVersionb(this.os_b);
@@ -2014,6 +2258,11 @@ export default {
       this.improve_percent = {};
       this.table_improve = [];
       this.im_show = false;
+      if (this.suite == "lmbench3") {
+        this.lmbench_show = true;
+      } else {
+        this.lmbench_show = false;
+      }
       for (var index = 0; index < this.compare_object.length; index++) {
         this.getSelectVersion(index, this.compare_object[index].os);
         this.getSelectGroup(index, this.compare_object[index].os_version);
@@ -2247,7 +2496,7 @@ export default {
       }
       return false;
     },
-    queryCharts() {
+    async queryCharts() {
       var series = [
         { os: this.os_a, os_version: this.os_version_a },
         { os: this.os_b, os_version: this.os_version_b },
@@ -2326,7 +2575,7 @@ export default {
 
       this.clean_data();
       if (this.suite === "lmbench3") {
-        this.getData(this.lmbench_data_a);
+        await this.getData(this.lmbench_data_a);
         this.sleep(100).then(() => {
           this.getData(this.lmbench_data_b);
         });
@@ -2344,16 +2593,17 @@ export default {
         });
       }
       if (this.suite === "unixbench") {
-        this.getData(this.unixbench_data);
+        await this.getData(this.unixbench_data);
       }
       if (this.suite === "libmicro") {
-        this.getData(this.libmicro_data);
+        await this.getData(this.libmicro_data);
       }
       if (this.suite === "stream") {
-        this.getData(this.stream_data);
+        await this.getData(this.stream_data);
+
       }
       if (this.suite === "fio-basic") {
-        this.getData(this.fio_data);
+        await this.getData(this.fio_data);
         this.sleep(200).then(() => {
           this.getData(this.fio_data_b);
         });
@@ -2362,7 +2612,7 @@ export default {
         });
       }
       if (this.suite === "netperf") {
-        this.getData(this.netperfb_data);
+        await this.getData(this.netperfb_data);
 
         this.sleep(200).then(() => {
           this.getData(this.netperfa_data);
@@ -2476,32 +2726,43 @@ export default {
         }
       }
     },
+    async getAllDataExcel() {
+      var sheet_data_hash = await this.getBaseAlldata()
+      let wb = XLSX.utils.book_new();
+      for (var key in sheet_data_hash) {
+        var sheet_name = key
+        var jsonObj = sheet_data_hash[key]
+        let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
+        XLSX.utils.book_append_sheet(wb, worksheet, sheet_name)
+      }
+      let wbout = XLSXS.write(wb, {
+        book_Type: "xlsx",
+        bookSST: false,
+        type: "binary",
+      });
+      filesaver.saveAs(
+        new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }),
+        "测试数据.xlsx"
+      );
+    },
     getExcel() {
       var c_children = document.getElementById("container").children;
       let wb = XLSX.utils.book_new();
-      var used_name = {};
 
       if (c_children.length < 2) {
         this.$message("导出失败");
         return;
       }
-
+      var jsonObj = [];
       for (var i = 2; i < c_children.length; i++) {
         var el_table = c_children[i].children[2];
         let sheet = XLSX.utils.table_to_sheet(el_table);
         this.setStyle(sheet);
-        var sheet_name = sheet["A1"].v;
-        if (sheet_name == "Function") sheet_name = this.suite;
-        if (used_name[sheet_name] == null) {
-          used_name[sheet_name] = 1;
-        } else {
-          used_name[sheet_name]++;
-        }
-        if (used_name[sheet_name] > 1) {
-          sheet_name = sheet_name + (used_name[sheet_name] - 1);
-        }
-        XLSX.utils.book_append_sheet(wb, sheet, sheet_name);
+        let a = XLSX.utils.sheet_to_json(sheet, {header: 1});
+        jsonObj = jsonObj.concat(a).concat([''])
       }
+      let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
+      XLSX.utils.book_append_sheet(wb, worksheet, "测试结果")
       let wbout = XLSXS.write(wb, {
         book_Type: "xlsx",
         bookSST: false,
@@ -2668,6 +2929,7 @@ export default {
             suite: [this.suite],
             os: [],
             os_version: [],
+            job_state: ["finished"],
           },
           field: "os",
         },
