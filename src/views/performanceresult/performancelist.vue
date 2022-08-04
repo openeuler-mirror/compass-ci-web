@@ -1251,7 +1251,6 @@ export default {
           filter: {
             suite: ["unixbench"],
             "pp.unixbench.nr_task": [1, 96],
-            "pp.unixbench.mount_to": ["/test"],
             group_id: [],
           },
           metrics: [
@@ -1342,7 +1341,6 @@ export default {
           filter: {
             suite: ["netperf"],
             "pp.netperf.test": ["TCP_STREAM", "UDP_STREAM"],
-            "pp.netperf.runtime": [60],
             group_id: [],
           },
           metrics: ["netperf.Throughput_Mbps"],
@@ -1361,7 +1359,6 @@ export default {
             suite: ["netperf"],
             group_id: [],
             "pp.netperf.test": ["TCP_RR", "TCP_CRR", "UDP_RR"],
-            "pp.netperf.runtime": [10],
           },
           metrics: ["netperf.Throughput_tps"],
           series: [
