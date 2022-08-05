@@ -1874,6 +1874,22 @@ export default {
     },
     async getBaseAlldata() {
       this.suite =  "stream"
+      // this.group_id_a == "2022-08-04"
+      // this.group_id_b == "2022-08-04"
+      // this.lmbench_data_a.QueryData.filter.group_id = [];
+      //   this.lmbench_data_b.QueryData.filter.group_id = [];
+      //   this.lmbench_data_c.QueryData.filter.group_id = [];
+      //   this.lmbench_data_d.QueryData.filter.group_id = [];
+      //   this.lmbench_data_e.QueryData.filter.group_id = [];
+      //   this.lmbench_data_f.QueryData.filter.group_id = [];
+      //   this.unixbench_data.QueryData.filter.group_id = [];
+      //   this.libmicro_data.QueryData.filter.group_id = [];
+      //   this.stream_data.QueryData.filter.group_id = [];
+      //   this.netperfa_data.QueryData.filter.group_id = [];
+      //   this.netperfb_data.QueryData.filter.group_id = [];
+      //   this.fio_data.QueryData.filter.group_id = [];
+      //   this.fio_data_b.QueryData.filter.group_id = [];
+      //   this.fio_data_c.QueryData.filter.group_id = [];
       await this.queryCharts()
       this.suite = "netperf"
       await this.queryCharts()
@@ -1885,7 +1901,6 @@ export default {
       await this.queryCharts()
       this.suite = "fio-basic"
       await this.queryCharts()
-      await location.reload()
       var data = JSON.parse(JSON.stringify(this.base_all_data))
       return data
     },
@@ -2741,6 +2756,7 @@ export default {
         new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }),
         "测试数据.xlsx"
       );
+      location.reload()
     },
     getExcel() {
       var c_children = document.getElementById("container").children;
