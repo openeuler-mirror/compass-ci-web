@@ -1059,9 +1059,9 @@ export default {
       base_all_data: {"stream": [],
                       "netperf": [],
                       "unixbench": [],
+                      "lmbench3": [],
                       "libmicro": [],
                       "fio-basic": [],
-                      "lmbench3": [],
                     },
       group_id_b: "",
       stream_data: {
@@ -1590,7 +1590,7 @@ export default {
       this.netperfb_data.table_data = [];
       this.netperfb_data.echart_data = [];
     },
-    getTableData(sData, table_data) {
+    async getTableData(sData, table_data) {
       var avg_data = sData.datas.average;
       var change_data = sData.datas.change;
       var tData = [];
@@ -1652,12 +1652,12 @@ export default {
       tHeader.push(title_trans);
       tHeader = tHeader.concat(avg_data[0].x_params);
       for (var i = 0; i < avg_data.length; i++) {
-        var tmp = this.getRowData(title_trans, avg_data[i]);
+        var tmp = await this.getRowData(title_trans, avg_data[i]);
         tData.push(tmp);
       }
 
       for (i = 0; i < change_data.length; i++) {
-        tmp = this.getRowData(title_trans, change_data[i]);
+        tmp = await this.getRowData(title_trans, change_data[i]);
         tData.push(tmp);
       }
       table_data.push({
@@ -1668,7 +1668,11 @@ export default {
         testbox: sData.testbox,
       });
       var tmp_table_data = JSON.parse(JSON.stringify(table_data))
-      this.base_all_data[this.suite] = this.get_table_data(tmp_table_data)
+      if (this.base_all_data[this.suite].length > 0) {
+        this.base_all_data[this.suite] = this.base_all_data[this.suite].concat(await this.get_table_data(tmp_table_data))
+      } else {
+        this.base_all_data[this.suite] = await this.get_table_data(tmp_table_data)
+      }
     },
     getRowData(title, data) {
       var tmp = {};
@@ -1854,11 +1858,27 @@ export default {
         });
       });
     },
-    get_table_data(data) {
+    async get_table_data(data) {
       var all_data = []
       var data_header = []
       for (var i=0; i < data.length;i++) {
         data_header = JSON.parse(JSON.stringify(data[i].header))
+        if (this.suite == "netperf") {
+          await this.getTableHeaders()
+          data_header = this.netperf_filter(data_header)
+        } else if (this.suite == "unixbench") {
+          await this.getTableHeaders()
+          data_header = this.unixbench_filter(data_header)
+        } else if (this.suite == "lmbench3") {
+          await this.getTableHeaders()
+          data_header = this.lmbench3_filter(data_header)
+        } else if (this.suite == "libmicro") {
+          await this.getTableHeaders()
+          data_header = this.libmicro_filter(data_header)
+        } else if (this.suite == "fio-basic") {
+          await this.getTableHeaders()
+          data_header = this.fio_filter(data_header)
+        }
         all_data.push(data_header)
         for (var j=0; j < data[i].data.length; j++) {
           var tmp_list = JSON.parse(JSON.stringify(data_header))
@@ -1873,35 +1893,30 @@ export default {
       return all_data
     },
     async getBaseAlldata() {
+      var data = []
       this.suite =  "stream"
-      // this.group_id_a == "2022-08-04"
-      // this.group_id_b == "2022-08-04"
-      // this.lmbench_data_a.QueryData.filter.group_id = [];
-      //   this.lmbench_data_b.QueryData.filter.group_id = [];
-      //   this.lmbench_data_c.QueryData.filter.group_id = [];
-      //   this.lmbench_data_d.QueryData.filter.group_id = [];
-      //   this.lmbench_data_e.QueryData.filter.group_id = [];
-      //   this.lmbench_data_f.QueryData.filter.group_id = [];
-      //   this.unixbench_data.QueryData.filter.group_id = [];
-      //   this.libmicro_data.QueryData.filter.group_id = [];
-      //   this.stream_data.QueryData.filter.group_id = [];
-      //   this.netperfa_data.QueryData.filter.group_id = [];
-      //   this.netperfb_data.QueryData.filter.group_id = [];
-      //   this.fio_data.QueryData.filter.group_id = [];
-      //   this.fio_data_b.QueryData.filter.group_id = [];
-      //   this.fio_data_c.QueryData.filter.group_id = [];
       await this.queryCharts()
       this.suite = "netperf"
-      await this.queryCharts()
-      this.suite = "unixbench"
-      await this.queryCharts()
-      this.suite = "lmbench3"
-      await this.queryCharts()
-      this.suite = "libmicro"
-      await this.queryCharts()
-      this.suite = "fio-basic"
-      await this.queryCharts()
-      var data = JSON.parse(JSON.stringify(this.base_all_data))
+      await this.queryCharts();
+      await this.sleep(300).then(() => {
+        this.suite = "unixbench"
+        this.queryCharts()
+      });
+      await this.sleep(300).then(() => {
+        this.suite = "lmbench3"
+        this.queryCharts()
+      });
+      await this.sleep(3800).then(() => {
+        this.suite = "libmicro"
+        this.queryCharts()
+      });
+      await this.sleep(3800).then(() => {
+        this.suite = "fio-basic"
+        this.queryCharts()
+      });
+      await this.sleep(3900).then(() => {
+        data = JSON.parse(JSON.stringify(this.base_all_data))
+      })
       return data
     },
     getTableHeaders() {
@@ -2585,22 +2600,22 @@ export default {
         this.fio_data_c.QueryData.filter.group_id = group_ids;
       }
 
-      this.clean_data();
+      await this.clean_data();
       if (this.suite === "lmbench3") {
         await this.getData(this.lmbench_data_a);
-        this.sleep(100).then(() => {
+        await this.sleep(100).then(() => {
           this.getData(this.lmbench_data_b);
         });
-        this.sleep(200).then(() => {
+        await this.sleep(200).then(() => {
           this.getData(this.lmbench_data_c);
         });
-        this.sleep(300).then(() => {
+        await this.sleep(300).then(() => {
           this.getData(this.lmbench_data_d);
         });
-        this.sleep(1000).then(() => {
+        await this.sleep(1000).then(() => {
           this.getData(this.lmbench_data_e);
         });
-        this.sleep(1900).then(() => {
+        await this.sleep(1900).then(() => {
           this.getData(this.lmbench_data_f);
         });
       }
@@ -2616,17 +2631,17 @@ export default {
       }
       if (this.suite === "fio-basic") {
         await this.getData(this.fio_data);
-        this.sleep(200).then(() => {
+        await this.sleep(200).then(() => {
           this.getData(this.fio_data_b);
         });
-        this.sleep(400).then(() => {
+        await this.sleep(400).then(() => {
           this.getData(this.fio_data_c);
         });
       }
       if (this.suite === "netperf") {
         await this.getData(this.netperfb_data);
 
-        this.sleep(200).then(() => {
+        await this.sleep(200).then(() => {
           this.getData(this.netperfa_data);
         });
       }
