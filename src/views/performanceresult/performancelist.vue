@@ -1163,8 +1163,6 @@ export default {
                       "lmbench3": [],
                       "libmicro": [],
                       "fio-basic": [],
-                      "speccpu-2006": [],
-                      "speccpu-2017": [],
                     },
       group_id_b: "",
       speccpu_2006_data: {
@@ -1176,10 +1174,16 @@ export default {
             group_id: [],
           },
           metrics: [
-            "speccpu-2006.410.bwaves_",
-            "speccpu-2006.416.gamess_",
-            "speccpu-2006.433.milc_",
-            "speccpu-2006.434.zeusmp_",
+            "speccpu-2006.400.perlbench_Rate",
+            "speccpu-2006.401.bzip2_Rate",
+            "speccpu-2006.403.gcc_Rate",
+            "speccpu-2006.429.mcf_Rate",
+            "speccpu-2006.445.gobmk_Rate",
+            "speccpu-2006.456.hmmer_Rate",
+            "speccpu-2006.458.sjeng_Rate",
+            "speccpu-2006.462.libquantum_Rate",
+            "speccpu-2006.464.h264ref_Rate",
+            "speccpu-2006.Est.SPECint(R)_rate_base2006"
           ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -1815,6 +1819,7 @@ export default {
         test_params: sData.test_params,
         testbox: sData.testbox,
       });
+      console.log("table_data", table_data)
       var tmp_table_data = JSON.parse(JSON.stringify(table_data))
       if (this.base_all_data[this.suite].length > 0) {
         this.base_all_data[this.suite] = this.base_all_data[this.suite].concat(await this.get_table_data(tmp_table_data))
@@ -1978,6 +1983,7 @@ export default {
       }
       datas.average = avg_data;
       datas.change = change_data;
+      console.log("datas", datas)
 
       return datas;
     },
@@ -2023,6 +2029,12 @@ export default {
         } else if (this.suite == "libmicro") {
           await this.getTableHeaders()
           data_header = this.libmicro_filter(data_header)
+        } else if (this.suite == "speccpu-2006") {
+          await this.getTableHeaders()
+          data_header = this.speccpu_2006_filter(data_header)
+        } else if (this.suite == "speccpu-2017") {
+          await this.getTableHeaders()
+          data_header = this.speccpu_2017_filter(data_header)
         } else if (this.suite == "fio-basic") {
           await this.getTableHeaders()
           data_header = this.fio_filter(data_header)
@@ -2072,7 +2084,17 @@ export default {
         this.t_headers = ["copy", "scale", "add", "triad"];
         this.stream_selected = this.t_headers;
       } else if (this.suite == "speccpu-2006") {
-        this.t_headers = ["key1", "key2"]
+        this.t_headers = [
+          "speccpu-2006-400-perlbench_Rate",
+          "speccpu-2006-401-bzip2_Rate",
+          "speccpu-2006-403-gcc_Rate",
+          "speccpu-2006-429-mcf_Rate",
+          "speccpu-2006-445-gobmk_Rate",
+          "speccpu-2006-456-hmmer_Rate",
+          "speccpu-2006-458-sjeng_Rate",
+          "speccpu-2006-462-libquantum_Rate",
+          "speccpu-2006-464-h264ref_Rate",
+          "speccpu-2006-Est-SPECint(R)_rate_base2006"];
         this.speccpu_2006_selected = this.t_headers
       } else if (this.suite == "speccpu-2017") {
         this.t_headers = ["key1", "key2"]
@@ -2698,6 +2720,9 @@ export default {
 
       this.unixbench_data.QueryData.series = series;
 
+      this.speccpu_2006_data.QueryData.series = series;
+      this.speccpu_2017_data.QueryData.series = series;
+
       this.libmicro_data.QueryData.series = series;
 
       this.stream_data.QueryData.series = series;
@@ -2714,6 +2739,9 @@ export default {
         this.group_id_b == "" ||
         this.groupIdEmpty()
       ) {
+        this.speccpu_2006_data.QueryData.filter.group_id = [];
+        this.speccpu_2017_data.QueryData.filter.group_id = [];
+        
         this.lmbench_data_a.QueryData.filter.group_id = [];
         this.lmbench_data_b.QueryData.filter.group_id = [];
         this.lmbench_data_c.QueryData.filter.group_id = [];
@@ -2996,7 +3024,7 @@ export default {
     },
     speccpu_2006_filter(s_headers) {
       var checkedHeaders;
-      checkedHeaders = this.sepccpu_2006_selected;
+      checkedHeaders = this.speccpu_2006_selected;
       var headers = [];
       headers.push(s_headers[0]);
 
