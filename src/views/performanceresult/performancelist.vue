@@ -3127,7 +3127,7 @@ export default {
     },
     speccpu_2017_filter(s_headers) {
       var checkedHeaders;
-      checkedHeaders = this.sepccpu_2017_selected;
+      checkedHeaders = this.speccpu_2017_selected;
       var headers = [];
       headers.push(s_headers[0]);
 
