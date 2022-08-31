@@ -220,6 +220,8 @@
             <el-radio label="lmbench3">lmbench3</el-radio>
             <el-radio label="libmicro">libmicro</el-radio>
             <el-radio label="fio-basic">fio-basic</el-radio>
+            <el-radio label="speccpu-2006">speccpu-2006</el-radio>
+            <el-radio label="speccpu-2017">speccpu-2017</el-radio>
           </el-radio-group>
         </div>
         <div style="float: left">
@@ -420,6 +422,394 @@
           >
             <el-table-column
               v-for="(item, index) in stream_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2006_data_a.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2006_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2006_data_b.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2006_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2006_data_c.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2006_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2006_data_d.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2006_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2017_data_a.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2017_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2017_data_b.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2017_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2017_data_c.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2017_filter(t_item.header)"
+              :key="index"
+              :label="item"
+              :prop="item"
+            ></el-table-column>
+          </el-table>
+        </div>
+
+        <div
+          :id="`average_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+
+        <div
+          :id="`change_${t_item.title.replace(
+            '.',
+            '_'
+          )}_${t_index}_${t_item.test_params.replace(/\.|\s/g, '_')}`"
+          :style="{ width: '100%', height: '600px' }"
+        ></div>
+      </div>
+
+      <div v-for="(t_item, t_index) in speccpu_2017_data_d.table_data" :key="t_index">
+        <div class="test_params" style="float: left" v-show="false">
+          test_params: {{ t_item.test_params }}
+        </div>
+        <div style="float: right">
+          <el-form>
+            <el-form-item>
+              <el-button @click="getHostInfo(t_item.testbox)"
+                >host info</el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <div>
+          <el-table
+            :data="t_item.data"
+            border
+            :header-cell-style="{ background: '#02951e', color: '#000' }"
+            :row-style="tableRowStyle"
+            :cell-style="tableCellStyle"
+            style="width: 1500px"
+          >
+            <el-table-column
+              v-for="(item, index) in speccpu_2017_filter(t_item.header)"
               :key="index"
               :label="item"
               :prop="item"
@@ -1018,6 +1408,8 @@ export default {
       testbox: "",
       dialogTableVisible: false,
       stream_selected: [],
+      speccpu_2006_selected: [],
+      speccpu_2017_selected: [],
       netperf_selected: [],
       unixbench_selected: [],
       lmbench3_selected: [],
@@ -1059,11 +1451,274 @@ export default {
       base_all_data: {"stream": [],
                       "netperf": [],
                       "unixbench": [],
+                      "lmbench3": [],
                       "libmicro": [],
                       "fio-basic": [],
-                      "lmbench3": [],
+                      "speccpu-2006": [],
+                      "speccpu-2017": [],
                     },
       group_id_b: "",
+      speccpu_2006_data_a: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2006"],
+            "pp.speccpu-2006.test_item":["rate"], 
+            "pp.speccpu-2006.num_type": ["int"],
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2006.400.perlbench_Rate",
+            "speccpu-2006.401.bzip2_Rate",
+            "speccpu-2006.403.gcc_Rate",
+            "speccpu-2006.429.mcf_Rate",
+            "speccpu-2006.445.gobmk_Rate",
+            "speccpu-2006.456.hmmer_Rate",
+            "speccpu-2006.458.sjeng_Rate",
+            "speccpu-2006.462.libquantum_Rate",
+            "speccpu-2006.464.h264ref_Rate",
+            "speccpu-2006.471.omnetpp_Rate",
+            "speccpu-2006.473.astar_Rate",
+            "speccpu-2006.483.xalancbmk_Rate",
+            "speccpu-2006.Est.SPECint(R)_rate_base2006"
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          test_params: ["pp.speccpu-2006.test_item", "pp.speccpu-2006.num_type"]
+        },
+      },
+      speccpu_2006_data_b: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2006"],
+            "pp.speccpu-2006.test_item":["speed"], 
+            "pp.speccpu-2006.num_type": ["int"],
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2006.400.perlbench_Ratio",
+            "speccpu-2006.401.bzip2_Ratio",
+            "speccpu-2006.403.gcc_Ratio",
+            "speccpu-2006.429.mcf_Ratio",
+            "speccpu-2006.445.gobmk_Ratio",
+            "speccpu-2006.456.hmmer_Ratio",
+            "speccpu-2006.458.sjeng_Ratio",
+            "speccpu-2006.462.libquantum_Ratio",
+            "speccpu-2006.464.h264ref_Ratio",
+            "speccpu-2006.471.omnetpp_Ratio",
+            "speccpu-2006.473.astar_Ratio",
+            "speccpu-2006.483.xalancbmk_Ratio",
+            "speccpu-2006.Est.SPECint(R)_base2006"
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          test_params: ["pp.speccpu-2006.test_item", "pp.speccpu-2006.num_type"]
+        },
+      },
+      speccpu_2006_data_c: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2006"],
+            "pp.speccpu-2006.test_item":["speed"], 
+            "pp.speccpu-2006.num_type": ["fp"],
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2006.410.bwaves_Ratio",
+            "speccpu-2006.416.gamess_Ratio",
+            "speccpu-2006.433.milc_Ratio",
+            "speccpu-2006.434.zeusmp_Ratio",
+            "speccpu-2006.435.gromacs_Ratio",
+            "speccpu-2006.436.cactusADM_Ratio",
+            "speccpu-2006.437.leslie3d_Ratio",
+            "speccpu-2006.444.namd_Ratio",
+            "speccpu-2006.447.dealII_Ratio",
+            "speccpu-2006.450.soplex_Ratio",
+            "speccpu-2006.453.povray_Ratio",
+            "speccpu-2006.454.calculix_Ratio",
+            "speccpu-2006.459.GemsFDTD_Ratio",
+            "speccpu-2006.465.tonto_Ratio",
+            "speccpu-2006.470.lbm_Ratio",
+            "speccpu-2006.481.wrf_Ratio",
+            "speccpu-2006.482.sphinx3_Ratio",
+            "speccpu-2006.Est.SPECfp(R)_base2006"
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          test_params: ["pp.speccpu-2006.test_item", "pp.speccpu-2006.num_type"]
+        },
+      },
+      speccpu_2006_data_d: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2006"],
+            "pp.speccpu-2006.test_item":["rate"], 
+            "pp.speccpu-2006.num_type": ["fp"],
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2006.410.bwaves_Rate",
+            "speccpu-2006.416.gamess_Rate",
+            "speccpu-2006.433.milc_Rate",
+            "speccpu-2006.434.zeusmp_Rate",
+            "speccpu-2006.435.gromacs_Rate",
+            "speccpu-2006.436.cactusADM_Rate",
+            "speccpu-2006.437.leslie3d_Rate",
+            "speccpu-2006.444.namd_Rate",
+            "speccpu-2006.447.dealII_Rate",
+            "speccpu-2006.450.soplex_Rate",
+            "speccpu-2006.453.povray_Rate",
+            "speccpu-2006.454.calculix_Rate",
+            "speccpu-2006.459.GemsFDTD_Rate",
+            "speccpu-2006.465.tonto_Rate",
+            "speccpu-2006.470.lbm_Rate",
+            "speccpu-2006.481.wrf_Rate",
+            "speccpu-2006.482.sphinx3_Rate",
+            "speccpu-2006.Est.SPECfp(R)_rate_base2006"
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+          test_params: ["pp.speccpu-2006.test_item", "pp.speccpu-2006.num_type"]
+        },
+      },
+      speccpu_2017_data_a: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2017"],
+            "pp.speccpu-2017.item": ["fprate"], 
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2017.503.bwaves_r",
+            "speccpu-2017.507.cactuBSSN_r",
+            "speccpu-2017.508.namd_r",
+            "speccpu-2017.510.parest_r",
+            "speccpu-2017.511.povray_r",
+            "speccpu-2017.519.lbm_r",
+            "speccpu-2017.521.wrf_r",
+            "speccpu-2017.526.blender_r",
+            "speccpu-2017.527.cam4_r",
+            "speccpu-2017.538.imagick_r",
+            "speccpu-2017.544.nab_r",
+            "speccpu-2017.549.fotonik3d_r",
+            "speccpu-2017.554.roms_r",
+            "speccpu-2017.Est.SPECrate2017_fp_base",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+        },
+      },
+      speccpu_2017_data_b: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2017"],
+            "pp.speccpu-2017.item": ["fpspeed"], 
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2017.603.bwaves_s",
+            "speccpu-2017.607.cactuBSSN_s",
+            "speccpu-2017.619.lbm_s",
+            "speccpu-2017.621.wrf_s",
+            "speccpu-2017.627.cam4_s",
+            "speccpu-2017.628.pop2_s",
+            "speccpu-2017.638.imagick_s",
+            "speccpu-2017.644.nab_s",
+            "speccpu-2017.649.fotonik3d_s",
+            "speccpu-2017.654.roms_s",
+            "speccpu-2017.Est.SPECspeed2017_fp_base",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+        },
+      },
+      speccpu_2017_data_c: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2017"],
+            "pp.speccpu-2017.item": ["intspeed"], 
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2017.600.perlbench_s",
+            "speccpu-2017.602.gcc_s",
+            "speccpu-2017.605.mcf_s",
+            "speccpu-2017.620.omnetpp_s",
+            "speccpu-2017.623.xalancbmk_s",
+            "speccpu-2017.625.x264_s",
+            "speccpu-2017.631.deepsjeng_s",
+            "speccpu-2017.641.leela_s",
+            "speccpu-2017.648.exchange2_s",
+            "speccpu-2017.657.xz_s",
+            "speccpu-2017.Est.SPECspeed2017_int_base",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+        },
+      },
+      speccpu_2017_data_d: {
+        table_data: [],
+        echart_data: [],
+        QueryData: {
+          filter: {
+            suite: ["speccpu-2017"],
+            "pp.speccpu-2017.item": ["intrate"], 
+            group_id: [],
+          },
+          metrics: [
+            "speccpu-2017.500.perlbench_r",
+            "speccpu-2017.502.gcc_r",
+            "speccpu-2017.505.mcf_r",
+            "speccpu-2017.520.omnetpp_r",
+            "speccpu-2017.523.xalancbmk_r",
+            "speccpu-2017.525.x264_r",
+            "speccpu-2017.531.deepsjeng_r",
+            "speccpu-2017.541.leela_r",
+            "speccpu-2017.548.exchange2_r",
+            "speccpu-2017.557.xz_r",
+            "speccpu-2017.Est.SPECrate2017_int_base",
+          ],
+          series: [
+            { os: "openeuler", os_version: "21.03-iso" },
+            { os: "openeuler", os_version: "21.09-iso" },
+          ],
+          x_params: ["metric"],
+        },
+      },
       stream_data: {
         table_data: [],
         echart_data: [],
@@ -1251,7 +1906,6 @@ export default {
           filter: {
             suite: ["unixbench"],
             "pp.unixbench.nr_task": [1, 96],
-            "pp.unixbench.mount_to": ["/test"],
             group_id: [],
           },
           metrics: [
@@ -1342,7 +1996,6 @@ export default {
           filter: {
             suite: ["netperf"],
             "pp.netperf.test": ["TCP_STREAM", "UDP_STREAM"],
-            "pp.netperf.runtime": [60],
             group_id: [],
           },
           metrics: ["netperf.Throughput_Mbps"],
@@ -1361,7 +2014,6 @@ export default {
             suite: ["netperf"],
             group_id: [],
             "pp.netperf.test": ["TCP_RR", "TCP_CRR", "UDP_RR"],
-            "pp.netperf.runtime": [10],
           },
           metrics: ["netperf.Throughput_tps"],
           series: [
@@ -1560,7 +2212,22 @@ export default {
       this.table_improve = [];
       this.stream_data.table_data = [];
       this.stream_data.echart_data = [];
-
+      this.speccpu_2006_data_a.table_data = [];
+      this.speccpu_2006_data_a.echart_data = [];
+      this.speccpu_2006_data_b.table_data = [];
+      this.speccpu_2006_data_b.echart_data = [];
+      this.speccpu_2006_data_c.table_data = [];
+      this.speccpu_2006_data_c.echart_data = [];
+      this.speccpu_2006_data_d.table_data = [];
+      this.speccpu_2006_data_d.echart_data = [];
+      this.speccpu_2017_data_a.table_data = [];
+      this.speccpu_2017_data_b.table_data = [];
+      this.speccpu_2017_data_c.table_data = [];
+      this.speccpu_2017_data_d.table_data = [];
+      this.speccpu_2017_data_a.echart_data = [];
+      this.speccpu_2017_data_b.echart_data = [];
+      this.speccpu_2017_data_c.echart_data = [];
+      this.speccpu_2017_data_d.echart_data = [];
       this.lmbench_data_a.table_data = [];
       this.lmbench_data_a.echart_data = [];
       this.lmbench_data_b.table_data = [];
@@ -1593,7 +2260,7 @@ export default {
       this.netperfb_data.table_data = [];
       this.netperfb_data.echart_data = [];
     },
-    getTableData(sData, table_data) {
+    async getTableData(sData, table_data) {
       var avg_data = sData.datas.average;
       var change_data = sData.datas.change;
       var tData = [];
@@ -1655,12 +2322,12 @@ export default {
       tHeader.push(title_trans);
       tHeader = tHeader.concat(avg_data[0].x_params);
       for (var i = 0; i < avg_data.length; i++) {
-        var tmp = this.getRowData(title_trans, avg_data[i]);
+        var tmp = await this.getRowData(title_trans, avg_data[i]);
         tData.push(tmp);
       }
 
       for (i = 0; i < change_data.length; i++) {
-        tmp = this.getRowData(title_trans, change_data[i]);
+        tmp = await this.getRowData(title_trans, change_data[i]);
         tData.push(tmp);
       }
       table_data.push({
@@ -1670,8 +2337,13 @@ export default {
         test_params: sData.test_params,
         testbox: sData.testbox,
       });
+      // console.log("table_data", table_data)
       var tmp_table_data = JSON.parse(JSON.stringify(table_data))
-      this.base_all_data[this.suite] = this.get_table_data(tmp_table_data)
+      if (this.base_all_data[this.suite].length > 0) {
+        this.base_all_data[this.suite] = this.base_all_data[this.suite].concat(await this.get_table_data(tmp_table_data))
+      } else {
+        this.base_all_data[this.suite] = await this.get_table_data(tmp_table_data)
+      }
     },
     getRowData(title, data) {
       var tmp = {};
@@ -1819,6 +2491,12 @@ export default {
         if (tHeader[i].includes("libmicro")) {
           tHeader[i] = tHeader[i].replace("libmicro-", "");
         }
+        if (tHeader[i].includes("speccpu-2006")) {
+          tHeader[i] = tHeader[i].replace("speccpu-2006-", "")
+        }
+        if (tHeader[i].includes("speccpu-2017")) {
+          tHeader[i] = tHeader[i].replace("speccpu-2017-", "")
+        }
       }
 
       for (i = 0; i < avg_data.length; i++) {
@@ -1829,6 +2507,7 @@ export default {
       }
       datas.average = avg_data;
       datas.change = change_data;
+      // console.log("datas", datas)
 
       return datas;
     },
@@ -1857,11 +2536,33 @@ export default {
         });
       });
     },
-    get_table_data(data) {
+    async get_table_data(data) {
       var all_data = []
       var data_header = []
       for (var i=0; i < data.length;i++) {
         data_header = JSON.parse(JSON.stringify(data[i].header))
+        if (this.suite == "netperf") {
+          await this.getTableHeaders()
+          data_header = this.netperf_filter(data_header)
+        } else if (this.suite == "unixbench") {
+          await this.getTableHeaders()
+          data_header = this.unixbench_filter(data_header)
+        } else if (this.suite == "lmbench3") {
+          await this.getTableHeaders()
+          data_header = this.lmbench3_filter(data_header)
+        } else if (this.suite == "libmicro") {
+          await this.getTableHeaders()
+          data_header = this.libmicro_filter(data_header)
+        } else if (this.suite == "speccpu-2006") {
+          await this.getTableHeaders()
+          data_header = this.speccpu_2006_filter(data_header)
+        } else if (this.suite == "speccpu-2017") {
+          await this.getTableHeaders()
+          data_header = this.speccpu_2017_filter(data_header)
+        } else if (this.suite == "fio-basic") {
+          await this.getTableHeaders()
+          data_header = this.fio_filter(data_header)
+        }
         all_data.push(data_header)
         for (var j=0; j < data[i].data.length; j++) {
           var tmp_list = JSON.parse(JSON.stringify(data_header))
@@ -1876,26 +2577,160 @@ export default {
       return all_data
     },
     async getBaseAlldata() {
+      var data = []
       this.suite =  "stream"
       await this.queryCharts()
       this.suite = "netperf"
-      await this.queryCharts()
-      this.suite = "unixbench"
-      await this.queryCharts()
-      this.suite = "lmbench3"
-      await this.queryCharts()
-      this.suite = "libmicro"
-      await this.queryCharts()
-      this.suite = "fio-basic"
-      await this.queryCharts()
-      await location.reload()
-      var data = JSON.parse(JSON.stringify(this.base_all_data))
+      await this.queryCharts();
+      await this.sleep(800).then(() => {
+        this.suite = "unixbench"
+        this.queryCharts()
+      });
+      await this.sleep(900).then(() => {
+        this.suite = "lmbench3"
+        this.queryCharts()
+      });
+      await this.sleep(4500).then(() => {
+        this.suite = "libmicro"
+        this.queryCharts()
+      });
+      await this.sleep(4700).then(() => {
+        this.suite = "fio-basic"
+        this.queryCharts()
+      });
+      await this.sleep(5500).then(() => {
+        this.suite = "speccpu-2006"
+        this.queryCharts()
+      })
+      await this.sleep(6000).then(() => {
+        this.suite = "speccpu-2017"
+        this.queryCharts()
+      })
+      await this.sleep(6500).then(() => {
+        data = JSON.parse(JSON.stringify(this.base_all_data))
+      })
       return data
     },
     getTableHeaders() {
       if (this.suite == "stream") {
         this.t_headers = ["copy", "scale", "add", "triad"];
         this.stream_selected = this.t_headers;
+      } else if (this.suite == "speccpu-2006") {
+        this.t_headers = [
+          "400-perlbench_Rate",
+          "401-bzip2_Rate",
+          "403-gcc_Rate",
+          "429-mcf_Rate",
+          "445-gobmk_Rate",
+          "456-hmmer_Rate",
+          "458-sjeng_Rate",
+          "462-libquantum_Rate",
+          "464-h264ref_Rate",
+          "471-omnetpp_Rate",
+          "473-astar_Rate",
+          "483-xalancbmk_Rate",
+          "Est-SPECint(R)_rate_base2006",
+          "400-perlbench_Ratio",
+          "401-bzip2_Ratio",
+          "403-gcc_Ratio",
+          "429-mcf_Ratio",
+          "445-gobmk_Ratio",
+          "456-hmmer_Ratio",
+          "458-sjeng_Ratio",
+          "462-libquantum_Ratio",
+          "464-h264ref_Ratio",
+          "471-omnetpp_Ratio",
+          "473-astar_Ratio",
+          "483-xalancbmk_Ratio",
+          "Est-SPECint(R)_base2006",
+          "410-bwaves_Ratio",
+          "416-gamess_Ratio",
+          "433-milc_Ratio",
+          "434-zeusmp_Ratio",
+          "435-gromacs_Ratio",
+          "436-cactusADM_Ratio",
+          "437-leslie3d_Ratio",
+          "444-namd_Ratio",
+          "447-dealII_Ratio",
+          "450-soplex_Ratio",
+          "453-povray_Ratio",
+          "454-calculix_Ratio",
+          "459-GemsFDTD_Ratio",
+          "465-tonto_Ratio",
+          "470-lbm_Ratio",
+          "481-wrf_Ratio",
+          "482-sphinx3_Ratio",
+          "Est-SPECfp(R)_base2006",
+          "410-bwaves_Rate",
+          "416-gamess_Rate",
+          "433-milc_Rate",
+          "434-zeusmp_Rate",
+          "435-gromacs_Rate",
+          "436-cactusADM_Rate",
+          "437-leslie3d_Rate",
+          "444-namd_Rate",
+          "447-dealII_Rate",
+          "450-soplex_Rate",
+          "453-povray_Rate",
+          "454-calculix_Rate",
+          "459-GemsFDTD_Rate",
+          "465-tonto_Rate",
+          "470-lbm_Rate",
+          "481-wrf_Rate",
+          "482-sphinx3_Rate",
+          "Est-SPECfp(R)_rate_base2006"];
+        this.speccpu_2006_selected = this.t_headers
+      } else if (this.suite == "speccpu-2017") {
+        this.t_headers = [
+          "500-perlbench_r",
+          "502-gcc_r",
+          "505-mcf_r",
+          "520-omnetpp_r",
+          "523-xalancbmk_r",
+          "525-x264_r",
+          "531-deepsjeng_r",
+          "541-leela_r",
+          "548-exchange2_r",
+          "557-xz_r",
+          "Est-SPECrate2017_int_base",
+          "600-perlbench_s",
+          "602-gcc_s",
+          "605-mcf_s",
+          "620-omnetpp_s",
+          "623-xalancbmk_s",
+          "625-x264_s",
+          "631-deepsjeng_s",
+          "641-leela_s",
+          "648-exchange2_s",
+          "657-xz_s",
+          "Est-SPECspeed2017_int_base",
+          "503-bwaves_r",
+          "507-cactuBSSN_r",
+          "508-namd_r",
+          "510-parest_r",
+          "511-povray_r",
+          "519-lbm_r",
+          "521-wrf_r",
+          "526-blender_r",
+          "527-cam4_r",
+          "538-imagick_r",
+          "544-nab_r",
+          "549-fotonik3d_r",
+          "554-roms_r",
+          "Est-SPECrate2017_fp_base",
+          "603-bwaves_s",
+          "607-cactuBSSN_s",
+          "619-lbm_s",
+          "621-wrf_s",
+          "627-cam4_s",
+          "628-pop2_s",
+          "638-imagick_s",
+          "644-nab_s",
+          "649-fotonik3d_s",
+          "654-roms_s",
+          "Est-SPECspeed2017_fp_base",
+        ]
+        this.speccpu_2017_selected = this.t_headers
       } else if (this.suite == "netperf") {
         this.t_headers = [
           "TCP_RR",
@@ -2498,8 +3333,8 @@ export default {
     },
     async queryCharts() {
       var series = [
-        { os: this.os_a, os_version: this.os_version_a },
-        { os: this.os_b, os_version: this.os_version_b },
+        { os: this.os_a, os_version: this.os_version_a, group_id: this.group_id_a },
+        { os: this.os_b, os_version: this.os_version_b, group_id: this.group_id_b },
       ];
       for (var i = 0; i < this.compare_object.length; i++) {
         var every_set = {
@@ -2517,6 +3352,15 @@ export default {
 
       this.unixbench_data.QueryData.series = series;
 
+      this.speccpu_2006_data_a.QueryData.series = series;
+      this.speccpu_2006_data_b.QueryData.series = series;
+      this.speccpu_2006_data_c.QueryData.series = series;
+      this.speccpu_2006_data_d.QueryData.series = series;
+      this.speccpu_2017_data_a.QueryData.series = series;
+      this.speccpu_2017_data_b.QueryData.series = series;
+      this.speccpu_2017_data_c.QueryData.series = series;
+      this.speccpu_2017_data_d.QueryData.series = series;
+
       this.libmicro_data.QueryData.series = series;
 
       this.stream_data.QueryData.series = series;
@@ -2533,6 +3377,15 @@ export default {
         this.group_id_b == "" ||
         this.groupIdEmpty()
       ) {
+        this.speccpu_2006_data_a.QueryData.filter.group_id = [];
+        this.speccpu_2006_data_b.QueryData.filter.group_id = [];
+        this.speccpu_2006_data_c.QueryData.filter.group_id = [];
+        this.speccpu_2006_data_d.QueryData.filter.group_id = [];
+        this.speccpu_2017_data_a.QueryData.filter.group_id = [];
+        this.speccpu_2017_data_b.QueryData.filter.group_id = [];
+        this.speccpu_2017_data_c.QueryData.filter.group_id = [];
+        this.speccpu_2017_data_d.QueryData.filter.group_id = [];
+        
         this.lmbench_data_a.QueryData.filter.group_id = [];
         this.lmbench_data_b.QueryData.filter.group_id = [];
         this.lmbench_data_c.QueryData.filter.group_id = [];
@@ -2573,22 +3426,22 @@ export default {
         this.fio_data_c.QueryData.filter.group_id = group_ids;
       }
 
-      this.clean_data();
+      await this.clean_data();
       if (this.suite === "lmbench3") {
         await this.getData(this.lmbench_data_a);
-        this.sleep(100).then(() => {
+        await this.sleep(100).then(() => {
           this.getData(this.lmbench_data_b);
         });
-        this.sleep(200).then(() => {
+        await this.sleep(200).then(() => {
           this.getData(this.lmbench_data_c);
         });
-        this.sleep(300).then(() => {
+        await this.sleep(300).then(() => {
           this.getData(this.lmbench_data_d);
         });
-        this.sleep(1000).then(() => {
+        await this.sleep(900).then(() => {
           this.getData(this.lmbench_data_e);
         });
-        this.sleep(1900).then(() => {
+        await this.sleep(1800).then(() => {
           this.getData(this.lmbench_data_f);
         });
       }
@@ -2600,21 +3453,32 @@ export default {
       }
       if (this.suite === "stream") {
         await this.getData(this.stream_data);
-
+      }
+      if (this.suite === "speccpu-2006") {
+        await this.getData(this.speccpu_2006_data_a)
+        await this.getData(this.speccpu_2006_data_b)
+        await this.getData(this.speccpu_2006_data_c)
+        await this.getData(this.speccpu_2006_data_d)
+      }
+      if (this.suite === "speccpu-2017") {
+        await this.getData(this.speccpu_2017_data_a)
+        await this.getData(this.speccpu_2017_data_b)
+        await this.getData(this.speccpu_2017_data_c)
+        await this.getData(this.speccpu_2017_data_d)
       }
       if (this.suite === "fio-basic") {
         await this.getData(this.fio_data);
-        this.sleep(200).then(() => {
+        await this.sleep(200).then(() => {
           this.getData(this.fio_data_b);
         });
-        this.sleep(400).then(() => {
+        await this.sleep(400).then(() => {
           this.getData(this.fio_data_c);
         });
       }
       if (this.suite === "netperf") {
         await this.getData(this.netperfb_data);
 
-        this.sleep(200).then(() => {
+        await this.sleep(200).then(() => {
           this.getData(this.netperfa_data);
         });
       }
@@ -2732,8 +3596,13 @@ export default {
       for (var key in sheet_data_hash) {
         var sheet_name = key
         var jsonObj = sheet_data_hash[key]
-        let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
-        XLSX.utils.book_append_sheet(wb, worksheet, sheet_name)
+        if("[]" !== jsonObj) {
+          let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
+          XLSX.utils.book_append_sheet(wb, worksheet, sheet_name)
+        }
+        // console.log("jsonOBj", jsonObj)
+        // let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
+        // XLSX.utils.book_append_sheet(wb, worksheet, sheet_name)
       }
       let wbout = XLSXS.write(wb, {
         book_Type: "xlsx",
@@ -2744,6 +3613,7 @@ export default {
         new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }),
         "测试数据.xlsx"
       );
+      location.reload()
     },
     getExcel() {
       var c_children = document.getElementById("container").children;
@@ -2798,6 +3668,30 @@ export default {
     stream_filter(s_headers) {
       var checkedHeaders;
       checkedHeaders = this.stream_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    speccpu_2006_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.speccpu_2006_selected;
+      var headers = [];
+      headers.push(s_headers[0]);
+
+      var tmp = checkedHeaders.filter(function (v) {
+        return s_headers.indexOf(v) > -1;
+      });
+      headers = headers.concat(tmp);
+      return headers;
+    },
+    speccpu_2017_filter(s_headers) {
+      var checkedHeaders;
+      checkedHeaders = this.speccpu_2017_selected;
       var headers = [];
       headers.push(s_headers[0]);
 
@@ -2914,6 +3808,18 @@ export default {
         for (i = 0; i < this.transfer_chosen.length; i++) {
           index = this.transfer_chosen[i];
           this.fio_selected[i] = this.transfer_data[index].label;
+        }
+      } else if (this.suite == "speccpu-2006") {
+        this.speccpu_2006_selected = [];
+        for (i = 0; i < this.transfer_chosen.length; i++) {
+          index = this.transfer_chosen[i];
+          this.speccpu_2006_selected[i] = this.transfer_data[index].label;
+        }
+      } else if (this.suite == "speccpu-2017") {
+        this.speccpu_2017_selected = [];
+        for (i = 0; i < this.transfer_chosen.length; i++) {
+          index = this.transfer_chosen[i];
+          this.speccpu_2017_selected[i] = this.transfer_data[index].label;
         }
       }
     },
