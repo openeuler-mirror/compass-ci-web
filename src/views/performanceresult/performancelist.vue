@@ -215,7 +215,7 @@
                 placeholder="请选择"
                 size="medium"
                 clearable
-                @change="selectChangeArch(index, obj.os_version)"
+                @change="selectChangeArch(index, obj.os, obj.os_version)"
               >
                 <el-option
                   v-for="item in obj.versionData"
@@ -1491,6 +1491,7 @@ export default {
         filter: {
           suite: [],
           os: [],
+          os_arch: [],
           os_version: [],
           job_state: ["finished"],
         },
@@ -2392,7 +2393,6 @@ export default {
         test_params: sData.test_params,
         testbox: sData.testbox,
       });
-      // console.log("table_data", table_data)
       var tmp_table_data = JSON.parse(JSON.stringify(table_data))
       if (this.base_all_data[this.suite].length > 0) {
         this.base_all_data[this.suite] = this.base_all_data[this.suite].concat(await this.get_table_data(tmp_table_data))
@@ -3262,6 +3262,7 @@ export default {
     getSelectVersiona(os) {
       this.checkQuery.filter.os = [os];
       this.checkQuery.filter.os_version = [];
+      this.checkQuery.filter.os_arch = [];
       this.checkQuery.field = "os_version";
       this.group_id_a = "";
       this.versionData_a = [];
@@ -3274,6 +3275,7 @@ export default {
     getSelectVersionb(os) {
       this.checkQuery_b.filter.os = [os];
       this.checkQuery_b.filter.os_version = [];
+      this.checkQuery_b.filter.os_arch = [];
       this.checkQuery_b.field = "os_version";
       this.group_id_b = "";
       this.versionData_b = [];
@@ -3721,7 +3723,9 @@ export default {
         new Blob([this.s2ab(wbout)], { type: "application/octet-stream" }),
         "测试数据.xlsx"
       );
-      location.reload()
+      await this.sleep(100).then(() => {
+        location.reload()
+      });
     },
     getExcel() {
       var c_children = document.getElementById("container").children;
