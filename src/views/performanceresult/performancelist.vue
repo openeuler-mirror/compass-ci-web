@@ -38,7 +38,7 @@
                 placeholder="请选择"
                 size="medium"
                 clearable
-                @change="getSelectGroupa"
+                @change="selectChangeArcha"
               >
                 <el-option
                   v-for="item in versionData_a"
@@ -48,7 +48,23 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-
+            <el-form-item label="arch" label-width="120px" class="input_class">
+              <el-select
+                v-model="os_arch_a"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroupa"
+              >
+                <el-option
+                  v-for="item in archData_a"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item
               label="group_id"
               label-width="120px"
@@ -120,10 +136,27 @@
                 placeholder="请选择"
                 size="medium"
                 clearable
-                @change="getSelectGroupb"
+                @change="selectChangeArchb"
               >
                 <el-option
                   v-for="item in versionData_b"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="arch" label-width="120px" class="input_class">
+              <el-select
+                v-model="os_arch_b"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroupb"
+              >
+                <el-option
+                  v-for="item in archData_b"
                   :key="item"
                   :label="item"
                   :value="item"
@@ -182,10 +215,27 @@
                 placeholder="请选择"
                 size="medium"
                 clearable
-                @change="getSelectGroup(index, obj.os_version)"
+                @change="selectChangeArch(index, obj.os_version)"
               >
                 <el-option
                   v-for="item in obj.versionData"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item class="input_class">
+              <el-select
+                v-model="obj.os_arch"
+                filterable
+                placeholder="请选择"
+                size="medium"
+                clearable
+                @change="getSelectGroup(index, obj.os, obj.os_version, obj.os_arch)"
+              >
+                <el-option
+                  v-for="item in obj.archData"
                   :key="item"
                   :label="item"
                   :value="item"
@@ -1421,6 +1471,8 @@ export default {
       compare_object: [],
       suite: "stream",
       osData: [],
+      archData_a: [],
+      archData_b: [],
       versionData_a: [],
       versionData_b: [],
       groupData_a: [],
@@ -1429,6 +1481,7 @@ export default {
         filter: {
           suite: [],
           os: [],
+          os_arch: [],
           os_version: [],
           job_state: ["finished"],
         },
@@ -1445,6 +1498,8 @@ export default {
       },
       os_a: "",
       os_b: "",
+      os_arch_a: "",
+      os_arch_b: "",
       os_version_a: "",
       os_version_b: "",
       group_id_a: "",
@@ -2507,7 +2562,6 @@ export default {
       }
       datas.average = avg_data;
       datas.change = change_data;
-      // console.log("datas", datas)
 
       return datas;
     },
@@ -3086,8 +3140,10 @@ export default {
       this.getosData();
       this.getSelectVersiona(this.os_a);
       this.getSelectVersionb(this.os_b);
-      this.getSelectGroupa(this.os_version_a);
-      this.getSelectGroupb(this.os_version_b);
+      this.getSelectArcha(this.os_version_a);
+      this.getSelectArchb(this.os_version_b);
+      this.getSelectGroupa(this.os_arch_a);
+      this.getSelectGroupb(this.os_arch_b);
       this.getTableHeaders();
       this.getTransferData();
       this.improve_percent = {};
@@ -3100,13 +3156,15 @@ export default {
       }
       for (var index = 0; index < this.compare_object.length; index++) {
         this.getSelectVersion(index, this.compare_object[index].os);
-        this.getSelectGroup(index, this.compare_object[index].os_version);
+        this.getSelectArch(index, this.compare_object[index].os, this.compare_object[index].os_version);
+        this.getSelectGroup(index, this.compare_object[index].os, this.compare_object[index].os_version, this.compare_object[index].os_arch);
       }
     },
     getosData() {
       this.checkQuery.filter.suite = [this.suite];
       this.checkQuery.filter.os = [];
       this.checkQuery.filter.os_version = [];
+      this.checkQuery.filter.os_arch = [];
       this.checkQuery.field = "os";
       this.group_id_a = "";
       this.versionData_a = [];
@@ -3115,6 +3173,7 @@ export default {
       this.checkQuery_b.filter.suite = [this.suite];
       this.checkQuery_b.filter.os = [];
       this.checkQuery_b.filter.os_version = [];
+      this.checkQuery_b.filter.os_arch = [];
       this.checkQuery_b.field = "os";
       this.group_id_b = "";
       this.versionData_b = [];
@@ -3136,6 +3195,18 @@ export default {
       this.compare_object[index].os_version = "";
       this.getSelectVersion(index, os);
     },
+    selectChangeArcha(os_version_a) {
+      this.os_arch_a = ""
+      this.getSelectArcha(os_version_a)
+    },
+    selectChangeArchb(os_version_b) {
+      this.os_arch_b = ""
+      this.getSelectArchb(os_version_b)
+    },
+    selectChangeArch(index, os, os_version) {
+      this.compare_object[index].os_arch = ""
+      this.getSelectArch(index, os, os_version)
+    },
     getSelectVersion(index, os) {
       this.compare_object[index].group_id = "";
       this.compare_object[index].versionData = [];
@@ -3148,6 +3219,44 @@ export default {
       checkQuery.field = "os_version";
       QueryField(checkQuery).then((res) => {
         this.compare_object[index].versionData = res;
+      });
+    },
+    getSelectArch(index, os, os_version) {
+      this.compare_object[index].group_id = "";
+      this.compare_object[index].archData = [];
+      this.compare_object[index].groupData = [];
+      var checkQuery = this.compare_object[index].checkQuery;
+
+      checkQuery.filter.suite = [this.suite];
+      checkQuery.filter.os = [os];
+      checkQuery.filter.os_version = [os_version];
+      checkQuery.field = "os_arch";
+      QueryField(checkQuery).then((res) => {
+        this.compare_object[index].archData = res;
+      });
+    },
+    getSelectArcha(os_version_a) {
+      this.checkQuery.filter.os = [this.os_a];
+      this.checkQuery.filter.os_version = [os_version_a];
+      this.checkQuery.field = "os_arch";
+      this.group_id_a = "";
+      this.archData_a = [];
+      this.groupData_a = [];
+
+      QueryField(this.checkQuery).then((res) => {
+        this.archData_a = res;
+      });
+    },
+    getSelectArchb(os_version_b) {
+      this.checkQuery_b.filter.os = [this.os_b];
+      this.checkQuery_b.filter.os_version = [os_version_b];
+      this.checkQuery_b.field = "os_arch";
+      this.group_id_b = "";
+      this.archData_b = [];
+      this.groupData_b = [];
+
+      QueryField(this.checkQuery_b).then((res) => {
+        this.archData_b = res;
       });
     },
     getSelectVersiona(os) {
@@ -3174,8 +3283,8 @@ export default {
         this.versionData_b = res;
       });
     },
-    getSelectGroupa(os_version) {
-      this.checkQuery.filter.os_version = [os_version];
+    getSelectGroupa(os_arch) {
+      this.checkQuery.filter.os_arch = [os_arch];
       this.checkQuery.field = "group_id";
       this.group_id_a = "";
 
@@ -3183,8 +3292,8 @@ export default {
         this.groupData_a = res;
       });
     },
-    getSelectGroupb(os_version) {
-      this.checkQuery_b.filter.os_version = [os_version];
+    getSelectGroupb(os_arch) {
+      this.checkQuery_b.filter.os_arch = [os_arch];
       this.checkQuery_b.field = "group_id";
       this.group_id_b = "";
 
@@ -3192,13 +3301,15 @@ export default {
         this.groupData_b = res;
       });
     },
-    getSelectGroup(index, os_version) {
+    getSelectGroup(index, os, os_version, os_arch) {
       this.compare_object[index].group_id = "";
       this.compare_object[index].groupData = [];
       var checkQuery = this.compare_object[index].checkQuery;
 
       checkQuery.filter.suite = [this.suite];
       checkQuery.filter.os_version = [os_version];
+      checkQuery.filter.os = [os]
+      checkQuery.filter.os_arch = [os_arch];
       checkQuery.field = "group_id";
       QueryField(checkQuery).then((res) => {
         this.compare_object[index].groupData = res;
@@ -3600,9 +3711,6 @@ export default {
           let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
           XLSX.utils.book_append_sheet(wb, worksheet, sheet_name)
         }
-        // console.log("jsonOBj", jsonObj)
-        // let worksheet = XLSX.utils.json_to_sheet(jsonObj, {skipHeader: true})
-        // XLSX.utils.book_append_sheet(wb, worksheet, sheet_name)
       }
       let wbout = XLSXS.write(wb, {
         book_Type: "xlsx",
@@ -3873,7 +3981,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 700px;
+  margin-top: 800px;
+  flex-direction: column;
+  align-items: center;
 }
 .chart {
   width: 1000px;
