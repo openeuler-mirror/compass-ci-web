@@ -3238,6 +3238,7 @@ export default {
     getSelectArcha(os_version_a) {
       this.checkQuery.filter.os = [this.os_a];
       this.checkQuery.filter.os_version = [os_version_a];
+      this.checkQuery.filter.os_arch = [];
       this.checkQuery.field = "os_arch";
       this.group_id_a = "";
       this.archData_a = [];
@@ -3250,6 +3251,7 @@ export default {
     getSelectArchb(os_version_b) {
       this.checkQuery_b.filter.os = [this.os_b];
       this.checkQuery_b.filter.os_version = [os_version_b];
+      this.checkQuery_b.filter.os_arch = [];
       this.checkQuery_b.field = "os_arch";
       this.group_id_b = "";
       this.archData_b = [];
