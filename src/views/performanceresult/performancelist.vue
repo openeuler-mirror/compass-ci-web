@@ -1961,7 +1961,7 @@ export default {
         QueryData: {
           filter: {
             suite: ["unixbench"],
-            "pp.unixbench.nr_task": [1, 96],
+            "pp.unixbench.nr_task": [1, 56, 80, 96, 128],
             group_id: [],
           },
           metrics: [
