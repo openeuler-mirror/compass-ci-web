@@ -3448,8 +3448,8 @@ export default {
     },
     async queryCharts() {
       var series = [
-        { os: this.os_a, os_version: this.os_version_a, group_id: this.group_id_a },
-        { os: this.os_b, os_version: this.os_version_b, group_id: this.group_id_b },
+        { os: this.os_a, os_version: this.os_version_a, os_arch: this.os_arch_a, group_id: this.group_id_a },
+        { os: this.os_b, os_version: this.os_version_b, os_arch: this.os_arch_b, group_id: this.group_id_b },
       ];
       for (var i = 0; i < this.compare_object.length; i++) {
         var every_set = {
