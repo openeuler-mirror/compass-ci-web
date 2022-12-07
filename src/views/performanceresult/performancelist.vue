@@ -267,7 +267,7 @@
             <el-radio label="stream">stream</el-radio>
             <el-radio label="netperf">netperf</el-radio>
             <el-radio label="unixbench">unixbench</el-radio>
-            <el-radio label="lmbench3">lmbench3</el-radio>
+            <el-radio label="lmbench">lmbench</el-radio>
             <el-radio label="libmicro">libmicro</el-radio>
             <el-radio label="fio-basic">fio-basic</el-radio>
             <el-radio label="speccpu-2006">speccpu-2006</el-radio>
@@ -1057,7 +1057,7 @@
             style="width: 1500px"
           >
             <el-table-column
-              v-for="(item, index) in lmbench3_filter(t_item.header)"
+              v-for="(item, index) in lmbench_filter(t_item.header)"
               :key="index"
               :label="item"
               :prop="item"
@@ -1109,7 +1109,7 @@
             style="width: 1500px"
           >
             <el-table-column
-              v-for="(item, index) in lmbench3_filter(t_item.header)"
+              v-for="(item, index) in lmbench_filter(t_item.header)"
               :key="index"
               :label="item"
               :prop="item"
@@ -1161,7 +1161,7 @@
             style="width: 1500px"
           >
             <el-table-column
-              v-for="(item, index) in lmbench3_filter(t_item.header)"
+              v-for="(item, index) in lmbench_filter(t_item.header)"
               :key="index"
               :label="item"
               :prop="item"
@@ -1213,7 +1213,7 @@
             style="width: 1500px"
           >
             <el-table-column
-              v-for="(item, index) in lmbench3_filter(t_item.header)"
+              v-for="(item, index) in lmbench_filter(t_item.header)"
               :key="index"
               :label="item"
               :prop="item"
@@ -1265,7 +1265,7 @@
             style="width: 1500px"
           >
             <el-table-column
-              v-for="(item, index) in lmbench3_filter(t_item.header)"
+              v-for="(item, index) in lmbench_filter(t_item.header)"
               :key="index"
               :label="item"
               :prop="item"
@@ -1317,7 +1317,7 @@
             style="width: 1500px"
           >
             <el-table-column
-              v-for="(item, index) in lmbench3_filter(t_item.header)"
+              v-for="(item, index) in lmbench_filter(t_item.header)"
               :key="index"
               :label="item"
               :prop="item"
@@ -1462,7 +1462,7 @@ export default {
       speccpu_2017_selected: [],
       netperf_selected: [],
       unixbench_selected: [],
-      lmbench3_selected: [],
+      lmbench_selected: [],
       libmicro_selected: [],
       fio_selected: [],
       t_headers: ["copy", "scale", "add", "triad"],
@@ -1507,7 +1507,7 @@ export default {
       base_all_data: {"stream": [],
                       "netperf": [],
                       "unixbench": [],
-                      "lmbench3": [],
+                      "lmbench": [],
                       "libmicro": [],
                       "fio-basic": [],
                       "speccpu-2006": [],
@@ -1800,18 +1800,18 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["lmbench3"], group_id: [] },
+          filter: { suite: ["lmbench"], group_id: [] },
           metrics: [
-            "lmbench3.syscall.syscall.latency.us",
-            "lmbench3.syscall.stat.latency.us",
-            "lmbench3.syscall.open/close.latency.us",
-            "lmbench3.null_io",
-            "lmbench3.Process.fork+exit.latency.us",
-            "lmbench3.Process.fork+execve.latency.us",
-            "lmbench3.Process.fork+/bin/sh.latency.us",
-            "lmbench3.Select.100tcp.latency.us",
-            "lmbench3.sig_inst",
-            "lmbench3.sig_hndl",
+            "lmbench.syscall.syscall.latency.us",
+            "lmbench.syscall.stat.latency.us",
+            "lmbench.syscall.open/close.latency.us",
+            "lmbench.null_io",
+            "lmbench.Process.fork+exit.latency.us",
+            "lmbench.Process.fork+execve.latency.us",
+            "lmbench.Process.fork+/bin/sh.latency.us",
+            "lmbench.Select.100tcp.latency.us",
+            "lmbench.sig_inst",
+            "lmbench.sig_hndl",
           ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -1825,13 +1825,13 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["lmbench3"], group_id: [] },
+          filter: { suite: ["lmbench"], group_id: [] },
           metrics: [
-            "lmbench3.PIPE.latency.us",
-            "lmbench3.AF_UNIX.sock.stream.latency.us",
-            "lmbench3.UDP.usinglocalhost.latency.us",
-            "lmbench3.TCP.localhost.latency",
-            "lmbench3.CONNECT.localhost.latency.us",
+            "lmbench.PIPE.latency.us",
+            "lmbench.AF_UNIX.sock.stream.latency.us",
+            "lmbench.UDP.usinglocalhost.latency.us",
+            "lmbench.TCP.localhost.latency",
+            "lmbench.CONNECT.localhost.latency.us",
           ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -1845,17 +1845,17 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["lmbench3"], group_id: [] },
+          filter: { suite: ["lmbench"], group_id: [] },
           metrics: [
-            "lmbench3.PIPE.bandwidth.MB/sec",
-            "lmbench3.AF_UNIX.sock.stream.bandwidth.MB/sec",
-            "lmbench3.TCP.socket.bandwidth.10MB.MB/sec",
-            "lmbench3.FILE.read.bandwidth.MB/sec",
-            "lmbench3.MMAP.read.bandwidth.MB/sec",
-            "lmbench3.BCOPY.libc.bandwidth.MB/sec",
-            "lmbench3.BCOPY.unrolled.bandwidth.MB/sec",
-            "lmbench3.BCOPY.memory_read.bandwidth.MB/sec",
-            "lmbench3.BCOPY.memory_write.bandwidth.MB/sec",
+            "lmbench.PIPE.bandwidth.MB/sec",
+            "lmbench.AF_UNIX.sock.stream.bandwidth.MB/sec",
+            "lmbench.TCP.socket.bandwidth.10MB.MB/sec",
+            "lmbench.FILE.read.bandwidth.MB/sec",
+            "lmbench.MMAP.read.bandwidth.MB/sec",
+            "lmbench.BCOPY.libc.bandwidth.MB/sec",
+            "lmbench.BCOPY.unrolled.bandwidth.MB/sec",
+            "lmbench.BCOPY.memory_read.bandwidth.MB/sec",
+            "lmbench.BCOPY.memory_write.bandwidth.MB/sec",
           ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -1869,15 +1869,15 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["lmbench3"], group_id: [] },
+          filter: { suite: ["lmbench"], group_id: [] },
           metrics: [
-            "lmbench3.CTX.2P.0K.latency.us",
-            "lmbench3.CTX.2P.16K.latency.us",
-            "lmbench3.CTX.2P.64K.latency.us",
-            "lmbench3.CTX.8P.16K.latency.us",
-            "lmbench3.CTX.8P.64K.latency.us",
-            "lmbench3.CTX.16P.16K.latency.us",
-            "lmbench3.CTX.16P.64K.latency.us",
+            "lmbench.CTX.2P.0K.latency.us",
+            "lmbench.CTX.2P.16K.latency.us",
+            "lmbench.CTX.2P.64K.latency.us",
+            "lmbench.CTX.8P.16K.latency.us",
+            "lmbench.CTX.8P.64K.latency.us",
+            "lmbench.CTX.16P.16K.latency.us",
+            "lmbench.CTX.16P.64K.latency.us",
           ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -1891,12 +1891,12 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["lmbench3"], group_id: [] },
+          filter: { suite: ["lmbench"], group_id: [] },
           metrics: [
-            "lmbench3.Mmap_Latency",
-            "lmbench3.Prot_Fault",
-            "lmbench3.Pagefaults.ms",
-            "lmbench3.Select.100fd.latency.us",
+            "lmbench.Mmap_Latency",
+            "lmbench.Prot_Fault",
+            "lmbench.Pagefaults.ms",
+            "lmbench.Select.100fd.latency.us",
           ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -1910,12 +1910,12 @@ export default {
         table_data: [],
         echart_data: [],
         QueryData: {
-          filter: { suite: ["lmbench3"], group_id: [] },
+          filter: { suite: ["lmbench"], group_id: [] },
           metrics: [
-            "lmbench3.L1_$",
-            "lmbench3.L2_$",
-            "lmbench3.Main_mem",
-            "lmbench3.Rand_mem",
+            "lmbench.L1_$",
+            "lmbench.L2_$",
+            "lmbench.Main_mem",
+            "lmbench.Rand_mem",
           ],
           series: [
             { os: "openeuler", os_version: "21.03-iso" },
@@ -1923,7 +1923,7 @@ export default {
           ],
           x_params: ["metric"],
           title: "Memory_latencies",
-          test_params: ["pp.lmbench3.nr_threads"],
+          test_params: ["pp.lmbench.nr_threads"],
         },
       },
       libmicro_data: {
@@ -1961,7 +1961,7 @@ export default {
         QueryData: {
           filter: {
             suite: ["unixbench"],
-            "pp.unixbench.nr_task": [1, 96],
+            "pp.unixbench.nr_task": [1, 56, 80, 96, 128],
             group_id: [],
           },
           metrics: [
@@ -2099,45 +2099,45 @@ export default {
         fsbuffer: "File_Copy_256_bufsize_500_maxblocks",
         fsdisk: "File_Copy_4096_bufsize_8000_maxblocks",
         execl: "Execl_Throughput",
-        "lmbench3-syscall-syscall-latency-us": "null_call",
-        "lmbench3-null_io": "null_io",
-        "lmbench3-syscall-stat-latency-us": "stat",
-        "lmbench3-syscall-open/close-latency-us": "open_close",
-        "lmbench3-Select-100tcp-latency-us": "slct_TCP",
-        "lmbench3-sig_inst": "sig_inst",
-        "lmbench3-sig_hndl": "sig_hndl",
-        "lmbench3-Process-fork+exit-latency-us": "fork_proc",
-        "lmbench3-Process-fork+execve-latency-us": "exec_proc",
-        "lmbench3-Process-fork+/bin/sh-latency-us": "sh_proc",
-        "lmbench3-PIPE-latency-us": "Pipe",
-        "lmbench3-AF_UNIX-sock-stream-latency-us": "AF_UNIX",
-        "lmbench3-UDP-usinglocalhost-latency-us": "UDP",
-        "lmbench3-TCP-localhost-latency": "TCP",
-        "lmbench3-CONNECT-localhost-latency-us": "TCP_conn",
-        "lmbench3-PIPE-bandwidth-MB/sec": "Pipe",
-        "lmbench3-AF_UNIX-sock-stream-bandwidth-MB/sec": "AF_UNIX",
-        "lmbench3-TCP-socket-bandwidth-10MB-MB/sec": "TCP",
-        "lmbench3-FILE-read-bandwidth-MB/sec": "File_reread",
-        "lmbench3-MMAP-read-bandwidth-MB/sec": "Mmap_reread",
-        "lmbench3-BCOPY-libc-bandwidth-MB/sec": "copy(libc)",
-        "lmbench3-BCOPY-unrolled-bandwidth-MB/sec": "copy(hand)",
-        "lmbench3-BCOPY-memory_read-bandwidth-MB/sec": "Mem_read",
-        "lmbench3-BCOPY-memory_write-bandwidth-MB/sec": "Mem_write",
-        "lmbench3-CTX-2P-0K-latency-us": "2p/0K",
-        "lmbench3-CTX-2P-16K-latency-us": "2p/16K",
-        "lmbench3-CTX-2P-64K-latency-us": "2p/64K",
-        "lmbench3-CTX-8P-16K-latency-us": "8p/16K",
-        "lmbench3-CTX-8P-64K-latency-us": "8p/64K",
-        "lmbench3-CTX-16P-16K-latency-us": "16p/16K",
-        "lmbench3-CTX-16P-64K-latency-us": "16p/64K",
-        "lmbench3-Mmap_Latency": "Mmap_Latency",
-        "lmbench3-Prot_Fault": "Prot_Fault",
-        "lmbench3-Pagefaults-ms": "Page_Fault",
-        "lmbench3-Select-100fd-latency-us": "100fd_selct",
-        "lmbench3-L1_$": "L1_$",
-        "lmbench3-L2_$": "L2_$",
-        "lmbench3-Main_mem": "Main_mem",
-        "lmbench3-Rand_mem": "Rand_mem",
+        "lmbench-syscall-syscall-latency-us": "null_call",
+        "lmbench-null_io": "null_io",
+        "lmbench-syscall-stat-latency-us": "stat",
+        "lmbench-syscall-open/close-latency-us": "open_close",
+        "lmbench-Select-100tcp-latency-us": "slct_TCP",
+        "lmbench-sig_inst": "sig_inst",
+        "lmbench-sig_hndl": "sig_hndl",
+        "lmbench-Process-fork+exit-latency-us": "fork_proc",
+        "lmbench-Process-fork+execve-latency-us": "exec_proc",
+        "lmbench-Process-fork+/bin/sh-latency-us": "sh_proc",
+        "lmbench-PIPE-latency-us": "Pipe",
+        "lmbench-AF_UNIX-sock-stream-latency-us": "AF_UNIX",
+        "lmbench-UDP-usinglocalhost-latency-us": "UDP",
+        "lmbench-TCP-localhost-latency": "TCP",
+        "lmbench-CONNECT-localhost-latency-us": "TCP_conn",
+        "lmbench-PIPE-bandwidth-MB/sec": "Pipe",
+        "lmbench-AF_UNIX-sock-stream-bandwidth-MB/sec": "AF_UNIX",
+        "lmbench-TCP-socket-bandwidth-10MB-MB/sec": "TCP",
+        "lmbench-FILE-read-bandwidth-MB/sec": "File_reread",
+        "lmbench-MMAP-read-bandwidth-MB/sec": "Mmap_reread",
+        "lmbench-BCOPY-libc-bandwidth-MB/sec": "copy(libc)",
+        "lmbench-BCOPY-unrolled-bandwidth-MB/sec": "copy(hand)",
+        "lmbench-BCOPY-memory_read-bandwidth-MB/sec": "Mem_read",
+        "lmbench-BCOPY-memory_write-bandwidth-MB/sec": "Mem_write",
+        "lmbench-CTX-2P-0K-latency-us": "2p/0K",
+        "lmbench-CTX-2P-16K-latency-us": "2p/16K",
+        "lmbench-CTX-2P-64K-latency-us": "2p/64K",
+        "lmbench-CTX-8P-16K-latency-us": "8p/16K",
+        "lmbench-CTX-8P-64K-latency-us": "8p/64K",
+        "lmbench-CTX-16P-16K-latency-us": "16p/16K",
+        "lmbench-CTX-16P-64K-latency-us": "16p/64K",
+        "lmbench-Mmap_Latency": "Mmap_Latency",
+        "lmbench-Prot_Fault": "Prot_Fault",
+        "lmbench-Pagefaults-ms": "Page_Fault",
+        "lmbench-Select-100fd-latency-us": "100fd_selct",
+        "lmbench-L1_$": "L1_$",
+        "lmbench-L2_$": "L2_$",
+        "lmbench-Main_mem": "Main_mem",
+        "lmbench-Rand_mem": "Rand_mem",
         "unixbench-Dhrystone_2_using_register_variables":
           "Dhrystone_2_using_register_variables",
         "unixbench-Double-Precision_Whetstone": "Double-Precision_Whetstone",
@@ -2423,7 +2423,7 @@ export default {
           var base = series[1];
           var test_obj = series[0];
           var found = 0;
-          if (this.suite == "lmbench3") {
+          if (this.suite == "lmbench") {
             var base_average = this.improve_percent[base].g_average;
             var base_bd_average = this.improve_percent[base].bd_g_average;
             var average = this.improve_percent[test_obj].g_average;
@@ -2487,7 +2487,7 @@ export default {
         }
 
         if (this.suite != "unixbench") {
-          if (this.suite == "lmbench3") {
+          if (this.suite == "lmbench") {
             if (this.improve_percent[data.series] == null) {
               this.improve_percent[data.series] = {
                 product: 1,
@@ -2601,9 +2601,9 @@ export default {
         } else if (this.suite == "unixbench") {
           await this.getTableHeaders()
           data_header = this.unixbench_filter(data_header)
-        } else if (this.suite == "lmbench3") {
+        } else if (this.suite == "lmbench") {
           await this.getTableHeaders()
-          data_header = this.lmbench3_filter(data_header)
+          data_header = this.lmbench_filter(data_header)
         } else if (this.suite == "libmicro") {
           await this.getTableHeaders()
           data_header = this.libmicro_filter(data_header)
@@ -2641,7 +2641,7 @@ export default {
         this.queryCharts()
       });
       await this.sleep(900).then(() => {
-        this.suite = "lmbench3"
+        this.suite = "lmbench"
         this.queryCharts()
       });
       await this.sleep(4500).then(() => {
@@ -2822,7 +2822,7 @@ export default {
           "System_Benchmarks_Index_Score",
         ];
         this.unixbench_selected = this.t_headers;
-      } else if (this.suite == "lmbench3") {
+      } else if (this.suite == "lmbench") {
         this.t_headers = [
           "null_call",
           "null_io",
@@ -2861,7 +2861,7 @@ export default {
           "Main_mem",
           "Rand_mem",
         ];
-        this.lmbench3_selected = this.t_headers;
+        this.lmbench_selected = this.t_headers;
       } else if (this.suite == "fio-basic") {
         this.t_headers = [
           "4k",
@@ -3149,7 +3149,7 @@ export default {
       this.improve_percent = {};
       this.table_improve = [];
       this.im_show = false;
-      if (this.suite == "lmbench3") {
+      if (this.suite == "lmbench") {
         this.lmbench_show = true;
       } else {
         this.lmbench_show = false;
@@ -3448,8 +3448,8 @@ export default {
     },
     async queryCharts() {
       var series = [
-        { os: this.os_a, os_version: this.os_version_a, group_id: this.group_id_a },
-        { os: this.os_b, os_version: this.os_version_b, group_id: this.group_id_b },
+        { os: this.os_a, os_version: this.os_version_a, os_arch: this.os_arch_a, group_id: this.group_id_a },
+        { os: this.os_b, os_version: this.os_version_b, os_arch: this.os_arch_b, group_id: this.group_id_b },
       ];
       for (var i = 0; i < this.compare_object.length; i++) {
         var every_set = {
@@ -3542,7 +3542,7 @@ export default {
       }
 
       await this.clean_data();
-      if (this.suite === "lmbench3") {
+      if (this.suite === "lmbench") {
         await this.getData(this.lmbench_data_a);
         await this.sleep(100).then(() => {
           this.getData(this.lmbench_data_b);
@@ -3839,9 +3839,9 @@ export default {
       headers = headers.concat(tmp);
       return headers;
     },
-    lmbench3_filter(s_headers) {
+    lmbench_filter(s_headers) {
       var checkedHeaders;
-      checkedHeaders = this.lmbench3_selected;
+      checkedHeaders = this.lmbench_selected;
       var headers = [];
       headers.push(s_headers[0]);
 
@@ -3905,11 +3905,11 @@ export default {
           index = this.transfer_chosen[i];
           this.unixbench_selected[i] = this.transfer_data[index].label;
         }
-      } else if (this.suite == "lmbench3") {
-        this.lmbench3_selected = [];
+      } else if (this.suite == "lmbench") {
+        this.lmbench_selected = [];
         for (i = 0; i < this.transfer_chosen.length; i++) {
           index = this.transfer_chosen[i];
-          this.lmbench3_selected[i] = this.transfer_data[index].label;
+          this.lmbench_selected[i] = this.transfer_data[index].label;
         }
       } else if (this.suite == "libmicro") {
         this.libmicro_selected = [];
