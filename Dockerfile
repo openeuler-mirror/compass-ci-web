@@ -7,7 +7,6 @@ WORKDIR /home/openeuler/crystal-ci-web
 COPY . /home/openeuler/crystal-ci-web
 
 RUN npm i --legacy-peer-deps --registry=https://mirrors.huaweicloud.com/repository/npm/ && \
-    npm install && \
     npm run build
 
 FROM nginx:1.20.0
