@@ -5,7 +5,7 @@
       <h1 class="title">Test Matrix</h1>
       <p class="summary">多架构多系统测试结果对比</p>
       <div style="margin-top: 15px;margin-bottom:50px;text-align: center;">
-        <el-input placeholder="group_id" v-model="groupId" class="input-with-select" >
+        <el-input placeholder="query by software name" v-model="groupId" class="input-with-select" >
             <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
         </el-input>
       </div>
@@ -13,7 +13,7 @@
       <el-table
         :data="tableData"
         border
-        style="width:58%;margin:auto"
+        style="width:75%;margin:auto"
         :header-cell-style="{background:'#f8f8ff','text-align':'center'}"
         :cell-style="cellClsNm"
         :cell-class-name="tableCellClassName"
@@ -32,7 +32,7 @@
         <el-table-column
         prop="arch"
         label="架构"
-        width="200"
+        width="150"
         align="center">
         </el-table-column>
         <el-table-column
@@ -62,15 +62,16 @@
                 <img :src="scope_func.row.function"/>
             </template>
         </el-table-column>
-        <!-- <el-table-column
+        <el-table-column
         prop="performance"
-        label="性能"
+        label="性能测试"
         width="150"
         align="center">
-             <template slot-scope="scope_perf">
-                <img :src="scope_perf.row.performance"/> 
+             <template >
+                <!-- <img :src="scope_perf.row.performance"/>  -->
+                <a >NA</a>
              </template> 
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
       </div>
     </div>
@@ -119,6 +120,7 @@ export default {
                   build: tmp.build_job_health=="success" ? require("../../assets/success.png"): tmp.build_job_health==null ? require("../../assets/null.png"):require("../../assets/fail.png"),
                   compatibility: !('install_job_health' in tmp) || tmp.install_job_health==null ? require("../../assets/null.png") :tmp.install_job_health=="success" ? require("../../assets/success.png"):require("../../assets/fail.png"),
                   function:!('func_job_health' in tmp) ? require("../../assets/null.png") :tmp.func_job_health=="success" ? require("../../assets/success.png"):require("../../assets/fail.png"),
+                  performance:require("../../assets/null.png"),
               }
               this.tableData.push(item)
           }
@@ -127,7 +129,8 @@ export default {
           var href;
           console.log()
           if(column.index >= 3){
-            href="https://api.compass-ci.openeuler.org:20007"+this.response[row.index].result_root;
+            href="https://api.compass-ci.openeuler.org"+this.response[row.index].result_root;
+            console.log(href)
             window.open(href,'_blank');
           }
       },
