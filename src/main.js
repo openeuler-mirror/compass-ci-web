@@ -26,7 +26,9 @@ import {
     Radio,
     RadioGroup,
     Transfer,
-    Dialog
+    Dialog,
+    Tabs,
+    TabPane
 } from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -37,6 +39,8 @@ import './../public/style/theme/index.css';
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 Vue.use(Table);
+Vue.use(Tabs);
+Vue.use(TabPane);
 Vue.use(TableColumn);
 Vue.use(Pagination);
 Vue.use(Form);

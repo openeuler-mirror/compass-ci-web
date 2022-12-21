@@ -37,6 +37,11 @@ const routes = [
         component: () => import('../views/oepkgs/oepkgs.vue')
     },
     {
+        path: '/machine',
+        name: 'Machine',
+        component: () => import('../views/machine/machineinfo.vue')
+    },
+    {
         path: '/tree',
         name: 'Tree',
         component: () => import('../views/tree/tree.vue')

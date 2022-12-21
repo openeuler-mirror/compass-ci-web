@@ -16,6 +16,7 @@
           <el-menu-item index="6-1" route="/job-summary">jobSummary</el-menu-item>
           <el-menu-item index="6-2" route="/performance-result">performanceResult</el-menu-item>
           <el-menu-item index="6-3" route="/testMatrix">testMatrix</el-menu-item>
+          <el-menu-item index="6-4" route="/machine">machine</el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
