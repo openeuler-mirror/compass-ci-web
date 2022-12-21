@@ -18,6 +18,14 @@ export function getSrpms(data) {
     });
 }
 
+export function getTestbox(data) {
+    return service({
+        url: '/active_testbox',
+        method: 'get',
+        params: data
+    });
+}
+
 export function getJobsSummary(data) {
     return service({
         url: '/get_jobs_summary',
