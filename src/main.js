@@ -28,7 +28,11 @@ import {
     Transfer,
     Dialog,
     Tabs,
-    TabPane
+    TabPane,
+    DatePicker,
+    CheckboxButton,
+    TimeSelect,
+    TimePicker
 } from 'element-ui';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -41,7 +45,11 @@ Vue.config.productionTip = false;
 Vue.use(Table);
 Vue.use(Tabs);
 Vue.use(TabPane);
+Vue.use(DatePicker);
+Vue.use(CheckboxButton);
 Vue.use(TableColumn);
+Vue.use(TimeSelect);
+Vue.use(TimePicker);
 Vue.use(Pagination);
 Vue.use(Form);
 Vue.use(FormItem);

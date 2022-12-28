@@ -20,7 +20,15 @@ export function getSrpms(data) {
 
 export function getTestbox(data) {
     return service({
-        url: '/active_testbox',
+        url: '/testbox_status',
+        method: 'get',
+        params: data
+    });
+}
+
+export function queryTestbox(data) {
+    return service({
+        url: '/query_testbox_info',
         method: 'get',
         params: data
     });
