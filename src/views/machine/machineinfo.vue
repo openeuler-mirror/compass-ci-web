@@ -7,17 +7,17 @@
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="物理机" name="first">
           <template>
-            <pmachine></pmachine>
+            <pmachine type="physical"></pmachine>
           </template>
         </el-tab-pane>
         <el-tab-pane label="虚拟机" name="second">
           <template>
-            <vmachine></vmachine>
+            <pmachine type="vm"></pmachine>
           </template>
         </el-tab-pane>
         <el-tab-pane label="容器" name="third">
           <template>
-            <docker></docker>
+            <pmachine type="dc"></pmachine>
           </template>
         </el-tab-pane>
       </el-tabs>
@@ -27,49 +27,22 @@
 <script>
 import Header from "@/components/Header";
 import pmachine from "./pmachine.vue";
-import vmachine from "./vmachine.vue";
-import docker from "./docker.vue";
 
 export default {
   name: "machineinfo",
   components: {
     Header,
     pmachine,
-    vmachine,
-    docker,
   },
   data() {
     return {
-      activeName: "first",
-      tableData: [],
-      totalData: [],
-      total: 1000,
-      filter: null,
-      tableHeader: {},
-      toolDisabled: false,
-      jobsQuery: {},
-      listQuery: {
-        page_size: 10,
-        page_num: 0,
-      },
-      tableHead: [
-        "key",
-        "doc_count",
-      ],
+      activeName: "first"
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     }
-  },
-  mounted() {
-    var data = this.$route.query;
-    data.page_size = this.listQuery.page_size;
-    data.page_num = this.listQuery.page_num;
-
-    this.getTestbox(data);
-  },
+  }
 };
 </script>
-
