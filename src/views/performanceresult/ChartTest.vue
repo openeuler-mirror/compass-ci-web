@@ -36,7 +36,7 @@
       </el-form-item>
 
       <el-form-item class="confirm">
-        <el-button @click="getTable">确定</el-button>
+        <el-button @click="fetchAndUncompressData">确定</el-button>
       </el-form-item>
       <el-form-item class="example">
         <el-button @click="showExample">Example</el-button>
@@ -61,17 +61,23 @@
 <script>
 // import Header from "@/components/Header";
 import * as echarts from "echarts";
-import { dataFliter } from '../../utils/dataFliter';
-import meminfo from '../../../meminfo.json';
-
-const meminfoData = dataFliter(meminfo);
+// import { dataFliter } from '../../utils/dataFliter';
+// import meminfo from '../../../meminfo.json';
+// import JSZip from "jszip"
+import exeJSZip from '../../utils/exeJSZip'
+// import axios from 'axios';
+// import { getJobs } from "../../api/jobs1";
+// import { getTemplateZipData } from '../../utils/getTemplateZipData'
+// const this.meminfoData = dataFliter(meminfo);
 
 export default {
   data () {
     return {
+      meminfoData: {},
       myChartStyle: { width: "100%", height: "400px", marginTop: '40px' } //图表样式
     };
   },
+
   mounted () {
     this.initEcharts();
     this.initEcharts1();
@@ -79,10 +85,33 @@ export default {
     this.initEcharts3();
     this.initEcharts4();
     this.initEcharts5();
-
-
   },
+
   methods: {
+    async fetchAndUncompressData () {
+      await this.unzipOnline()
+    },
+
+    // 执行在线解压操作
+    async unzipOnline () {
+      const data = await exeJSZip.getBinaryContent(
+        'http://localhost:8080/api/download',
+        this.handleProgress
+      );
+      console.log('dejodoj', JSON.stringify(data))
+      await exeJSZip.iterateZipFile(data, (relativePath, zipEntry) => {
+        console.log('----', `${zipEntry.dir}---${zipEntry.name}`)
+      });
+    },
+
+    // 处理下载进度
+    handleProgress (progressData) {
+      const { loaded, total } = progressData;
+      if (loaded === total) {
+        console.log("文件已下载，努力解压中");
+      }
+    },
+
     initEcharts () {
       // 基本柱状图
       const option = {
@@ -109,7 +138,7 @@ export default {
         ],
         xAxis: [{
           type: 'category',
-          data: meminfoData['meminfo.time']
+          data: this.meminfoData['meminfo.time']
         }],
         yAxis: [
           {
@@ -121,13 +150,15 @@ export default {
         series: [
           {
             name: 'meminfo.MemFree',
-            type: 'bar',
-            data: meminfoData['meminfo.MemFree']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.MemFree']
           },
           {
             name: 'meminfo.Memused',
-            type: 'bar',
-            data: meminfoData['meminfo.Memused']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Memused']
           }
         ]
       };
@@ -165,7 +196,7 @@ export default {
         ],
         xAxis: [{
           type: 'category',
-          data: meminfoData['meminfo.time']
+          data: this.meminfoData['meminfo.time']
         }],
         yAxis: [
           {
@@ -175,22 +206,24 @@ export default {
         series: [
           {
             name: 'meminfo.MemFree',
-            type: 'bar',
-            data: meminfoData['meminfo.MemFree']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.MemFree']
           },
           {
             name: 'Buffers',
-            type: 'bar',
-            data: meminfoData['meminfo.Buffers']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Buffers']
           },
           {
             name: 'Cached',
-            type: 'bar',
-            stack: 'Ad',
+            type: 'line',
+            stack: 'Total',
             emphasis: {
               focus: 'series'
             },
-            data: meminfoData['meminfo.Cached']
+            data: this.meminfoData['meminfo.Cached']
           },
         ]
       };
@@ -228,7 +261,7 @@ export default {
         ],
         xAxis: [{
           type: 'category',
-          data: meminfoData['meminfo.time']
+          data: this.meminfoData['meminfo.time']
         }],
         yAxis: [
           {
@@ -238,13 +271,15 @@ export default {
         series: [
           {
             name: 'meminfo.Active',
-            type: 'bar',
-            data: meminfoData['meminfo.Active']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Active']
           },
           {
             name: 'meminfo.Inactive',
-            type: 'bar',
-            data: meminfoData['meminfo.Inactive']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Inactive']
           }
         ]
       };
@@ -282,7 +317,7 @@ export default {
         ],
         xAxis: [{
           type: 'category',
-          data: meminfoData['meminfo.time']
+          data: this.meminfoData['meminfo.time']
         }],
         yAxis: [
           {
@@ -292,13 +327,15 @@ export default {
         series: [
           {
             name: 'meminfo.Active(anon)',
-            type: 'bar',
-            data: meminfoData['meminfo.Active(anon)']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Active(anon)']
           },
           {
             name: 'meminfo.Inactive(anon)',
-            type: 'bar',
-            data: meminfoData['meminfo.Inactive(anon)']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Inactive(anon)']
           }
         ]
       };
@@ -336,7 +373,7 @@ export default {
         ],
         xAxis: [{
           type: 'category',
-          data: meminfoData['meminfo.time']
+          data: this.meminfoData['meminfo.time']
         }],
         yAxis: [
           {
@@ -346,13 +383,15 @@ export default {
         series: [
           {
             name: 'meminfo.Active(file)',
-            type: 'bar',
-            data: meminfoData['meminfo.Active(file)']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Active(file)']
           },
           {
             name: 'meminfo.Inactive(file)',
-            type: 'bar',
-            data: meminfoData['meminfo.Inactive(file)']
+            type: 'line',
+            stack: 'Total',
+            data: this.meminfoData['meminfo.Inactive(file)']
           }
         ]
       };
@@ -390,7 +429,7 @@ export default {
         ],
         xAxis: [{
           type: 'category',
-          data: meminfoData['meminfo.time']
+          data: this.meminfoData['meminfo.time']
         }],
         yAxis: {
           type: 'value'
@@ -400,19 +439,19 @@ export default {
             name: 'meminfo.Slab',
             type: 'line',
             stack: 'Total',
-            data: meminfoData['meminfo.Slab']
+            data: this.meminfoData['meminfo.Slab']
           },
           {
             name: 'meminfo.SReclaimable',
             type: 'line',
             stack: 'Total',
-            data: meminfoData['meminfo.SReclaimable']
+            data: this.meminfoData['meminfo.SReclaimable']
           },
           {
             name: 'meminfo.SUnreclaim',
             type: 'line',
             stack: 'Total',
-            data: meminfoData['meminfo.SUnreclaim']
+            data: this.meminfoData['meminfo.SUnreclaim']
           },
         ]
       };
@@ -464,3 +503,4 @@ export default {
 }
 </style>
 
+../../api/jobs1
