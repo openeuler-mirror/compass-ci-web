@@ -34,6 +34,9 @@ import {
     TimeSelect,
     TimePicker
 } from 'element-ui';
+import echarts from "echarts";
+Vue.prototype.$echarts = echarts;
+
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import '../public/style/public.css';

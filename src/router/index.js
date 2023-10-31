@@ -85,6 +85,11 @@ const routes = [
         path: '/performance-update',
         name: 'PerformanceUpdate',
         component: () => import('../views/performanceresult/performanceupdate.vue')
+    },
+	{
+        path: '/chart-test',
+        name: 'ChartTest',
+        component: () => import('../views/performanceresult/ChartTest.vue')
     }
 
 

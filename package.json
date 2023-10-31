@@ -9,15 +9,19 @@
     "test": "vue-cli-service build --mode test"
   },
   "dependencies": {
+    "@vue/composition-api": "^1.7.1",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
-    "echarts": "^4.9.0",
+    "echarts": "^4.1.0",
     "element-ui": "^2.13.2",
     "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "jszip-utils": "^0.1.0",
     "less-loader": "^7.0.1",
-    "vue": "^2.6.11",
+    "v-charts": "^1.17.9",
+    "vue": "2.7.14",
     "vue-axios": "^2.1.5",
-    "vue-echarts": "^6.0.0-rc.6",
+    "vue-echarts": "^6.6.0",
     "vue-router": "^3.2.0",
     "xlsx": "^0.17.4",
     "xlsx-style": "^0.8.13"
